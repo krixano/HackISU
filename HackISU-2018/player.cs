@@ -196,6 +196,13 @@ namespace HackISU_2018
         {
             return new Vector2_Double(player.sprite.position_wp.X / World.BLOCK_SIZE, player.sprite.position_wp.Y / World.BLOCK_SIZE);
         }
+        
+        public static void Draw(SpriteBatch spriteBatch)
+        {
+            int x = (int) (player.sprite.position_wp.X - World.worldOffsetPixels().X);
+            int y = (int) (player.sprite.position_wp.Y - World.worldOffsetPixels().Y);
+            spriteBatch.Draw(Game1.testTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
+        }
 
     }
 }
