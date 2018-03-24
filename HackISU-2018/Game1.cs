@@ -75,7 +75,13 @@ namespace HackISU_2018
             stoneTexture = Content.Load<Texture2D>("Stone_Block_Texture_64x64");
             gunArmTexture = testTexture;
             bulletTexture = testTexture;
-            gun.gunArm.origin.Y = gunArmTexture.Height / 2;
+            gun.gunArm.origin.X = testTexture.Width / 2;
+            gun.gunArm.origin.Y = testTexture.Height / 2;
+            for (int i = 0; i < gun.bullet.Length; i++)
+            {
+                gun.bullet[i].origin.Y = bulletTexture.Height / 2 ;                
+                gun.bullet[i].origin.X = bulletTexture.Width / 2;
+            }
         }
 
         
@@ -106,11 +112,11 @@ namespace HackISU_2018
                 World.Draw(spriteBatch);
 
                 spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
-                spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, SpriteEffects.None,0);
                 for (int i = 0; i < gun.bullet.Length; i++)
                     if (gun.bullet[i].isFired)
                         spriteBatch.Draw(bulletTexture, new Rectangle((int)(gun.bullet[i].position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.bullet[i].position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.bullet[i].size.X, (int)gun.bullet[i].size.Y), null, Color.White, gun.bullet[i].rotation, gun.bullet[i].origin, SpriteEffects.None, 0);
-
+                spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, SpriteEffects.None,0);
+                
             }
             spriteBatch.End();
 
