@@ -14,7 +14,7 @@ namespace HackISU_2018
 
         public enum BlockType
         {
-            AIR, DIRT, GRASS, STONE
+            AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS
         };
 
         public struct Block
@@ -31,45 +31,123 @@ namespace HackISU_2018
 
         public static void Init()
         {
-            int worldHeight = ((Game1.screenRectangle.Height / 2) / BLOCK_SIZE) + 2;
-            WORLD_SIZE = new Vector2(200, worldHeight * 2);
+            int worldHeight = 50;// ((Game1.screenRectangle.Height / 2) / BLOCK_SIZE) + 2;
+            WORLD_SIZE = new Vector2(100, worldHeight * 2);
             offset_b = new Vector2_Double(0, 0);
             blocks = new Block[(int) WORLD_SIZE.X * (int) WORLD_SIZE.Y];
+            Console.WriteLine(worldHeight);
 
-            for (int y = 0; y < WORLD_SIZE.Y; y++)
-            {
-                for (int x = 0; x < WORLD_SIZE.X; x++)
+            char[,] map = new char[100,worldHeight];
+            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Owner\source\repos\HackISU-2018\HackISU-2018\testWorld.txt");
+            for (int i=0; i< worldHeight; i++)
+            {                
+                for (int j=0; j<100; j++)
                 {
-                    int i = x + y * (int) WORLD_SIZE.X;
-                    if (y == 3)
-                    {
-                        blocks[i].type = BlockType.STONE;
-                        blocks[i].solid = true;
-                    }
-                    else if (y < (WORLD_SIZE.Y / 2) - 1)
-                    {
-                        if (x == 5 || x == 20)
-                        {
-                            blocks[i].type = BlockType.STONE;
-                            blocks[i].solid = true;
-                        } else
-                        {
-                            blocks[i].type = BlockType.AIR;
-                            blocks[i].solid = false;
-                        }
-                    }
-                    else if (y == (WORLD_SIZE.Y / 2) - 1)
-                    {
-                        blocks[i].type = BlockType.GRASS;
-                        blocks[i].solid = true;
-                    }
-                    else {
-                        blocks[i].type = BlockType.DIRT;
-                        blocks[i].solid = true;
-                    }
-                    blocks[i].size = new Vector2(1, 1);
+                    char[] mapLine = lines[i].ToString().ToCharArray();
+                    map[j, i] = mapLine[j];
+                    Console.Write(map[j, i]);                    
                 }
+                Console.WriteLine();
             }
+            for (int i = 0; i < worldHeight; i++)
+            {
+                for (int j = 0; j < 100; j++)
+                {
+                    int index = (int)(j + i * World.WORLD_SIZE.X);
+                    if (map[j, i] == 's')
+                    {
+                        blocks[index].type = BlockType.STONE;
+                        blocks[index].solid = true;
+                    }
+                    else if (map[j, i] == '1')
+                    {
+                        blocks[index].type = BlockType.ROSE;
+                        blocks[index].solid = false;
+                    }
+                    else if (map[j, i] == '2')
+                    {
+                        blocks[index].type = BlockType.SUNFLOWER;
+                        blocks[index].solid = false;
+                    }
+                    else if (map[j, i] == '3')
+                    {
+                        blocks[index].type = BlockType.WILDGRASS;
+                        blocks[index].solid = false;
+                    }
+                    else if (map[j, i] == 'g')
+                    {
+                        blocks[index].type = BlockType.GRASS;
+                        blocks[index].solid = true;
+                    }
+                    else if (map[j, i] == 'd')
+                    {
+                        blocks[index].type = BlockType.DIRT;
+                        blocks[index].solid = true;
+                    }
+                    else if (map[j, i] == 'a')
+                    {
+                        blocks[index].type = BlockType.AIR;
+                        blocks[index].solid = true;
+                    }
+                    
+                }
+
+            }
+
+            //for (int y = 0; y < WORLD_SIZE.Y; y++)
+            //{
+            //    for (int x = 0; x < WORLD_SIZE.X; x++)
+            //    {
+            //        int i = x + y * (int) WORLD_SIZE.X;
+            //        if (y == 3)
+            //        {
+            //            blocks[i].type = BlockType.STONE;
+            //            blocks[i].solid = true;
+            //        }
+            //        else if ((y == (WORLD_SIZE.Y / 2 - 2) && (x == 9 || x == 10)))
+            //        {
+            //            blocks[i].type = BlockType.WILDGRASS;
+            //            blocks[i].solid = false;
+
+            //        }
+            //        else if ((y == (WORLD_SIZE.Y / 2 - 2) && (x == 8 || x == 14)))
+            //        {
+            //            blocks[i].type = BlockType.SUNFLOWER;
+            //            blocks[i].solid = false;
+
+            //        }
+            //        else if ((y == (WORLD_SIZE.Y / 2 - 2 ) && (x == 7 || x == 16)))
+            //        {
+            //            blocks[i].type = BlockType.ROSE;
+            //            blocks[i].solid = false;
+
+            //        }
+            //        else if (y < (WORLD_SIZE.Y / 2) - 1)
+            //        {
+            //            if (x == 5 || x == 20)
+            //            {
+            //                blocks[i].type = BlockType.STONE;
+            //                blocks[i].solid = true;
+            //            } 
+            //            else
+            //            {
+            //                blocks[i].type = BlockType.AIR;
+            //                blocks[i].solid = false;
+            //            }
+            //        }
+            //        else if (y == (WORLD_SIZE.Y / 2) - 1)
+            //        {
+            //            blocks[i].type = BlockType.GRASS;
+            //            blocks[i].solid = true;
+            //        }                    
+            //        else {
+            //            blocks[i].type = BlockType.DIRT;
+            //            blocks[i].solid = true;
+            //        }
+            //blocks[i].size = new Vector2(1, 1);
+
+            //    }
+            //}
 
         }
 
@@ -95,6 +173,15 @@ namespace HackISU_2018
                             break;
                         case BlockType.STONE:
                             texture = Game1.stoneTexture;
+                            break;
+                        case BlockType.ROSE:
+                            texture = Game1.roseTexture;
+                            break;
+                        case BlockType.SUNFLOWER:
+                            texture = Game1.sunflowerTexture;
+                            break;
+                        case BlockType.WILDGRASS:
+                            texture = Game1.wildgrassTexture;
                             break;
                         default:
                             texture = null;

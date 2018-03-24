@@ -69,7 +69,7 @@ namespace HackISU_2018
             Vector2 sideCollisionBottomRight = new Vector2((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);*/
 
             // Controls player moving left and right
-            Console.WriteLine("Key Down?: ", Game1.keyboard.IsKeyDown(Keys.Left));
+            //Console.WriteLine("Key Down?: ", Game1.keyboard.IsKeyDown(Keys.Left));
             if (Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D))
             {
                 double increment = .25f;
@@ -141,6 +141,11 @@ namespace HackISU_2018
                 sprite.position_wp.X -= playerXSpeed_p;*/
             /*if (canGoRight && (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D)))
                 sprite.position_wp.X += playerXSpeed_p;*/
+
+            if (playerScreenPixels().Y >= Game1.screenRectangle.Height / 5 * 4)
+            {
+                World.offset_b.Y += playerYSpeed_p / World.BLOCK_SIZE;
+            }
 
             // Jump
             // If pressing jump button, and not jumping or falling

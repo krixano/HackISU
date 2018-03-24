@@ -21,8 +21,11 @@ namespace HackISU_2018
         public static Texture2D stoneTexture;
         public static Texture2D gunArmTexture;
         public static Texture2D bulletTexture;
+        public static Texture2D roseTexture;
+        public static Texture2D sunflowerTexture;
+        public static Texture2D wildgrassTexture;
 
-        
+
 
         public enum GameStates
         {
@@ -75,6 +78,9 @@ namespace HackISU_2018
             dirtTexture = Content.Load<Texture2D>("Dirt_Block_Texture_64x64");
             grassTexture = Content.Load<Texture2D>("Grass_Block_Texture_64x64");
             stoneTexture = Content.Load<Texture2D>("Stone_Block_Texture_64x64");
+            roseTexture = Content.Load<Texture2D>("Rose_Block_Texture_64x64");
+            sunflowerTexture = Content.Load<Texture2D>("Sunflower_Block_Texture_64x64");
+            wildgrassTexture = Content.Load<Texture2D>("Wildgrass_Block_Texture_64x64");
             gunArmTexture = testTexture;
             bulletTexture = testTexture;
             gun.gunArm.origin.X = testTexture.Width / 2;
@@ -89,6 +95,7 @@ namespace HackISU_2018
         
         protected override void UnloadContent()
         {
+
         }
         
         protected override void Update(GameTime gameTime)
