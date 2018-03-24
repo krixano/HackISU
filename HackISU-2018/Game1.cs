@@ -44,6 +44,12 @@ namespace HackISU_2018
             public bool isFired;
         }
 
+        public struct Menu
+        {
+            public Rectangle[] bottons;
+            public Color color;
+        }
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -61,6 +67,8 @@ namespace HackISU_2018
             World.Init();
             player.playerInit();
             gun.gunInit();
+
+            UserInterface.InitializeMenus();
 
             base.Initialize();
         }
