@@ -19,6 +19,7 @@ namespace HackISU_2018
         static int tmrAmt = 10;
         static int currentTmr = 0;
         static bool isJumping = false;
+        static bool isFalling = false;
 
         static public void playerInit()
         {
@@ -37,48 +38,24 @@ namespace HackISU_2018
         public static void playerUpdate()
         {
             
-            Vector2 gravityCollisionBottomRight = new Vector2((sprite.position.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
-            Vector2 gravityCollisionBottomLeft = new Vector2((sprite.position.X) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
-            bool isFalling = false;
-
-            // Checking collision for bottom of player, left and right corners
-            if ((World.blocks[(int)gravityCollisionBottomRight.X + (int)gravityCollisionBottomRight.Y * (int)World.WORLD_SIZE.X].solid != true
-                || gravityCollisionBottomRight.X < 0 || gravityCollisionBottomRight.X > World.WORLD_SIZE.X || gravityCollisionBottomRight.Y < 0 || gravityCollisionBottomRight.Y > World.WORLD_SIZE.Y)
-                && !isJumping)
+            // Gravity/Ground Collision
+            if (!isJumping || isFalling)
             {
-                isFalling = true;
-                //sprite.position.Y += playerYSpeed;
                 float increment = playerYSpeed;
                 float x1 = (sprite.position.X) / World.BLOCK_SIZE;
                 float x2 = (sprite.position.X + sprite.size.X) / World.BLOCK_SIZE;
-                float y = (sprite.position.Y + sprite.size.Y + increment - 4) / World.BLOCK_SIZE;
+                float y = (sprite.position.Y + sprite.size.Y + increment - 2) / World.BLOCK_SIZE;
                 int i = (int) (x1 + y * World.WORLD_SIZE.X);
                 int i2 = (int) (x2 + y * World.WORLD_SIZE.X);
                 while (World.blocks[i].solid || World.blocks[i2].solid)
                 {
                     isFalling = false;
                     increment--;
-                    y = (sprite.position.Y + sprite.size.Y + increment - 4) / World.BLOCK_SIZE;
-                    i = (int) (x1 + y * World.WORLD_SIZE.X);
-                    i2 = (int) (x2 + y * World.WORLD_SIZE.X);
-                }
-            }
-            if ((World.blocks[(int)gravityCollisionBottomLeft.X + (int)gravityCollisionBottomLeft.Y * (int)World.WORLD_SIZE.X].solid != true
-                || gravityCollisionBottomLeft.X < 0 || gravityCollisionBottomLeft.X > World.WORLD_SIZE.X || gravityCollisionBottomLeft.Y < 0 || gravityCollisionBottomLeft.Y > World.WORLD_SIZE.Y)
-                && !isJumping)
-            {
-                isFalling = true;
-                float increment = playerYSpeed;
-                float x1 = (sprite.position.X) / World.BLOCK_SIZE;
-                float x2 = (sprite.position.X + sprite.size.X) / World.BLOCK_SIZE;
-                float y = (sprite.position.Y + sprite.size.Y + increment - 4) / World.BLOCK_SIZE;
-                int i = (int) (x1 + y * World.WORLD_SIZE.X);
-                int i2 = (int) (x2 + y * World.WORLD_SIZE.X);
-                while (World.blocks[i].solid || World.blocks[i2].solid)
-                {
-                    isFalling = false;
-                    increment--;
-                    y = (sprite.position.Y + sprite.size.Y + increment - 4) / World.BLOCK_SIZE;
+                    if (increment <= 0) {
+                        increment = 0;
+                        break;
+                    }
+                    y = (sprite.position.Y + sprite.size.Y + increment - 2) / World.BLOCK_SIZE;
                     i = (int) (x1 + y * World.WORLD_SIZE.X);
                     i2 = (int) (x2 + y * World.WORLD_SIZE.X);
                 }
@@ -125,7 +102,7 @@ namespace HackISU_2018
 
         public static void playerJump()
         {
-            if (isJumping)
+            if (isJumping && !isFalling)
             {
                 currentTmr++;
                 sprite.position.Y -= playerYSpeed * 2;
@@ -133,6 +110,7 @@ namespace HackISU_2018
                 {
                     currentTmr = 0;
                     isJumping = false;
+                    isFalling = true;
                 }
             }
             

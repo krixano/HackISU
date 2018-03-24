@@ -104,5 +104,16 @@ namespace HackISU_2018
 
         }
 
+        public static Vector2 worldPixelsToScreenPixelsPosition(Vector2 position)
+        {
+            return new Vector2(position.X - (World.offset.X * World.BLOCK_SIZE), position.Y - (World.offset.Y * World.BLOCK_SIZE));
+        }
+
+        // Note: Only works for sprites of same size as BLOCK_SIZE
+        public static Vector2 worldBlocksToScreenPixelsPosition(Vector2 position)
+        {
+            return new Vector2((position.X * BLOCK_SIZE) - (offset.X * World.BLOCK_SIZE), (position.Y * BLOCK_SIZE) - (offset.Y * World.BLOCK_SIZE));
+        }
+
     }
 }
