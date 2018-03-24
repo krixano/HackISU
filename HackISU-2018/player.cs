@@ -13,7 +13,7 @@ namespace HackISU_2018
     class player
     {
         static private float playerXSpeed, playerYSpeed; // In Pixels
-        static public Game1.SpriteStruct sprite, gun;
+        static public Game1.SpriteStruct sprite;
         static Timer tmr;
         //tmrAmt = Jump length
         static int tmrAmt = 10;
@@ -31,27 +31,19 @@ namespace HackISU_2018
             sprite.size.Y = Game1.screenRectangle.Width / 20;
             sprite.position.X = Game1.screenRectangle.Center.X - (sprite.size.X / 2); // In World Pixels
             sprite.position.Y = (((World.WORLD_SIZE.Y / 2) - 1) * World.BLOCK_SIZE) - sprite.size.Y;
-
-            gun.size.X = sprite.size.X;
-            gun.size.Y = gun.size.Y / 2f;
-            gun.position.X = sprite.position.X + gun.size.X / 2;
-            gun.position.Y = sprite.position.Y + gun.size.Y / 2;
-
+                       
         }
         public static void playerUpdate()
         {
 
-            //Controls player moving left and right        
+            //Scrolls screen when player reaches edge
             if (Game1.keyboard.IsKeyDown(Keys.Right) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
                 World.offset.X += .25f;
             if (Game1.keyboard.IsKeyDown(Keys.Left) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
                 World.offset.X -= .25f;
-            //else if (Game1.keyboard.IsKeyDown(Keys.Up) && sprite.position.Y <= Game1.screenRectangle.Bottom - Game1.screenRectangle.Height / 3)
-            //    World.offset.Y -= .25f;
-            //else if (Game1.keyboard.IsKeyDown(Keys.Down) && sprite.position.Y >= Game1.screenRectangle.Top - Game1.screenRectangle.Height / 3)
-            //    World.offset.Y += .25f;
 
-            //Scrolls screen
+
+            //Controls player moving left and right  
             if (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left))
                 sprite.position.X -= playerXSpeed;
             if (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right))
@@ -85,6 +77,7 @@ namespace HackISU_2018
             bool canGoLeft = true;
             bool canGoRight = true;
 
+            //checking collision for left and right edges of player
             if (World.blocks[(int) sideCollisionTopLeft.X + (int) sideCollisionTopLeft.Y * (int) World.WORLD_SIZE.X].solid)
                 canGoLeft = false;
             //if (World.blocks[(int) sideCollisionBottomLeft.X + (int) sideCollisionBottomLeft.Y * (int) World.WORLD_SIZE.X].solid)
@@ -98,11 +91,7 @@ namespace HackISU_2018
             if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Right) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
                 World.offset.X += .25f;
             if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Left) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
-                World.offset.X -= .25f;
-            //else if (Game1.keyboard.IsKeyDown(Keys.Up) && sprite.position.Y <= Game1.screenRectangle.Bottom - Game1.screenRectangle.Height / 3)
-            //    World.offset.Y -= .25f;
-            //else if (Game1.keyboard.IsKeyDown(Keys.Down) && sprite.position.Y >= Game1.screenRectangle.Top - Game1.screenRectangle.Height / 3)
-            //    World.offset.Y += .25f;
+                World.offset.X -= .25f;            
 
             //Scrolls screen
             if (canGoLeft && (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left)))
@@ -131,23 +120,7 @@ namespace HackISU_2018
                 }
             }
             
-            /*tmr.start();
-            if (tmr.Update() == true)
-            {
-                tmr.stop();
-            } else if (tmr.running)
-            {
-                sprite.position.Y -= playerYSpeed;
-            }*/
-            //else
-            //    tmr.stop();
-        }
-
-        public static void gunUpdate()
-        {
-            gun.position.X = sprite.position.X + gun.size.X;
-            gun.position.Y = sprite.position.Y + gun.size.Y;
-        }
+        }        
 
         public static Vector2 playerScreenPixels()
         {

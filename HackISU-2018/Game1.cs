@@ -17,7 +17,7 @@ namespace HackISU_2018
         public static Texture2D testTexture;
         public static Texture2D dirtTexture;
         public static Texture2D grassTexture;
-        public static Texture2D gunArm;
+        public static Texture2D gunArmTexture;
 
         enum GameStates
         {
@@ -64,7 +64,7 @@ namespace HackISU_2018
             testTexture = Content.Load<Texture2D>("WhiteSquare100x100");
             dirtTexture = Content.Load<Texture2D>("Dirt_Block_Texture_64x64");
             grassTexture = Content.Load<Texture2D>("Grass_Block_Texture_64x64");
-            gunArm = Content.Load<Texture2D>("WhiteSquare100x100");
+            gunArmTexture = testTexture;
         }
 
         
@@ -93,7 +93,7 @@ namespace HackISU_2018
             {
                 World.Draw(spriteBatch);
                 spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position.X - (World.offset.X * World.BLOCK_SIZE)), (int) (player.sprite.position.Y - (World.offset.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
-                spriteBatch.Draw(gunArm, new Rectangle((int)(player.gun.position.X - (World.offset.X * World.BLOCK_SIZE)), (int)(player.gun.position.Y - (World.offset.Y * World.BLOCK_SIZE)), (int)player.gun.size.X, (int)player.gun.size.Y), Color.White);
+                spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position.X - (World.offset.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position.Y - (World.offset.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), Color.Red);
             }
             spriteBatch.End();
 
