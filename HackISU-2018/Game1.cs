@@ -97,7 +97,7 @@ namespace HackISU_2018
             mouse = Mouse.GetState();
             player.playerUpdate();
             gun.gunUpdate();
-            prevMouse = mouse;
+            //prevMouse = mouse;
             prevPad1 = pad1;
             base.Update(gameTime);
         }
