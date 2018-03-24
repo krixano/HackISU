@@ -137,6 +137,9 @@ namespace HackISU_2018
             if (playerScreenPixels().Y >= Game1.screenRectangle.Height / 5 * 3)
             {
                 World.offset_b.Y += playerYSpeed_p / World.BLOCK_SIZE;
+            } else if (playerScreenPixels().Y <= Game1.screenRectangle.Height / 5)
+            {
+                World.offset_b.Y -= playerYSpeed_p / World.BLOCK_SIZE;
             }
 
             // Jump
