@@ -47,7 +47,6 @@ namespace HackISU_2018
             graphics.PreferredBackBufferWidth = screenRectangle.Width;
             graphics.PreferredBackBufferHeight = screenRectangle.Height;
             graphics.ApplyChanges();
-            //playingAreaRectangle = new Rectangle(0, 0, 1280, 720);
 
             World.Init();
             player.playerInit();
@@ -60,17 +59,15 @@ namespace HackISU_2018
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
             testTexture = Content.Load<Texture2D>("WhiteSquare100x100");
             dirtTexture = Content.Load<Texture2D>("Dirt_Block_Texture_64x64");
             grassTexture = Content.Load<Texture2D>("Grass_Block_Texture_64x64");
-
-            
         }
 
         
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         
@@ -80,13 +77,6 @@ namespace HackISU_2018
 
             keyboard = Keyboard.GetState();
             player.playerUpdate();
-            //if (keyboard.IsKeyDown(Keys.Right)) world.offset.X += .25f;
-            //if (keyboard.IsKeyDown(Keys.Left)) world.offset.X -= .25f;
-            //if (keyboard.IsKeyDown(Keys.Up)) world.offset.Y -= .25f;
-            //if (keyboard.IsKeyDown(Keys.Down)) world.offset.Y += .25f;
-
-
-            //Put update code here
 
             prevPad1 = pad1;
             base.Update(gameTime);
