@@ -9,6 +9,9 @@ namespace HackISU_2018
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        KeyboardState keyboard;
+
+        World world;
 
         public Game1()
         {
@@ -16,10 +19,9 @@ namespace HackISU_2018
             Content.RootDirectory = "Content";
         }
 
-        
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            world = new World();
 
             base.Initialize();
         }
@@ -30,7 +32,8 @@ namespace HackISU_2018
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            world.Load(Content);
+            
         }
 
         
@@ -45,7 +48,12 @@ namespace HackISU_2018
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            keyboard = Keyboard.GetState();
+
+            if (keyboard.IsKeyDown(Keys.Right)) world.offset.X++;
+            if (keyboard.IsKeyDown(Keys.Left)) world.offset.X--;
+            if (keyboard.IsKeyDown(Keys.Up)) world.offset.Y--;
+            if (keyboard.IsKeyDown(Keys.Down)) world.offset.Y++;
 
             base.Update(gameTime);
         }
@@ -57,7 +65,7 @@ namespace HackISU_2018
 
             spriteBatch.Begin();
             {
-
+                world.Draw(spriteBatch);
             }
             spriteBatch.End();
 
