@@ -14,12 +14,12 @@ namespace HackISU_2018
 
         static public void enemyInit()
         {
-            Game1.SpriteStruct[] enemySprite = new Game1.SpriteStruct[15];
+            enemySprite = new Game1.SpriteStruct[15];
             Random rnd = new Random();
 
             for (int i=0; i<enemySprite.Length;i++)
             {
-                enemySprite[i].size = player.sprite.size;                
+                enemySprite[i].size = player.sprite.size;
             }
         }
         static public void enemyUpdate()
