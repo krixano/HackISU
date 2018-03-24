@@ -10,13 +10,26 @@ namespace HackISU_2018
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Rectangle screenRectangle, playingAreaRectangle;
+        public static Rectangle screenRectangle, playingAreaRectangle;
+        public static Texture2D testTexture;
 
         enum GameStates
         {
             
+        }        
+
+        public struct SpriteStruct
+        {
+            public Vector2 position;
+            public Rectangle rectangle;
+            public Color color;
+            public float rotation;
+            public Vector2 origin, speed;
+            public float scale;
+            public SpriteEffects effect;
+            public float layerDepth;
         }
-        
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -39,6 +52,7 @@ namespace HackISU_2018
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            testTexture = Content.Load<Texture2D>("WhiteSquare100x100");
 
             // TODO: use this.Content to load your game content here
         }
