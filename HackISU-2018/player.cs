@@ -35,20 +35,6 @@ namespace HackISU_2018
         }
         public static void playerUpdate()
         {
-
-            //Scrolls screen when player reaches edge
-            if (Game1.keyboard.IsKeyDown(Keys.Right) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
-                World.offset.X += .25f;
-            if (Game1.keyboard.IsKeyDown(Keys.Left) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
-                World.offset.X -= .25f;
-
-
-            //Controls player moving left and right  
-            if (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left))
-                sprite.position.X -= playerXSpeed;
-            if (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right))
-                sprite.position.X += playerXSpeed;
-
             Vector2 gravityCollisionBottomRight = new Vector2((sprite.position.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
             Vector2 gravityCollisionBottomLeft = new Vector2((sprite.position.X) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
             bool isFalling = false;
@@ -80,18 +66,18 @@ namespace HackISU_2018
             //checking collision for left and right edges of player
             if (World.blocks[(int) sideCollisionTopLeft.X + (int) sideCollisionTopLeft.Y * (int) World.WORLD_SIZE.X].solid)
                 canGoLeft = false;
-            //if (World.blocks[(int) sideCollisionBottomLeft.X + (int) sideCollisionBottomLeft.Y * (int) World.WORLD_SIZE.X].solid)
-                //canGoLeft = false;
+            if (World.blocks[(int) sideCollisionBottomLeft.X + (int) sideCollisionBottomLeft.Y * (int) World.WORLD_SIZE.X].solid)
+                canGoLeft = false;
             if (World.blocks[(int) sideCollisionTopRight.X + (int) sideCollisionTopRight.Y * (int) World.WORLD_SIZE.X].solid)
                 canGoRight = false;
-            //if (World.blocks[(int) sideCollisionBottomRight.X + (int) sideCollisionBottomRight.Y * (int) World.WORLD_SIZE.X].solid)
-                //canGoRight = false;
+            if (World.blocks[(int) sideCollisionBottomRight.X + (int) sideCollisionBottomRight.Y * (int) World.WORLD_SIZE.X].solid)
+                canGoRight = false;
 
-            //Controls player moving left and right        
+            //Controls player moving left and right
             if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Right) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
                 World.offset.X += .25f;
             if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Left) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
-                World.offset.X -= .25f;            
+                World.offset.X -= .25f;
 
             //Scrolls screen
             if (canGoLeft && (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left)))
