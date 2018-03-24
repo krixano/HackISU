@@ -17,14 +17,13 @@ namespace HackISU_2018
 
         static public void Init()
         {
-            playerXSpeed = Game1.playingAreaRectangle.Width / 20;
-            playerYSpeed = Game1.playingAreaRectangle.Height / 20;
+            playerXSpeed = Game1.screenRectangle.Width / 20;
+            playerYSpeed = Game1.screenRectangle.Height / 20;
 
-            
-            sprite.rectangle.Width = Game1.playingAreaRectangle.Width / 20;
-            sprite.rectangle.Height = Game1.playingAreaRectangle.Height / 20;
-            sprite.position.X = Game1.playingAreaRectangle.Width / 2 - sprite.rectangle.Width;
-            sprite.position.Y = Game1.playingAreaRectangle.Bottom - sprite.rectangle.Height;
+            sprite.size.X = Game1.screenRectangle.Width / 20;
+            sprite.size.Y = Game1.screenRectangle.Width / 20;
+            sprite.position.X = Game1.screenRectangle.Center.X - (sprite.size.X / 2);
+            sprite.position.Y = Game1.screenRectangle.Center.Y - (sprite.size.Y / 2);
 
 
             if (Game1.pad1.IsButtonDown(Buttons.DPadLeft))

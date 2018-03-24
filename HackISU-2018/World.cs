@@ -27,7 +27,7 @@ namespace HackISU_2018
         public Vector2 offset; // In Blocks
         public Vector2 WORLD_SIZE;
         public Blocks[] blocks;
-        public const int BLOCK_SIZE = 16;
+        public const int BLOCK_SIZE = 64;
 
         public World()
         {
@@ -51,7 +51,7 @@ namespace HackISU_2018
                 {
                     //Console.WriteLine("Test");
                     Rectangle destination = new Rectangle((int) ((x * BLOCK_SIZE) - (offset.X * BLOCK_SIZE)), (int) ((y * BLOCK_SIZE) - (offset.Y * BLOCK_SIZE)), (int) BLOCK_SIZE, (int) BLOCK_SIZE);
-                    spriteBatch.Draw(simpleBlock, destination, Color.Red);
+                    spriteBatch.Draw(Game1.dirtTexture, destination, Color.Red);
                 }
             }
 
