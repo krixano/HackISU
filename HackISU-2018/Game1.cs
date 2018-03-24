@@ -9,7 +9,7 @@ namespace HackISU_2018
     public class Game1 : Game
     {
         public static GamePadState pad1, prevPad1;
-        public static MouseState mouse1;
+        public static MouseState mouse;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static KeyboardState keyboard;
@@ -45,6 +45,8 @@ namespace HackISU_2018
 
         protected override void Initialize()
         {
+            this.IsMouseVisible = true;
+
             screenRectangle = new Rectangle(0, 0, 1280, 720);
             graphics.PreferredBackBufferWidth = screenRectangle.Width;
             graphics.PreferredBackBufferHeight = screenRectangle.Height;
@@ -67,6 +69,7 @@ namespace HackISU_2018
             dirtTexture = Content.Load<Texture2D>("Dirt_Block_Texture_64x64");
             grassTexture = Content.Load<Texture2D>("Grass_Block_Texture_64x64");
             gunArmTexture = testTexture;
+            gun.gunArm.origin.Y = gunArmTexture.Height / 2;
         }
 
         
@@ -79,6 +82,7 @@ namespace HackISU_2018
             pad1 = GamePad.GetState(PlayerIndex.One);
 
             keyboard = Keyboard.GetState();
+            mouse = Mouse.GetState();
             player.playerUpdate();
             gun.gunUpdate();
 
@@ -95,8 +99,7 @@ namespace HackISU_2018
             {
                 World.Draw(spriteBatch);
                 spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position.X - (World.offset.X * World.BLOCK_SIZE)), (int) (player.sprite.position.Y - (World.offset.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
-                spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position.X - (World.offset.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position.Y - (World.offset.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), Color.Red);
-                
+                spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position.X - (World.offset.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position.Y - (World.offset.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, SpriteEffects.None,0);
             }
             spriteBatch.End();
 

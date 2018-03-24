@@ -29,7 +29,7 @@ namespace HackISU_2018
 
             sprite.size.X = Game1.screenRectangle.Width / 20;
             sprite.size.Y = Game1.screenRectangle.Width / 20;
-            sprite.position.X = Game1.screenRectangle.Center.X - (sprite.size.X / 2); // In World Pixels
+            sprite.position.X = ((Game1.screenRectangle.Center.X - (sprite.size.X / 2) / World.BLOCK_SIZE) + World.offset.X); // In World Pixels
             sprite.position.Y = (((World.WORLD_SIZE.Y / 2) - 1) * World.BLOCK_SIZE) - sprite.size.Y;
             
                        
