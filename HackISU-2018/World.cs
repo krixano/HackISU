@@ -23,13 +23,12 @@ namespace HackISU_2018
             public Vector2 size; // In Blocks - which means size.x and size.y times blocksize.
         };
 
-        public Texture2D simpleBlock;
-        public Vector2 offset; // In Blocks
-        public Vector2 WORLD_SIZE;
-        public Block[] blocks;
-        public const int BLOCK_SIZE = 64;
+        public static Vector2 offset; // In Blocks
+        public static Vector2 WORLD_SIZE;
+        public static Block[] blocks;
+        public const int BLOCK_SIZE = 45;
 
-        public World()
+        public static void Init()
         {
             int worldHeight = ((Game1.screenRectangle.Height / 2) / BLOCK_SIZE) + 2;
             WORLD_SIZE = new Vector2(200, worldHeight * 2);
@@ -51,12 +50,7 @@ namespace HackISU_2018
 
         }
 
-        public void Load(ContentManager Content)
-        {
-            simpleBlock = Content.Load<Texture2D>("WhiteSquare100x100");
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
+        public static void Draw(SpriteBatch spriteBatch)
         {
 
             for (int y = 0; y < WORLD_SIZE.Y; y++)
