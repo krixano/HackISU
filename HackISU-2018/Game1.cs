@@ -6,7 +6,7 @@ using System;
 namespace HackISU_2018
 {
 
-    public class Game1 : Game
+    public class Game1 : Microsoft.Xna.Framework.Game
     {
         public static GamePadState pad1, prevPad1;
         public static MouseState mouse, prevMouse;
@@ -35,7 +35,8 @@ namespace HackISU_2018
 
         public enum GameStates
         {
-            MAIN_MENU, PAUSED, PLAYING
+            MAIN_MENU, PAUSED, PLAYING, Exit,
+            OPTIONS
         }
 
         static public GameStates gameState = GameStates.MAIN_MENU;
@@ -132,10 +133,18 @@ namespace HackISU_2018
 
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
-            if (gameState == GameStates.MAIN_MENU)
+            
+if (gameState == GameStates.MAIN_MENU)
                 UserInterface.UpdateButtonsStart();
             if (gameState == GameStates.PAUSED)
                 UserInterface.UpdateButtonsPaused();
+            if (gameState == GameStates.OPTIONS)
+                UserInterface.UpdateButtonsOptions();
+            if(gameState == GameStates.Exit)
+            {
+                Exit();
+            }
+            
             player.playerUpdate();
             gun.gunUpdate();
             enemy.enemyUpdate();

@@ -46,7 +46,7 @@ namespace HackISU_2018
             if (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left))
                 sprite.position_wp.X -= playerXSpeed_p;
             if (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right))
-                sprite.position_wp.X += playerXSpeed_p;*
+                sprite.position_wp.X += playerXSpeed_p;
 
             Vector2_Double gravityCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
             Vector2_Double gravityCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
