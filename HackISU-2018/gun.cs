@@ -27,18 +27,11 @@ namespace HackISU_2018
         {
             Vector2 distance;
             double angle;
-
             
-            distance.X = Math.Abs(Game1.mouse.X - (gunArm.position.X - World.offset.X * World.BLOCK_SIZE));
+            distance.X = Game1.mouse.X - (gunArm.position.X - World.offset.X * World.BLOCK_SIZE);
             distance.Y = Game1.mouse.Y - (gunArm.position.Y - World.offset.Y * World.BLOCK_SIZE);
-
-            if (Game1.mouse.X < gunArm.position.X)
-            {
-                angle = 3.14159 - Math.Atan(distance.Y / distance.X);
-            } else
-            {
-                angle = Math.Atan(distance.Y / distance.X);
-            }
+                                  
+            angle = Math.Atan2(distance.Y , distance.X);            
             
             return angle;
         }
