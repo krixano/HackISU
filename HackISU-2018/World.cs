@@ -11,7 +11,7 @@ namespace HackISU_2018
 {
     class World
     {
-
+        static public string fileName;
         public enum BlockType
         {
             AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS
@@ -31,6 +31,7 @@ namespace HackISU_2018
 
         public static void Init()
         {
+            fileName = "testWorld.txt";
             int worldHeight = 50;// ((Game1.screenRectangle.Height / 2) / BLOCK_SIZE) + 2;
             WORLD_SIZE = new Vector2(100, worldHeight * 2);
             offset_b = new Vector2_Double(0,28);
@@ -38,7 +39,7 @@ namespace HackISU_2018
             Console.WriteLine(worldHeight);
 
             char[,] map = new char[100,worldHeight];
-            string[] lines = System.IO.File.ReadAllLines(@"testWorld.txt");
+            string[] lines = System.IO.File.ReadAllLines(@fileName);
             for (int i=0; i< worldHeight; i++)
             {                
                 for (int j=0; j<100; j++)
