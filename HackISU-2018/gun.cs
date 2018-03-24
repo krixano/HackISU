@@ -20,7 +20,7 @@ namespace HackISU_2018
             ASSAULT_RIFLE = 10,
             SHOTGUN = 45
         }
-        static public GunSelections gunSelection = GunSelections.SHOTGUN;
+        static public GunSelections gunSelection = GunSelections.HANDGUN;
 
         static public void gunInit()
         {
@@ -70,6 +70,8 @@ namespace HackISU_2018
         }
         public static void gunUpdate()
         {
+            checkForBulletCollision();
+
             //Gun Arm Position Update
             gunArm.position_wp.X = player.sprite.position_wp.X + player.sprite.size.X / 2;
             gunArm.position_wp.Y = player.sprite.position_wp.Y + player.sprite.size.Y / 2;
@@ -83,7 +85,7 @@ namespace HackISU_2018
                 shootGun();
             }
 
-            //checkForBulletCollision();
+            
 
             //Shoots gun at selected Rate of Fire
             else if (Game1.mouse.LeftButton == ButtonState.Pressed
@@ -105,6 +107,9 @@ namespace HackISU_2018
                     //    || bullet[i].position_wp.X < Game1.screenRectangle.Width * -2 || bullet[i].position_wp.Y < Game1.screenRectangle.Height * -2)
                     //    bullet[i].isFired = false;
                 }
+                if (bullet[i].position_wp.X > World.WORLD_SIZE.X || bullet[i].position_wp.X < World.WORLD_SIZE.X
+                    || bullet[i].position_wp.Y > World.WORLD_SIZE.Y || bullet[i].position_wp.Y < World.WORLD_SIZE.Y)
+                    bullet[i].visible = false;
 
             }
         }
@@ -150,8 +155,16 @@ namespace HackISU_2018
         }
         public static void checkForBulletCollision()
         {
-            
-        }
+            for (int i = 0; i < bullet.Length; i++)
+                for (int j = 0; j < enemy.enemySprite.Length; j++)
+                    if (bullet[i].position_wp.X >= enemy.enemySprite[j].position_wp.X && bullet[i].position_wp.X <= enemy.enemySprite[j].position_wp.X + enemy.enemySprite[j].size.X
+                        && bullet[i].position_wp.Y <= enemy.enemySprite[j].position_wp.Y + enemy.enemySprite[j].size.Y && bullet[i].position_wp.Y >= enemy.enemySprite[j].size.Y)
+                    {
+                        enemy.enemySprite[j].visible = false;
+                        bullet[i].isFired = false;
+                        enemy.spawnRate -= 100;
+                    }
+                   }
         public static void switchWeapons()
         {
             

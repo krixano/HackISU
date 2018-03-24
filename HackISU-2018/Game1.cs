@@ -52,6 +52,7 @@ namespace HackISU_2018
             public SpriteEffects effect;
             public float layerDepth;
             public bool isFired;
+            public bool visible;
         }
 
         public struct Menu
@@ -80,6 +81,7 @@ namespace HackISU_2018
             gun.gunInit();
             enemy.enemyInit();
 
+            gameState = GameStates.MAIN_MENU;
             UserInterface.InitializeMenus();
 
             base.Initialize();
@@ -130,24 +132,20 @@ namespace HackISU_2018
         protected override void Update(GameTime gameTime)
         {
             pad1 = GamePad.GetState(PlayerIndex.One);
-
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
+
             
-if (gameState == GameStates.MAIN_MENU)
-                UserInterface.UpdateButtonsStart();
-            if (gameState == GameStates.PAUSED)
-                UserInterface.UpdateButtonsPaused();
-            if (gameState == GameStates.OPTIONS)
-                UserInterface.UpdateButtonsOptions();
-            if(gameState == GameStates.Exit)
+                if (gameState == GameStates.MAIN_MENU)
+                    UserInterface.UpdateButtonsStart();
+                if (gameState == GameStates.PAUSED)
+                    UserInterface.UpdateButtonsPaused();
+            if (gameState == GameStates.PLAYING)
             {
-                Exit();
+                player.playerUpdate();
+                gun.gunUpdate();
+                enemy.enemyUpdate();
             }
-            
-            player.playerUpdate();
-            gun.gunUpdate();
-            enemy.enemyUpdate();
             //prevMouse = mouse;
             prevPad1 = pad1;
             prevKeyboard = keyboard;
@@ -161,12 +159,11 @@ if (gameState == GameStates.MAIN_MENU)
 
             spriteBatch.Begin();
             {
-                enemy.Draw(spriteBatch);
-
-                World.Draw(spriteBatch);
+                
+                enemy.Draw(spriteBatch);               
 
                 player.Draw(spriteBatch);
-                
+                World.Draw(spriteBatch);
 
                 //spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
                 for (int i = 0; i < gun.bullet.Length; i++)
