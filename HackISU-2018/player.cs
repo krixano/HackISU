@@ -115,15 +115,9 @@ namespace HackISU_2018
             if (canGoRight && (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right)))
                 sprite.position.X += playerXSpeed;
 
-<<<<<<< HEAD
             // Jump
             // If pressing jump button, and not jumping or falling
-            if ((Game1.pad1.IsButtonDown(Buttons.A) || Game1.keyboard.IsKeyDown(Keys.Space)) && !isJumping && !isFalling)
-=======
-            //jump
-            //if pressing jump button, and not jumping or falling
             if ((Game1.pad1.IsButtonDown(Buttons.A) || Game1.keyboard.IsKeyDown(Keys.Space) || Game1.keyboard.IsKeyDown(Keys.Up)) && !isJumping && !isFalling)
->>>>>>> 88e99c644db5eb5bdbbb4bbd26907325669d911e
                 isJumping = true;
             playerJump();
         }
