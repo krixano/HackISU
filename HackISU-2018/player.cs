@@ -55,7 +55,9 @@ namespace HackISU_2018
                         increment = 0;
                         break;
                     }
+
                     y = (sprite.position_wp.Y + sprite.size.Y + increment - 2) / World.BLOCK_SIZE;
+
                     i = (int) (x1 + y * World.WORLD_SIZE.X);
                     i2 = (int) (x2 + y * World.WORLD_SIZE.X);
                 }
@@ -82,9 +84,63 @@ namespace HackISU_2018
 
             // Controls player moving left and right
             if (canGoRight && (Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D)) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
-                World.offset_b.X += .25f;
+            {
+                float increment = .25f;
+                float x1 = (sprite.position_wp.X - 1 + increment) / World.BLOCK_SIZE;
+                float x2 = (sprite.position_wp.X + sprite.size.X + 1 + increment) / World.BLOCK_SIZE;
+                float y1 = (sprite.position_wp.Y) / World.BLOCK_SIZE;
+                float y2 = (sprite.position_wp.Y + sprite.size.Y - 1) / World.BLOCK_SIZE;
+                int i1 = (int) (x1 + y1 * World.WORLD_SIZE.X);
+                int i2 = (int) (x1 + y2 * World.WORLD_SIZE.X);
+                int i3 = (int) (x2 + y1 * World.WORLD_SIZE.X);
+                int i4 = (int) (x2 + y2 * World.WORLD_SIZE.X);
+                while (World.blocks[i1].solid || World.blocks[i2].solid || World.blocks[i3].solid || World.blocks[i4].solid)
+                {
+                    increment -= 1f / World.BLOCK_SIZE;
+                    if (increment <= 0) {
+                        increment = 0;
+                        break;
+                    }
+                    
+                    x1 = (sprite.position_wp.X - 1 + increment) / World.BLOCK_SIZE;
+                    x2 = (sprite.position_wp.X + sprite.size.X + 1 + increment) / World.BLOCK_SIZE;
+
+                    i1 = (int) (x1 + y1 * World.WORLD_SIZE.X);
+                    i2 = (int) (x1 + y2 * World.WORLD_SIZE.X);
+                    i3 = (int) (x2 + y1 * World.WORLD_SIZE.X);
+                    i4 = (int) (x2 + y2 * World.WORLD_SIZE.X);
+                }
+                World.offset_b.X += increment;
+            }
             if (canGoLeft && (Game1.keyboard.IsKeyDown(Keys.Left) || Game1.keyboard.IsKeyDown(Keys.A)) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
-                World.offset_b.X -= .25f;
+            {
+                float increment = .25f;
+                float x1 = (sprite.position_wp.X - 1 - increment) / World.BLOCK_SIZE;
+                float x2 = (sprite.position_wp.X + sprite.size.X + 1 - increment) / World.BLOCK_SIZE;
+                float y1 = (sprite.position_wp.Y) / World.BLOCK_SIZE;
+                float y2 = (sprite.position_wp.Y + sprite.size.Y - 1) / World.BLOCK_SIZE;
+                int i1 = (int) (x1 + y1 * World.WORLD_SIZE.X);
+                int i2 = (int) (x1 + y2 * World.WORLD_SIZE.X);
+                int i3 = (int) (x2 + y1 * World.WORLD_SIZE.X);
+                int i4 = (int) (x2 + y2 * World.WORLD_SIZE.X);
+                while (World.blocks[i1].solid || World.blocks[i2].solid || World.blocks[i3].solid || World.blocks[i4].solid)
+                {
+                    increment -= 1f / World.BLOCK_SIZE;
+                    if (increment <= 0) {
+                        increment = 0;
+                        break;
+                    }
+                    
+                    x1 = (sprite.position_wp.X - 1 - increment) / World.BLOCK_SIZE;
+                    x2 = (sprite.position_wp.X + sprite.size.X + 1 - increment) / World.BLOCK_SIZE;
+
+                    i1 = (int) (x1 + y1 * World.WORLD_SIZE.X);
+                    i2 = (int) (x1 + y2 * World.WORLD_SIZE.X);
+                    i3 = (int) (x2 + y1 * World.WORLD_SIZE.X);
+                    i4 = (int) (x2 + y2 * World.WORLD_SIZE.X);
+                }
+                World.offset_b.X -= increment;
+            }
             
 
             // Scrolls screen
