@@ -75,6 +75,7 @@ namespace HackISU_2018
             World.Init();
             player.playerInit();
             gun.gunInit();
+            enemy.enemyInit();
 
             UserInterface.InitializeMenus();
 
@@ -124,6 +125,7 @@ namespace HackISU_2018
             mouse = Mouse.GetState();
             player.playerUpdate();
             gun.gunUpdate();
+            enemy.enemyUpdate();
             //prevMouse = mouse;
             prevPad1 = pad1;
             prevKeyboard = keyboard;
@@ -151,7 +153,6 @@ namespace HackISU_2018
                         spriteBatch.Draw(bulletTexture, new Rectangle((int)(gun.bullet[i].position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.bullet[i].position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.bullet[i].size.X, (int)gun.bullet[i].size.Y), null, Color.White, gun.bullet[i].rotation, gun.bullet[i].origin, SpriteEffects.None, 0);
                 }
                     spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, SpriteEffects.None,0);
-                
             }
             spriteBatch.End();
 
