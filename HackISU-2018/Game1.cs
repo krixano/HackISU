@@ -9,6 +9,7 @@ namespace HackISU_2018
     public class Game1 : Game
     {
         public static GamePadState pad1, prevPad1;
+        public static MouseState mouse1;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static KeyboardState keyboard;
@@ -51,6 +52,7 @@ namespace HackISU_2018
 
             World.Init();
             player.playerInit();
+            gun.gunInit();
 
             base.Initialize();
         }
@@ -71,7 +73,6 @@ namespace HackISU_2018
         protected override void UnloadContent()
         {
         }
-
         
         protected override void Update(GameTime gameTime)
         {         
@@ -79,6 +80,7 @@ namespace HackISU_2018
 
             keyboard = Keyboard.GetState();
             player.playerUpdate();
+            gun.gunUpdate();
 
             prevPad1 = pad1;
             base.Update(gameTime);
@@ -94,6 +96,7 @@ namespace HackISU_2018
                 World.Draw(spriteBatch);
                 spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position.X - (World.offset.X * World.BLOCK_SIZE)), (int) (player.sprite.position.Y - (World.offset.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
                 spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position.X - (World.offset.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position.Y - (World.offset.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), Color.Red);
+                
             }
             spriteBatch.End();
 
