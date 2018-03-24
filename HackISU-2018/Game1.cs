@@ -90,7 +90,7 @@ namespace HackISU_2018
             spriteBatch.Begin();
             {
                 World.Draw(spriteBatch);
-                spriteBatch.Draw(testTexture, new Rectangle((int) player.sprite.position.X, (int) player.sprite.position.Y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
+                spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position.X - (World.offset.X * World.BLOCK_SIZE)), (int) (player.sprite.position.Y - (World.offset.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
             }
             spriteBatch.End();
 
