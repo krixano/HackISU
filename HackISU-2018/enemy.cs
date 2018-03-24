@@ -42,7 +42,7 @@ namespace HackISU_2018
         {
             for (int i = 0; i < enemySprite.Length; i++)
             {
-                enemySprite[i].position_wp.X = player.sprite.position_wp.X + rnd.Next(-28, 28); 
+                enemySprite[i].position_wp.X = player.sprite.position_wp.X + rnd.Next(-5, 28); 
                 //enemySprite[i].position_wp.X +=
             }
         }
