@@ -37,113 +37,37 @@ namespace HackISU_2018
         }
         public static void playerUpdate()
         {
-            // Gravity/Ground Collision
-            if (!isJumping || isFalling)
+            if (Game1.keyboard.IsKeyDown(Keys.Right) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
+                World.offset_b.X += .25f;
+            if (Game1.keyboard.IsKeyDown(Keys.Left) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
+                World.offset_b.X -= .25f;
+
+            //Scrolls screen
+            if (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left))
+                sprite.position_wp.X -= playerXSpeed_p;
+            if (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right))
+                sprite.position_wp.X += playerXSpeed_p;
+
+            Vector2_Double gravityCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            Vector2_Double gravityCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            //bool isFalling = false;
+            isFalling = false;
+
+            //checking collision for bottom of player, left and right corners
+            if ((World.blocks[(int)gravityCollisionBottomRight.X + (int)gravityCollisionBottomRight.Y * (int)World.WORLD_SIZE.X].solid != true
+                || gravityCollisionBottomRight.X < 0 || gravityCollisionBottomRight.X > World.WORLD_SIZE.X || gravityCollisionBottomRight.Y < 0 || gravityCollisionBottomRight.Y > World.WORLD_SIZE.Y)
+                && !isJumping)
             {
-                double increment = playerYSpeed_p;
-                double x1 = (sprite.position_wp.X) / World.BLOCK_SIZE;
-                double x2 = (sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE;
-                double y = (sprite.position_wp.Y + sprite.size.Y + increment) / World.BLOCK_SIZE;
-                int i = (int) (x1 + y * World.WORLD_SIZE.X);
-                int i2 = (int) (x2 + y * World.WORLD_SIZE.X);
-                while (World.blocks[i].solid || World.blocks[i2].solid)
-                {
-                    isFalling = false;
-                    increment--;
-                    if (increment <= 0) {
-                        increment = 0;
-                        break;
-                    }
-
-                    y = (sprite.position_wp.Y + sprite.size.Y + increment) / World.BLOCK_SIZE;
-
-                    i = (int) (x1 + y * World.WORLD_SIZE.X);
-                    i2 = (int) (x2 + y * World.WORLD_SIZE.X);
-                }
-                sprite.position_wp.Y += increment;
+                sprite.position_wp.Y += playerYSpeed_p;
+                isFalling = true;
             }
-
-            /*sprite.position_wp.Y += playerYSpeed_p;
-            Vector2_Double gravityBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
-
-            if (World.blocks[(int) gravityBottomLeft.X + (int) gravityBottomLeft.Y * (int) World.WORLD_SIZE.X].solid)
+            if ((World.blocks[(int)gravityCollisionBottomLeft.X + (int)gravityCollisionBottomLeft.Y * (int)World.WORLD_SIZE.X].solid != true
+                || gravityCollisionBottomLeft.X < 0 || gravityCollisionBottomLeft.X > World.WORLD_SIZE.X || gravityCollisionBottomLeft.Y < 0 || gravityCollisionBottomLeft.Y > World.WORLD_SIZE.Y)
+                && !isJumping)
             {
-                sprite.position_wp.Y -= playerYSpeed_p;
-                //sprite.position_wp.Y  = (gravityBottomLeft.Y * World.BLOCK_SIZE) - sprite.size.Y - 1;
-            }*/
-
-            /*Vector2 sideCollisionTopLeft = new Vector2((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
-            Vector2 sideCollisionBottomLeft = new Vector2((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);
-            Vector2 sideCollisionTopRight = new Vector2((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
-            Vector2 sideCollisionBottomRight = new Vector2((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);*/
-
-            // Controls player moving left and right
-            //Console.WriteLine("Key Down?: ", Game1.keyboard.IsKeyDown(Keys.Left));
-            /*if (Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D))
-            {
-                double increment = .25f;
-                double x1 = (sprite.position_wp.X + increment) / World.BLOCK_SIZE;
-                double x2 = (sprite.position_wp.X + sprite.size.X + increment) / World.BLOCK_SIZE;
-                double y1 = (sprite.position_wp.Y) / World.BLOCK_SIZE;
-                double y2 = (sprite.position_wp.Y + sprite.size.Y - 5) / World.BLOCK_SIZE;
-                int i1 = (int) (x1 + y1 * World.WORLD_SIZE.X);
-                int i2 = (int) (x1 + y2 * World.WORLD_SIZE.X);
-                int i3 = (int) (x2 + y1 * World.WORLD_SIZE.X);
-                int i4 = (int) (x2 + y2 * World.WORLD_SIZE.X);
-                while (World.blocks[i1].solid || World.blocks[i2].solid || World.blocks[i3].solid || World.blocks[i4].solid)
-                {
-                    increment -= 1d / (double) World.BLOCK_SIZE;
-                    if (increment <= 0) {
-                        increment = 0;
-                        break;
-                    }
-                    
-                    x1 = (sprite.position_wp.X + increment) / World.BLOCK_SIZE;
-                    x2 = (sprite.position_wp.X + sprite.size.X + increment) / World.BLOCK_SIZE;
-
-                    i1 = (int) (x1 + y1 * World.WORLD_SIZE.X);
-                    i2 = (int) (x1 + y2 * World.WORLD_SIZE.X);
-                    i3 = (int) (x2 + y1 * World.WORLD_SIZE.X);
-                    i4 = (int) (x2 + y2 * World.WORLD_SIZE.X);
-                }
-                Console.WriteLine("Increment: " + increment);
-                sprite.position_wp.X += increment * World.BLOCK_SIZE;
-                if (playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
-                    World.offset_b.X += increment;
+                sprite.position_wp.Y += playerYSpeed_p;
+                isFalling = true;
             }
-            if (Game1.keyboard.IsKeyDown(Keys.Left) || Game1.keyboard.IsKeyDown(Keys.A))
-            {
-                double increment = .25f;
-                double x1 = (sprite.position_wp.X - increment) / World.BLOCK_SIZE;
-                double x2 = (sprite.position_wp.X + sprite.size.X - increment) / World.BLOCK_SIZE;
-                double y1 = (sprite.position_wp.Y) / World.BLOCK_SIZE;
-                double y2 = (sprite.position_wp.Y + sprite.size.Y - 5) / World.BLOCK_SIZE;
-                int i1 = (int) (x1 + y1 * World.WORLD_SIZE.X);
-                int i2 = (int) (x1 + y2 * World.WORLD_SIZE.X);
-                int i3 = (int) (x2 + y1 * World.WORLD_SIZE.X);
-                int i4 = (int) (x2 + y2 * World.WORLD_SIZE.X);
-                while (World.blocks[i1].solid || World.blocks[i2].solid || World.blocks[i3].solid || World.blocks[i4].solid)
-                {
-                    increment -= 1.0d / (double) World.BLOCK_SIZE;
-                    if (increment <= 0) {
-                        increment = 0;
-                        break;
-                    }
-                    
-                    x1 = (sprite.position_wp.X - increment) / World.BLOCK_SIZE;
-                    x2 = (sprite.position_wp.X + sprite.size.X - increment) / World.BLOCK_SIZE;
-
-                    i1 = (int) (x1 + y1 * World.WORLD_SIZE.X);
-                    i2 = (int) (x1 + y2 * World.WORLD_SIZE.X);
-                    i3 = (int) (x2 + y1 * World.WORLD_SIZE.X);
-                    i4 = (int) (x2 + y2 * World.WORLD_SIZE.X);
-                }
-                sprite.position_wp.X -= increment * World.BLOCK_SIZE;
-                Console.WriteLine("Increment: " +  increment);
-                if (playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
-                    World.offset_b.X -= increment;
-            }*/
-            
 
             // Scrolls screen
             /*if (canGoLeft && (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left) || Game1.keyboard.IsKeyDown(Keys.A)))
