@@ -9,12 +9,13 @@ namespace HackISU_2018
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Rectangle screenRectangle, playingAreaRectangle;
 
         enum GameStates
         {
             
         }
-
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -23,8 +24,9 @@ namespace HackISU_2018
 
         
         protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
+        {           
+            screenRectangle = new Rectangle(0, 0, 1280, 720);
+            playingAreaRectangle = new Rectangle(0, 0, 1280, 720);
 
             base.Initialize();
         }
