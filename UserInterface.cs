@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 
-public class UserInterface
+namespace HackISU_2018
 {
-    public UserInterface()
+    class UserInterface
     {
-       
+        
     }
-}
 
+
+}
