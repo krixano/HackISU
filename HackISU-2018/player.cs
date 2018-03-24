@@ -38,7 +38,7 @@ namespace HackISU_2018
         public static void playerUpdate()
         {
             // Gravity/Ground Collision
-            /*if (!isJumping || isFalling)
+            if (!isJumping || isFalling)
             {
                 double increment = playerYSpeed_p;
                 double x1 = (sprite.position_wp.X) / World.BLOCK_SIZE;
@@ -61,14 +61,18 @@ namespace HackISU_2018
                     i2 = (int) (x2 + y * World.WORLD_SIZE.X);
                 }
                 sprite.position_wp.Y += increment;
-            }*/
+            }
 
-            sprite.position_wp.Y += playerYSpeed_p;
+
+            /*sprite.position_wp.Y += playerYSpeed_p;
             Vector2_Double gravityBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            
+
             if (World.blocks[(int) gravityBottomLeft.X + (int) gravityBottomLeft.Y * (int) World.WORLD_SIZE.X].solid)
             {
                 sprite.position_wp.Y -= playerYSpeed_p;
-            }
+                //sprite.position_wp.Y  = (gravityBottomLeft.Y * World.BLOCK_SIZE) - sprite.size.Y - 1;
+            }*/
 
             /*Vector2 sideCollisionTopLeft = new Vector2((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
             Vector2 sideCollisionBottomLeft = new Vector2((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);
@@ -149,16 +153,16 @@ namespace HackISU_2018
             /*if (canGoRight && (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D)))
                 sprite.position_wp.X += playerXSpeed_p;*/
 
-            /*if (playerScreenPixels().Y >= Game1.screenRectangle.Height / 5 * 4)
+            if (playerScreenPixels().Y >= Game1.screenRectangle.Height / 5 * 3)
             {
                 World.offset_b.Y += playerYSpeed_p / World.BLOCK_SIZE;
-            }*/
+            }
 
             // Jump
             // If pressing jump button, and not jumping or falling
-            /*if ((Game1.pad1.IsButtonDown(Buttons.A) || Game1.keyboard.IsKeyDown(Keys.Space) || Game1.keyboard.IsKeyDown(Keys.Up) || Game1.keyboard.IsKeyDown(Keys.W)) && !isJumping && !isFalling)
+            if ((Game1.pad1.IsButtonDown(Buttons.A) || Game1.keyboard.IsKeyDown(Keys.Space) || Game1.keyboard.IsKeyDown(Keys.Up) || Game1.keyboard.IsKeyDown(Keys.W)) && !isJumping && !isFalling)
                 isJumping = true;
-            playerJump();*/
+            playerJump();
         }
         
 
