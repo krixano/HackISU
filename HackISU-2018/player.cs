@@ -14,9 +14,12 @@ namespace HackISU_2018
     {
         static private float playerXSpeed, playerYSpeed; // In Pixels
         static public Game1.SpriteStruct sprite;
+        static Timer tmr;
 
         static public void playerInit()
         {
+            tmr = new Timer(60);
+
             playerXSpeed = World.BLOCK_SIZE * .25f;
             playerYSpeed = World.BLOCK_SIZE * .25f;
 
@@ -28,14 +31,25 @@ namespace HackISU_2018
         }
         public static void playerUpdate()
         {
+            Vector2 gravityCollisionBottomRight = new Vector2((sprite.position.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            Vector2 gravityCollisionBottomLeft = new Vector2((sprite.position.X) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            bool isFalling = false;
 
-            Vector2 playerBlocks = new Vector2((sprite.position.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
-            Console.WriteLine(playerBlocks);
-
-
-            if (World.blocks[(int)playerBlocks.X + (int)playerBlocks.Y * (int)World.WORLD_SIZE.X].solid != true
-                || playerBlocks.X < 0 || playerBlocks.X > World.WORLD_SIZE.X || playerBlocks.Y < 0 || playerBlocks.Y > World.WORLD_SIZE.Y)
+            //checking collision for bottom of player, left and right corners
+            if ((World.blocks[(int)gravityCollisionBottomRight.X + (int)gravityCollisionBottomRight.Y * (int)World.WORLD_SIZE.X].solid != true
+                || gravityCollisionBottomRight.X < 0 || gravityCollisionBottomRight.X > World.WORLD_SIZE.X || gravityCollisionBottomRight.Y < 0 || gravityCollisionBottomRight.Y > World.WORLD_SIZE.Y)
+                && !isJumping)
+            {
                 sprite.position.Y += playerYSpeed;
+                isFalling = true;
+            }
+            if ((World.blocks[(int)gravityCollisionBottomLeft.X + (int)gravityCollisionBottomLeft.Y * (int)World.WORLD_SIZE.X].solid != true
+                || gravityCollisionBottomLeft.X < 0 || gravityCollisionBottomLeft.X > World.WORLD_SIZE.X || gravityCollisionBottomLeft.Y < 0 || gravityCollisionBottomLeft.Y > World.WORLD_SIZE.Y)
+                && !isJumping)
+            {
+                sprite.position.Y += playerYSpeed;
+                isFalling = true;
+            }
 
             Vector2 sideCollisionTopLeft = new Vector2((sprite.position.X - 1) / World.BLOCK_SIZE, (sprite.position.Y) / World.BLOCK_SIZE);
             Vector2 sideCollisionBottomLeft = new Vector2((sprite.position.X - 1) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);
@@ -71,12 +85,39 @@ namespace HackISU_2018
                 sprite.position.X += playerXSpeed;
 
             //jump
-            //if (Game1.pad1.IsButtonDown(Buttons.A) || Game1.keyboard.IsKeyDown(Keys.Space))
-            //playerJump();
+            //if pressing jump button, and not jumping or falling
+            if ((Game1.pad1.IsButtonDown(Buttons.A) || Game1.keyboard.IsKeyDown(Keys.Space)) && !isJumping && !isFalling)
+                isJumping = true;
+            playerJump();
         }
-        void playerJump()
+
+        static int tmrAmt = 10;
+        static int currentTmr = 0;
+        static bool isJumping = false;
+
+        public static void playerJump()
         {
-            Timer tmr = new Timer(30);
+            if (isJumping)
+            {
+                currentTmr++;
+                sprite.position.Y -= playerYSpeed * 2;
+                if (currentTmr == tmrAmt)
+                {
+                    currentTmr = 0;
+                    isJumping = false;
+                }
+            }
+            
+            /*tmr.start();
+            if (tmr.Update() == true)
+            {
+                tmr.stop();
+            } else if (tmr.running)
+            {
+                sprite.position.Y -= playerYSpeed;
+            }*/
+            //else
+            //    tmr.stop();
         }
 
         public static Vector2 playerScreenPixels()
