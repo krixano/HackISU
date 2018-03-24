@@ -12,13 +12,13 @@ namespace HackISU_2018
 {
     class player
     {
-        static private int playerXSpeed, playerYSpeed;
+        static private float playerXSpeed, playerYSpeed;
         static public Game1.SpriteStruct sprite;
 
         static public void playerInit()
         {
-            playerXSpeed = Game1.screenRectangle.Width / 80;
-            playerYSpeed = Game1.screenRectangle.Height / 80;
+            playerXSpeed = World.BLOCK_SIZE *.25f;
+            playerYSpeed = World.BLOCK_SIZE *.25f;
 
             sprite.size.X = Game1.screenRectangle.Width / 20;
             sprite.size.Y = Game1.screenRectangle.Width / 20;
@@ -29,19 +29,20 @@ namespace HackISU_2018
         }
         public static void playerUpdate()
         {
-            if (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left))
-                sprite.position.X -= playerXSpeed;
-            if (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right))
-                sprite.position.X += playerXSpeed;           
-
-            if (Game1.keyboard.IsKeyDown(Keys.Right) && sprite.position.X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width/3)
+                    
+            if (Game1.keyboard.IsKeyDown(Keys.Right) && sprite.position.X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width/3 + sprite.size.Y / 2)
                 World.offset.X += .25f;
-            if (Game1.keyboard.IsKeyDown(Keys.Left) && sprite.position.X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3)
+            else if (Game1.keyboard.IsKeyDown(Keys.Left) && sprite.position.X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
                 World.offset.X -= .25f;
-            if (Game1.keyboard.IsKeyDown(Keys.Up) && sprite.position.Y <= Game1.screenRectangle.Bottom - Game1.screenRectangle.Height / 3)
-                World.offset.Y -= .25f;
-            if (Game1.keyboard.IsKeyDown(Keys.Down) && sprite.position.Y >= Game1.screenRectangle.Top - Game1.screenRectangle.Height / 3)
-                World.offset.Y += .25f;
+            //else if (Game1.keyboard.IsKeyDown(Keys.Up) && sprite.position.Y <= Game1.screenRectangle.Bottom - Game1.screenRectangle.Height / 3)
+            //    World.offset.Y -= .25f;
+            //else if (Game1.keyboard.IsKeyDown(Keys.Down) && sprite.position.Y >= Game1.screenRectangle.Top - Game1.screenRectangle.Height / 3)
+            //    World.offset.Y += .25f;
+
+            else if (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left))
+                sprite.position.X -= playerXSpeed;
+            else if (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right))
+                sprite.position.X += playerXSpeed;
         }
 
     }
