@@ -139,9 +139,9 @@ namespace HackISU_2018
 
             spriteBatch.Begin();
             {
+                player.Draw(spriteBatch);
                 World.Draw(spriteBatch);
 
-                player.Draw(spriteBatch);
                 //spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
                 for (int i = 0; i < gun.bullet.Length; i++)
                 {

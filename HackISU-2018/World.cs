@@ -121,6 +121,7 @@ namespace HackISU_2018
                 {
                     Rectangle destination = new Rectangle((int) ((x * BLOCK_SIZE) - (offset_b.X * BLOCK_SIZE)), (int) ((y * BLOCK_SIZE) - (offset_b.Y * BLOCK_SIZE)), (int) BLOCK_SIZE, (int) BLOCK_SIZE);
                     Texture2D texture;
+                    Color color = Color.White;
                     switch (blocks[x + y * (int) WORLD_SIZE.X].type)
                     {
                         case BlockType.AIR:
@@ -134,9 +135,11 @@ namespace HackISU_2018
                             break;
                         case BlockType.SHALLOW_OCEAN:
                             texture = Game1.shallowOceanTexture;
+                            color = new Color(255, 255, 255, 50);
                             break;
                         case BlockType.DEEP_OCEAN:
                             texture = Game1.deepOceanTexture;
+                            color = new Color(255, 255, 255, 50);
                             break;                        
                         case BlockType.STONE:
                             texture = Game1.stoneTexture;
@@ -159,7 +162,7 @@ namespace HackISU_2018
                     }
                     if (texture != null)
                     {
-                        spriteBatch.Draw(texture, destination, Color.White);
+                        spriteBatch.Draw(texture, destination, color);
                     }
                 }
             }
