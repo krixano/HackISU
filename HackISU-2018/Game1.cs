@@ -21,8 +21,14 @@ namespace HackISU_2018
         public static Texture2D stoneTexture;
         public static Texture2D gunArmTexture;
         public static Texture2D bulletTexture;
+        public static Texture2D roseTexture;
+        public static Texture2D sunflowerTexture;
+        public static Texture2D wildgrassTexture;
+        public static Texture2D deepOceanTexture;
+        public static Texture2D shallowOceanTexture;
+        public static Texture2D skyTexture;
 
-        
+
 
         public enum GameStates
         {
@@ -83,8 +89,14 @@ namespace HackISU_2018
             dirtTexture = Content.Load<Texture2D>("Dirt_Block_Texture_64x64");
             grassTexture = Content.Load<Texture2D>("Grass_Block_Texture_64x64");
             stoneTexture = Content.Load<Texture2D>("Stone_Block_Texture_64x64");
+            roseTexture = Content.Load<Texture2D>("Rose_Block_Texture_64x64");
+            sunflowerTexture = Content.Load<Texture2D>("Sunflower_Block_Texture_64x64");
+            wildgrassTexture = Content.Load<Texture2D>("Wildgrass_Block_Texture_64x64");
+            deepOceanTexture = Content.Load<Texture2D>("Deep_Ocean_Block_Texture_64x64");
+            shallowOceanTexture = Content.Load<Texture2D>("Shallow_Ocean_Block_Texture_64x64");
+            skyTexture = Content.Load<Texture2D>("Sky_Block_Texture_64x64");
             gunArmTexture = testTexture;
-            bulletTexture = testTexture;
+            bulletTexture = Content.Load<Texture2D>("bullet_Texture_20x60");
             gun.gunArm.origin.X = testTexture.Width / 2;
             gun.gunArm.origin.Y = testTexture.Height / 2;
             for (int i = 0; i < gun.bullet.Length; i++)
@@ -122,7 +134,8 @@ namespace HackISU_2018
             {
                 World.Draw(spriteBatch);
 
-                spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
+                player.Draw(spriteBatch);
+                //spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
                 for (int i = 0; i < gun.bullet.Length; i++)
                     if (gun.bullet[i].isFired)
                         spriteBatch.Draw(bulletTexture, new Rectangle((int)(gun.bullet[i].position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.bullet[i].position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.bullet[i].size.X, (int)gun.bullet[i].size.Y), null, Color.White, gun.bullet[i].rotation, gun.bullet[i].origin, SpriteEffects.None, 0);

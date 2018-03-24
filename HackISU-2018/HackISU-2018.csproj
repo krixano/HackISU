@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="enemy.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="gun.cs" />
     <Compile Include="player.cs" />
@@ -60,13 +61,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Ball-White-Round.png" />
+    <Content Include="Content\Bullet_Texture_20x60.png" />
+    <Content Include="Content\Deep_Ocean_Block_Texture_64x64.png" />
     <Content Include="Content\Dirt_Block_Texture_64x64.png" />
     <Content Include="Content\Grass_Block_Texture_64x64.png" />
     <Content Include="Content\new game.png" />
     <Content Include="Content\options.png" />
     <Content Include="Content\quit.png" />
     <Content Include="Content\Resume.png" />
+    <Content Include="Content\Half_Heart_Block_Texture_64x64.png" />
+    <Content Include="Content\Heart_Block_Texture_64x64.png" />
     <Content Include="Content\Rose_Block_Texture_64x64.png" />
+    <Content Include="Content\Shallow_Ocean_Block_Texture_64x64.png" />
+    <Content Include="Content\Sky_Block_Texture_64x64.png" />
     <Content Include="Content\Stone_Block_Texture_64x64.png" />
     <Content Include="Content\Sunflower_Block_Texture_64x64.png" />
     <Content Include="Content\WhiteSquare100x100.png" />

@@ -30,8 +30,8 @@ namespace HackISU_2018
 
             sprite.size.X = Game1.screenRectangle.Width / 20;
             sprite.size.Y = Game1.screenRectangle.Width / 10;
-            sprite.position_wp.X = ((Game1.screenRectangle.Center.X - (sprite.size.X / 2) / World.BLOCK_SIZE) + World.offset_b.X); // In World Pixels
-            sprite.position_wp.Y = (((World.WORLD_SIZE.Y / 2) - 1) * World.BLOCK_SIZE) - sprite.size.Y;
+            sprite.position_wp.X = ((Game1.screenRectangle.Center.X - (sprite.size.X / 2)) + World.offset_b.X); // In World Pixels
+            sprite.position_wp.Y = 28 * World.BLOCK_SIZE; //(((World.WORLD_SIZE.Y / 2) - 1) * World.BLOCK_SIZE) - sprite.size.Y;
             
                        
         }
@@ -63,14 +63,25 @@ namespace HackISU_2018
                 sprite.position_wp.Y += increment;
             }
 
+
+            /*sprite.position_wp.Y += playerYSpeed_p;
+            Vector2_Double gravityBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            
+
+            if (World.blocks[(int) gravityBottomLeft.X + (int) gravityBottomLeft.Y * (int) World.WORLD_SIZE.X].solid)
+            {
+                sprite.position_wp.Y -= playerYSpeed_p;
+                //sprite.position_wp.Y  = (gravityBottomLeft.Y * World.BLOCK_SIZE) - sprite.size.Y - 1;
+            }*/
+
             /*Vector2 sideCollisionTopLeft = new Vector2((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
             Vector2 sideCollisionBottomLeft = new Vector2((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);
             Vector2 sideCollisionTopRight = new Vector2((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
             Vector2 sideCollisionBottomRight = new Vector2((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);*/
 
             // Controls player moving left and right
-            Console.WriteLine("Key Down?: ", Game1.keyboard.IsKeyDown(Keys.Left));
-            if (Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D))
+            //Console.WriteLine("Key Down?: ", Game1.keyboard.IsKeyDown(Keys.Left));
+            /*if (Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D))
             {
                 double increment = .25f;
                 double x1 = (sprite.position_wp.X + increment) / World.BLOCK_SIZE;
@@ -133,7 +144,7 @@ namespace HackISU_2018
                 Console.WriteLine("Increment: " +  increment);
                 if (playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
                     World.offset_b.X -= increment;
-            }
+            }*/
             
 
             // Scrolls screen
@@ -141,6 +152,11 @@ namespace HackISU_2018
                 sprite.position_wp.X -= playerXSpeed_p;*/
             /*if (canGoRight && (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D)))
                 sprite.position_wp.X += playerXSpeed_p;*/
+
+            if (playerScreenPixels().Y >= Game1.screenRectangle.Height / 5 * 3)
+            {
+                World.offset_b.Y += playerYSpeed_p / World.BLOCK_SIZE;
+            }
 
             // Jump
             // If pressing jump button, and not jumping or falling
@@ -195,6 +211,13 @@ namespace HackISU_2018
         public static Vector2_Double playerWorldBlocks()
         {
             return new Vector2_Double(player.sprite.position_wp.X / World.BLOCK_SIZE, player.sprite.position_wp.Y / World.BLOCK_SIZE);
+        }
+        
+        public static void Draw(SpriteBatch spriteBatch)
+        {
+            int x = (int) (player.sprite.position_wp.X - World.worldOffsetPixels().X);
+            int y = (int) (player.sprite.position_wp.Y - World.worldOffsetPixels().Y);
+            spriteBatch.Draw(Game1.testTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
         }
 
     }
