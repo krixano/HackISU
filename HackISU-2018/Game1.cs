@@ -18,6 +18,7 @@ namespace HackISU_2018
         public static Texture2D testTexture;
         public static Texture2D dirtTexture;
         public static Texture2D grassTexture;
+        public static Texture2D stoneTexture;
         public static Texture2D gunArmTexture;
 
         enum GameStates
@@ -45,8 +46,7 @@ namespace HackISU_2018
 
         protected override void Initialize()
         {
-            this.IsMouseVisible = true;
-
+            IsMouseVisible = true;
             screenRectangle = new Rectangle(0, 0, 1280, 720);
             graphics.PreferredBackBufferWidth = screenRectangle.Width;
             graphics.PreferredBackBufferHeight = screenRectangle.Height;
@@ -68,6 +68,7 @@ namespace HackISU_2018
             testTexture = Content.Load<Texture2D>("WhiteSquare100x100");
             dirtTexture = Content.Load<Texture2D>("Dirt_Block_Texture_64x64");
             grassTexture = Content.Load<Texture2D>("Grass_Block_Texture_64x64");
+            stoneTexture = Content.Load<Texture2D>("Stone_Block_Texture_64x64");
             gunArmTexture = testTexture;
             gun.gunArm.origin.Y = gunArmTexture.Height / 2;
         }
