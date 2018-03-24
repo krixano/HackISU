@@ -78,6 +78,8 @@ namespace HackISU_2018
             Vector2_Double sideCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - (sprite.size.Y / 4)) / World.BLOCK_SIZE);
             Vector2_Double sideCollisionTopRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
             Vector2_Double sideCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - (sprite.size.Y / 4)) / World.BLOCK_SIZE);
+            Vector2_Double sideCollisionMiddleLeft = new Vector2_Double((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + (sprite.size.Y / 2)) / World.BLOCK_SIZE);
+            Vector2_Double sideCollisionMiddleRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + (sprite.size.Y / 2)) / World.BLOCK_SIZE);
 
             bool canGoLeft = true;
             bool canGoRight = true;
@@ -89,6 +91,10 @@ namespace HackISU_2018
             if (World.blocks[(int) sideCollisionTopRight.X + (int) sideCollisionTopRight.Y * (int) World.WORLD_SIZE.X].solid)
                 canGoRight = false;
             if (World.blocks[(int) sideCollisionBottomRight.X + (int) sideCollisionBottomRight.Y * (int) World.WORLD_SIZE.X].solid)
+                canGoRight = false;
+            if (World.blocks[(int) sideCollisionMiddleLeft.X + (int) sideCollisionMiddleLeft.Y * (int) World.WORLD_SIZE.X].solid)
+                canGoLeft = false;
+            if (World.blocks[(int) sideCollisionMiddleRight.X + (int) sideCollisionMiddleRight.Y * (int) World.WORLD_SIZE.X].solid)
                 canGoRight = false;
 
             //Slow fall if touching wall
