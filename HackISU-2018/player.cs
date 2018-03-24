@@ -12,7 +12,7 @@ namespace HackISU_2018
 {
     class player
     {
-        static private float playerXSpeed, playerYSpeed;
+        static private float playerXSpeed, playerYSpeed; // In Pixels
         static public Game1.SpriteStruct sprite;
 
         static public void playerInit()
@@ -22,16 +22,16 @@ namespace HackISU_2018
 
             sprite.size.X = Game1.screenRectangle.Width / 20;
             sprite.size.Y = Game1.screenRectangle.Width / 20;
-            sprite.position.X = Game1.screenRectangle.Center.X - (sprite.size.X / 2);
+            sprite.position.X = Game1.screenRectangle.Center.X - (sprite.size.X / 2); // In World Pixels
             sprite.position.Y = (((World.WORLD_SIZE.Y / 2) - 1) * World.BLOCK_SIZE) - sprite.size.Y;
 
         }
         public static void playerUpdate()
         {
             //Controls player moving left and right        
-            if (Game1.keyboard.IsKeyDown(Keys.Right) && sprite.position.X - (World.offset.X * World.BLOCK_SIZE) >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
+            if (Game1.keyboard.IsKeyDown(Keys.Right) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
                 World.offset.X += .25f;
-            if (Game1.keyboard.IsKeyDown(Keys.Left) && sprite.position.X - (World.offset.X * World.BLOCK_SIZE) <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
+            if (Game1.keyboard.IsKeyDown(Keys.Left) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
                 World.offset.X -= .25f;
             //else if (Game1.keyboard.IsKeyDown(Keys.Up) && sprite.position.Y <= Game1.screenRectangle.Bottom - Game1.screenRectangle.Height / 3)
             //    World.offset.Y -= .25f;
@@ -58,6 +58,16 @@ namespace HackISU_2018
         void playerJump()
         {
             Timer tmr = new Timer(30);
+        }
+
+        public static Vector2 playerScreenPixels()
+        {
+            return new Vector2(player.sprite.position.X - (World.offset.X * World.BLOCK_SIZE), player.sprite.position.Y - (World.offset.Y * World.BLOCK_SIZE));
+        }
+
+        public static Vector2 playerWorldBlocks()
+        {
+            return new Vector2(player.sprite.position.X / World.BLOCK_SIZE, player.sprite.position.Y / World.BLOCK_SIZE);
         }
 
     }
