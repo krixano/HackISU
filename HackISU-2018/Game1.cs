@@ -83,10 +83,10 @@ namespace HackISU_2018
             keyboard = Keyboard.GetState();
             player.playerUpdate();
 
-            if (keyboard.IsKeyDown(Keys.Right)) world.offset.X += .25f;
-            if (keyboard.IsKeyDown(Keys.Left)) world.offset.X -= .25f;
-            if (keyboard.IsKeyDown(Keys.Up)) world.offset.Y -= .25f;
-            if (keyboard.IsKeyDown(Keys.Down)) world.offset.Y += .25f;
+            //if (keyboard.IsKeyDown(Keys.Right)) world.offset.X += .25f;
+            //if (keyboard.IsKeyDown(Keys.Left)) world.offset.X -= .25f;
+            //if (keyboard.IsKeyDown(Keys.Up)) world.offset.Y -= .25f;
+            //if (keyboard.IsKeyDown(Keys.Down)) world.offset.Y += .25f;
 
 
             //Put update code here
