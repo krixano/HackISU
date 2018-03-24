@@ -62,11 +62,11 @@ namespace HackISU_2018
             {
                 addFalling = playerYSpeed_p;
                 isFalling = true;
-            } else
+            }/* else
             {
                 isFalling = false;
                 sprite.position_wp.Y = (gravityCollisionBottomRight.Y * World.BLOCK_SIZE) - 1 - sprite.size.Y;
-            }
+            }*/
             if ((World.blocks[(int)gravityCollisionBottomLeft.X + (int)gravityCollisionBottomLeft.Y * (int)World.WORLD_SIZE.X].solid != true
                 || gravityCollisionBottomLeft.X < 0 || gravityCollisionBottomLeft.X > World.WORLD_SIZE.X || gravityCollisionBottomLeft.Y < 0 || gravityCollisionBottomLeft.Y > World.WORLD_SIZE.Y)
                 && !isJumping)
@@ -115,7 +115,7 @@ namespace HackISU_2018
                 || Game1.keyboard.IsKeyDown(Keys.D) 
                 && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
                 World.offset_b.X += .25f;
-            if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Left) 
+            if (canGoLeft && Game1.keyboard.IsKeyDown(Keys.Left) 
                 || Game1.keyboard.IsKeyDown(Keys.A) 
                 && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
                 World.offset_b.X -= .25f;
