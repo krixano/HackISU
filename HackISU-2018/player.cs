@@ -12,7 +12,7 @@ namespace HackISU_2018
 {
     class player
     {
-        static private float playerXSpeed_p, playerYSpeed_p; // _p: In Pixels
+        static private double playerXSpeed_p, playerYSpeed_p; // _p: In Pixels
         static public Game1.SpriteStruct sprite;
         static Timer tmr;
         //tmrAmt = Jump length
@@ -40,10 +40,10 @@ namespace HackISU_2018
             // Gravity/Ground Collision
             if (!isJumping || isFalling)
             {
-                float increment = playerYSpeed_p;
-                float x1 = (sprite.position_wp.X) / World.BLOCK_SIZE;
-                float x2 = (sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE;
-                float y = (sprite.position_wp.Y + sprite.size.Y + increment) / World.BLOCK_SIZE;
+                double increment = playerYSpeed_p;
+                double x1 = (sprite.position_wp.X) / World.BLOCK_SIZE;
+                double x2 = (sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE;
+                double y = (sprite.position_wp.Y + sprite.size.Y + increment) / World.BLOCK_SIZE;
                 int i = (int) (x1 + y * World.WORLD_SIZE.X);
                 int i2 = (int) (x2 + y * World.WORLD_SIZE.X);
                 while (World.blocks[i].solid || World.blocks[i2].solid)
@@ -72,18 +72,18 @@ namespace HackISU_2018
             Console.WriteLine("Key Down?: ", Game1.keyboard.IsKeyDown(Keys.Left));
             if (Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D))
             {
-                float increment = .25f;
-                float x1 = (sprite.position_wp.X + increment) / World.BLOCK_SIZE;
-                float x2 = (sprite.position_wp.X + sprite.size.X + increment) / World.BLOCK_SIZE;
-                float y1 = (sprite.position_wp.Y) / World.BLOCK_SIZE;
-                float y2 = (sprite.position_wp.Y + sprite.size.Y - 5) / World.BLOCK_SIZE;
+                double increment = .25f;
+                double x1 = (sprite.position_wp.X + increment) / World.BLOCK_SIZE;
+                double x2 = (sprite.position_wp.X + sprite.size.X + increment) / World.BLOCK_SIZE;
+                double y1 = (sprite.position_wp.Y) / World.BLOCK_SIZE;
+                double y2 = (sprite.position_wp.Y + sprite.size.Y - 5) / World.BLOCK_SIZE;
                 int i1 = (int) (x1 + y1 * World.WORLD_SIZE.X);
                 int i2 = (int) (x1 + y2 * World.WORLD_SIZE.X);
                 int i3 = (int) (x2 + y1 * World.WORLD_SIZE.X);
                 int i4 = (int) (x2 + y2 * World.WORLD_SIZE.X);
                 while (World.blocks[i1].solid || World.blocks[i2].solid || World.blocks[i3].solid || World.blocks[i4].solid)
                 {
-                    increment -= 1f / (float) World.BLOCK_SIZE;
+                    increment -= 1d / (double) World.BLOCK_SIZE;
                     if (increment <= 0) {
                         increment = 0;
                         break;
@@ -104,18 +104,18 @@ namespace HackISU_2018
             }
             if (Game1.keyboard.IsKeyDown(Keys.Left) || Game1.keyboard.IsKeyDown(Keys.A))
             {
-                float increment = .25f;
-                float x1 = (sprite.position_wp.X - increment) / World.BLOCK_SIZE;
-                float x2 = (sprite.position_wp.X + sprite.size.X - increment) / World.BLOCK_SIZE;
-                float y1 = (sprite.position_wp.Y) / World.BLOCK_SIZE;
-                float y2 = (sprite.position_wp.Y + sprite.size.Y - 5) / World.BLOCK_SIZE;
+                double increment = .25f;
+                double x1 = (sprite.position_wp.X - increment) / World.BLOCK_SIZE;
+                double x2 = (sprite.position_wp.X + sprite.size.X - increment) / World.BLOCK_SIZE;
+                double y1 = (sprite.position_wp.Y) / World.BLOCK_SIZE;
+                double y2 = (sprite.position_wp.Y + sprite.size.Y - 5) / World.BLOCK_SIZE;
                 int i1 = (int) (x1 + y1 * World.WORLD_SIZE.X);
                 int i2 = (int) (x1 + y2 * World.WORLD_SIZE.X);
                 int i3 = (int) (x2 + y1 * World.WORLD_SIZE.X);
                 int i4 = (int) (x2 + y2 * World.WORLD_SIZE.X);
                 while (World.blocks[i1].solid || World.blocks[i2].solid || World.blocks[i3].solid || World.blocks[i4].solid)
                 {
-                    increment -= 1.0f / (float) World.BLOCK_SIZE;
+                    increment -= 1.0d / (double) World.BLOCK_SIZE;
                     if (increment <= 0) {
                         increment = 0;
                         break;
@@ -155,10 +155,10 @@ namespace HackISU_2018
             if (isJumping && !isFalling)
             {
                 currentTmr++;
-                float increment = playerYSpeed_p * 2;
-                float x1 = (sprite.position_wp.X) / World.BLOCK_SIZE;
-                float x2 = (sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE;
-                float y = (sprite.position_wp.Y - increment - 2) / World.BLOCK_SIZE;
+                double increment = playerYSpeed_p * 2;
+                double x1 = (sprite.position_wp.X) / World.BLOCK_SIZE;
+                double x2 = (sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE;
+                double y = (sprite.position_wp.Y - increment - 2) / World.BLOCK_SIZE;
                 int i = (int) (x1 + y * World.WORLD_SIZE.X);
                 int i2 = (int) (x2 + y * World.WORLD_SIZE.X);
                 while (World.blocks[i].solid || World.blocks[i2].solid)
@@ -187,14 +187,14 @@ namespace HackISU_2018
             
         }        
 
-        public static Vector2 playerScreenPixels()
+        public static Vector2_Double playerScreenPixels()
         {
-            return new Vector2(player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE), player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE));
+            return new Vector2_Double(player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE), player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE));
         }
 
-        public static Vector2 playerWorldBlocks()
+        public static Vector2_Double playerWorldBlocks()
         {
-            return new Vector2(player.sprite.position_wp.X / World.BLOCK_SIZE, player.sprite.position_wp.Y / World.BLOCK_SIZE);
+            return new Vector2_Double(player.sprite.position_wp.X / World.BLOCK_SIZE, player.sprite.position_wp.Y / World.BLOCK_SIZE);
         }
 
     }

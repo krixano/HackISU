@@ -11,7 +11,7 @@ namespace HackISU_2018
         static public Game1.SpriteStruct[] bullet;
         static public int bulletSpeed, shotgunSpread;
         static public float bulletSize, rateOfFire, tick;
-        public static Random rnd = new Random();
+
         
         public enum GunSelections
         {
@@ -102,7 +102,7 @@ namespace HackISU_2018
         public static double getMouseAngle()
         {
             //Returns angle of mouse and aim
-            Vector2 distance;
+            Vector2_Double distance;
             double angle;            
             distance.X = Game1.mouse.X - (gunArm.position_wp.X - World.offset_b.X * World.BLOCK_SIZE);
             distance.Y = Game1.mouse.Y - (gunArm.position_wp.Y - World.offset_b.Y * World.BLOCK_SIZE);                                  
