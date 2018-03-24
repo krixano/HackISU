@@ -31,10 +31,12 @@ namespace HackISU_2018
             sprite.size.Y = Game1.screenRectangle.Width / 20;
             sprite.position.X = Game1.screenRectangle.Center.X - (sprite.size.X / 2); // In World Pixels
             sprite.position.Y = (((World.WORLD_SIZE.Y / 2) - 1) * World.BLOCK_SIZE) - sprite.size.Y;
+            
                        
         }
         public static void playerUpdate()
         {
+            
             Vector2 gravityCollisionBottomRight = new Vector2((sprite.position.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
             Vector2 gravityCollisionBottomLeft = new Vector2((sprite.position.X) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
             bool isFalling = false;
@@ -83,10 +85,10 @@ namespace HackISU_2018
                 sprite.position.Y += increment;
             }
 
-            Vector2 sideCollisionTopLeft = new Vector2((sprite.position.X - 1f) / World.BLOCK_SIZE, (sprite.position.Y) / World.BLOCK_SIZE);
-            Vector2 sideCollisionBottomLeft = new Vector2((sprite.position.X - 1f) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y - 1f) / World.BLOCK_SIZE);
-            Vector2 sideCollisionTopRight = new Vector2((sprite.position.X + sprite.size.X + 1f) / World.BLOCK_SIZE, (sprite.position.Y) / World.BLOCK_SIZE);
-            Vector2 sideCollisionBottomRight = new Vector2((sprite.position.X + sprite.size.X + 1f) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y - 1f) / World.BLOCK_SIZE);
+            Vector2 sideCollisionTopLeft = new Vector2((sprite.position.X - 1) / World.BLOCK_SIZE, (sprite.position.Y) / World.BLOCK_SIZE);
+            Vector2 sideCollisionBottomLeft = new Vector2((sprite.position.X - 1) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);
+            Vector2 sideCollisionTopRight = new Vector2((sprite.position.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position.Y) / World.BLOCK_SIZE);
+            Vector2 sideCollisionBottomRight = new Vector2((sprite.position.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);
 
             bool canGoLeft = true;
             bool canGoRight = true;
@@ -113,9 +115,15 @@ namespace HackISU_2018
             if (canGoRight && (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right)))
                 sprite.position.X += playerXSpeed;
 
+<<<<<<< HEAD
             // Jump
             // If pressing jump button, and not jumping or falling
             if ((Game1.pad1.IsButtonDown(Buttons.A) || Game1.keyboard.IsKeyDown(Keys.Space)) && !isJumping && !isFalling)
+=======
+            //jump
+            //if pressing jump button, and not jumping or falling
+            if ((Game1.pad1.IsButtonDown(Buttons.A) || Game1.keyboard.IsKeyDown(Keys.Space) || Game1.keyboard.IsKeyDown(Keys.Up)) && !isJumping && !isFalling)
+>>>>>>> 88e99c644db5eb5bdbbb4bbd26907325669d911e
                 isJumping = true;
             playerJump();
         }

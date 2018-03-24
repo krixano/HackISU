@@ -12,7 +12,7 @@ namespace HackISU_2018
         static public void gunInit()
         {
             gunArm.size.X = player.sprite.size.X;
-            gunArm.size.Y = gunArm.size.Y / 2f;
+            gunArm.size.Y = gunArm.size.X / 3;
             gunArm.position.X = player.sprite.position.X + gunArm.size.X / 2;
             gunArm.position.Y = player.sprite.position.Y + gunArm.size.Y / 2;
         }
