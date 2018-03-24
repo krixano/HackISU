@@ -88,12 +88,12 @@ namespace HackISU_2018
                     else if (map[j, i] == 'o')
                     {
                         blocks[index].type = BlockType.SHALLOW_OCEAN;
-                        blocks[index].solid = true;
+                        blocks[index].solid = false;
                     }
                     else if (map[j, i] == 'O')
                     {
                         blocks[index].type = BlockType.DEEP_OCEAN;
-                        blocks[index].solid = true;
+                        blocks[index].solid = false;
                     }
                     else if (map[j, i] == 'p')
                     {

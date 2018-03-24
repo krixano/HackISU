@@ -22,11 +22,13 @@ namespace HackISU_2018
 
             rnd = new Random();
 
+            enemyXSpeed_p = World.BLOCK_SIZE * .15f;
+            enemyYSpeed_p = World.BLOCK_SIZE * .10f;
 
             for (int i=0; i<enemySprite.Length;i++)
             {
-                enemySprite[i].size = player.sprite.size;
-
+                enemySprite[i].size.X = player.sprite.size.X;
+                enemySprite[i].size.Y = enemySprite[i].size.Y;
                 enemySprite[i].position_wp = player.sprite.position_wp;
 
             }
@@ -34,9 +36,23 @@ namespace HackISU_2018
         static public void enemyUpdate()
         {
 
-            if (rnd.Next(0, 100) == 50)
+            if (rnd.Next(0, 1000) == 50)
                 spawnEnemy();
-            
+
+            //Enemy AI
+            for (int i = 0; i < enemySprite.Length; i++)
+                if (enemySprite[i].position_wp.X < player.sprite.position_wp.X)
+                    enemySprite[i].position_wp.X += enemyXSpeed_p;
+            for (int i = 0; i < enemySprite.Length; i++)
+                if (enemySprite[i].position_wp.Y < player.sprite.position_wp.Y)
+                    enemySprite[i].position_wp.Y += enemyYSpeed_p;
+            for (int i = 0; i < enemySprite.Length; i++)
+                if (enemySprite[i].position_wp.X > player.sprite.position_wp.X)
+                    enemySprite[i].position_wp.X -= enemyXSpeed_p;
+            for (int i = 0; i < enemySprite.Length; i++)
+                if (enemySprite[i].position_wp.Y > player.sprite.position_wp.Y)
+                    enemySprite[i].position_wp.Y -= enemyYSpeed_p;
+
         }
         static public void spawnEnemy()
         {
