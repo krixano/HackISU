@@ -31,22 +31,22 @@ namespace HackISU_2018
 
         public static void Init()
         {
-            fileName = "map1.txt";
+            fileName = "map3.txt";
             int worldHeight = 50;// ((Game1.screenRectangle.Height / 2) / BLOCK_SIZE) + 2;
             WORLD_SIZE = new Vector2(200, worldHeight);
             offset_b = new Vector2_Double(0,28);
             blocks = new Block[(int) WORLD_SIZE.X * (int) WORLD_SIZE.Y];
             Console.WriteLine(worldHeight);
 
-            char[,] map = new char[100,worldHeight];
-            string[] lines = System.IO.File.ReadAllLines(@fileName);
-            for (int i=0; i< worldHeight; i++)
+            char[,] map = new char[200,worldHeight];
+            string[] lines = System.IO.File.ReadAllLines(@"map3.txt");
+            for (int i=0; i< 50; i++)
             {                
-                for (int j=0; j<100; j++)
+                for (int j=0; j<200; j++)
                 {
                     char[] mapLine = lines[i].ToString().ToCharArray();
-                    map[j, i] = mapLine[j];
-                    Console.Write(map[j, i]);                    
+                    map[i,j] = mapLine[j];
+                    //Console.Write(map[j, i]);                    
                 }
                 Console.WriteLine();
             }

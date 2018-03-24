@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace HackISU_2018
@@ -16,6 +15,7 @@ namespace HackISU_2018
         static public Game1.SpriteStruct[] enemySprite;
         static public Random rnd;
         static public int spawnRate;
+        static public int enemiesLeft;
         public enum EnemiesPerLevel
         {
             level1 = 5,
@@ -26,11 +26,12 @@ namespace HackISU_2018
         }
         static public EnemiesPerLevel enemiesPerLevel = EnemiesPerLevel.level1;
         static public void enemyInit()
-        {
-            
+        {            
             enemySprite = new Game1.SpriteStruct[(int) enemiesPerLevel];
-            spawnRate = 900;
+            spawnEnemy();
+            spawnRate = 9;
             rnd = new Random();
+            enemiesLeft = (int) enemiesPerLevel;
 
             enemyXSpeed_p = World.BLOCK_SIZE * .10f;
             enemyYSpeed_p = World.BLOCK_SIZE * .10f;
@@ -45,8 +46,12 @@ namespace HackISU_2018
         }
         static public void enemyUpdate()
         {
-
-            if (rnd.Next(0, 1000) >= spawnRate)
+            if (enemiesLeft == 0)
+            {
+                enemiesPerLevel = EnemiesPerLevel.level2;
+                World.fileName = "map2.txt";
+            }
+            if (rnd.Next(0, 10) == spawnRate)
                 spawnEnemy();
 
             //Enemy AI
@@ -54,13 +59,13 @@ namespace HackISU_2018
             {
                 if (enemySprite[i].position_wp.X < player.sprite.position_wp.X)
                     enemySprite[i].position_wp.X += enemyXSpeed_p;
-                else if (enemySprite[i].position_wp.Y < player.sprite.position_wp.Y)
+                if (enemySprite[i].position_wp.Y < player.sprite.position_wp.Y)
                     enemySprite[i].position_wp.Y += enemyYSpeed_p;
-                else if (enemySprite[i].position_wp.X > player.sprite.position_wp.X)
+                if (enemySprite[i].position_wp.X > player.sprite.position_wp.X)
                     enemySprite[i].position_wp.X -= enemyXSpeed_p;
-                else if (enemySprite[i].position_wp.Y > player.sprite.position_wp.Y)
+                if (enemySprite[i].position_wp.Y > player.sprite.position_wp.Y)
                     enemySprite[i].position_wp.Y -= enemyYSpeed_p;
-                if (enemySprite[i].visible = false)
+                if (enemySprite[i].visible = false && enemiesLeft > 0)
                     spawnEnemy();
             }
 
@@ -71,7 +76,7 @@ namespace HackISU_2018
             for (int i = 0; i < enemySprite.Length; i++)
             {
 
-                enemySprite[i].position_wp.X = rnd.Next(0, (int) World.WORLD_SIZE.X);
+                //enemySprite[i].position_wp.X = rnd.Next(0, (int) World.WORLD_SIZE.X);
                 enemySprite[i].position_wp.Y = 0;
                 enemySprite[i].visible = true;
             }

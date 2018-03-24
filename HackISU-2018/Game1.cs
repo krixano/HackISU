@@ -157,8 +157,7 @@ namespace HackISU_2018
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            {
-                
+            {                
                 enemy.Draw(spriteBatch);               
 
                 player.Draw(spriteBatch);
