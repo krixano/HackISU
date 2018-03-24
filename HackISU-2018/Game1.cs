@@ -24,10 +24,12 @@ namespace HackISU_2018
 
         
 
-        enum GameStates
+        public enum GameStates
         {
             MAIN_MENU, PAUSED, PLAYING
         }
+
+        static public GameStates gameState = GameStates.PLAYING;
 
         public struct SpriteStruct
         {

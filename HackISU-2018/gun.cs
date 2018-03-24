@@ -12,14 +12,14 @@ namespace HackISU_2018
         static public int bulletSpeed;
         static public float bulletSize, rateOfFire, tick;     
         
-        enum gunSelection
+        public enum GunSelections
         {
-            HANDGUN = 40,
-            SMG = 30,
+            HANDGUN = 35,
+            SMG = 25,
             ASSAULT_RIFLE = 10,
-            SHOTGUN = 50;
-
+            SHOTGUN = 45
         }
+        static public GunSelections gunSelection = GunSelections.HANDGUN;
 
         static public void gunInit()
         {
@@ -27,7 +27,7 @@ namespace HackISU_2018
             bulletSpeed = Game1.screenRectangle.Width / 20;
             bulletSize = gunArm.size.X / 4;
             //Rate Of Fire: The Higher it is the slower you shoot (out of 60)
-            rateOfFire = 40;
+            rateOfFire = (float)gunSelection;
             tick = 0;
 
             gunArm.size.X = player.sprite.size.X;
@@ -57,29 +57,32 @@ namespace HackISU_2018
             gunArm.rotation = (float) getMouseAngle();
             tick++;
 
-
-            //Shoots gun at selected Rate of Fire
+            //Shoots SHOTGUN at SHOTGUN (50) Rate of Fire
             if (Game1.mouse.LeftButton == ButtonState.Pressed
+                && tick % rateOfFire == 0 && gunSelection == GunSelections.SHOTGUN)
+            {
+                shootGun();
+            }
+            //Shoots gun at selected Rate of Fire
+            else if (Game1.mouse.LeftButton == ButtonState.Pressed
                 && tick % rateOfFire == 0)
             {
                 shootGun();
-            }                  
-                                
-                   
-                        for (int i = 0; i < bullet.Length; i++)
-                        {
-                            if (bullet[i].isFired)
-                            {
-                                //This is what happens when a bullet is fired
-                                bullet[i].position_wp.X += bulletSpeed * (float)Math.Cos(bullet[i].rotation);
-                                bullet[i].position_wp.Y += bulletSpeed * (float)Math.Sin(bullet[i].rotation);
-                                if (bullet[i].position_wp.X > Game1.screenRectangle.Width * 2 || bullet[i].position_wp.Y > Game1.screenRectangle.Height * 2
-                                    || bullet[i].position_wp.X < Game1.screenRectangle.Width * -2 || bullet[i].position_wp.Y < Game1.screenRectangle.Height * -2)
-                                    bullet[i].isFired = false;
-                            }
+                
+            }
+            for (int i = 0; i < bullet.Length; i++)
+            {
+                if (bullet[i].isFired)
+                {
+                    //This is what happens when a bullet is fired
+                    bullet[i].position_wp.X += bulletSpeed * (float)Math.Cos(bullet[i].rotation);
+                    bullet[i].position_wp.Y += bulletSpeed * (float)Math.Sin(bullet[i].rotation);
+                    if (bullet[i].position_wp.X > Game1.screenRectangle.Width * 2 || bullet[i].position_wp.Y > Game1.screenRectangle.Height * 2
+                        || bullet[i].position_wp.X < Game1.screenRectangle.Width * -2 || bullet[i].position_wp.Y < Game1.screenRectangle.Height * -2)
+                        bullet[i].isFired = false;
+                }
 
-                        }
-                    
+            }
         }
         public static double getMouseAngle()
         {
@@ -105,6 +108,10 @@ namespace HackISU_2018
                     break;
                 }
             }
+        }
+        public static void isBulletCollided()
+        {
+
         }
     }
 }
