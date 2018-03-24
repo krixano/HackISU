@@ -29,7 +29,7 @@ namespace HackISU_2018
             playerYSpeed_p = World.BLOCK_SIZE * .25f;
 
             sprite.size.X = Game1.screenRectangle.Width / 20;
-            sprite.size.Y = Game1.screenRectangle.Width / 20;
+            sprite.size.Y = Game1.screenRectangle.Width / 10;
             sprite.position_wp.X = ((Game1.screenRectangle.Center.X - (sprite.size.X / 2) / World.BLOCK_SIZE) + World.offset_b.X); // In World Pixels
             sprite.position_wp.Y = (((World.WORLD_SIZE.Y / 2) - 1) * World.BLOCK_SIZE) - sprite.size.Y;
             
