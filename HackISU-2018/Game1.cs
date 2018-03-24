@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace HackISU_2018
 {
@@ -24,9 +25,8 @@ namespace HackISU_2018
 
         
         protected override void Initialize()
-        {           
-            screenRectangle = new Rectangle(0, 0, 1280, 720);
-            playingAreaRectangle = new Rectangle(0, 0, 1280, 720);
+        {
+            // TODO: Add your initialization logic here
 
             base.Initialize();
         }
