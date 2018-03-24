@@ -69,7 +69,7 @@ namespace HackISU_2018
             Vector2 sideCollisionBottomRight = new Vector2((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);*/
 
             // Controls player moving left and right
-            Console.WriteLine("Key Down?: ", Game1.keyboard.IsKeyDown(Keys.Left));
+            //Console.WriteLine("Key Down?: ", Game1.keyboard.IsKeyDown(Keys.Left));
             if (Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D))
             {
                 double increment = .25f;
