@@ -44,6 +44,7 @@ namespace HackISU_2018
             Console.WriteLine("Test!");
             screenRectangle = new Rectangle(0, 0, 1280, 720);
             playingAreaRectangle = new Rectangle(0, 0, 1280, 720);
+            player.Init();
             
 
             base.Initialize();
@@ -84,7 +85,7 @@ namespace HackISU_2018
 
             spriteBatch.Begin();
             {
-
+                spriteBatch.Draw(testTexture, player.sprite.rectangle, Color.White);
             }
             spriteBatch.End();
 
