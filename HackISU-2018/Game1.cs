@@ -27,6 +27,7 @@ namespace HackISU_2018
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            Console.WriteLine("Test!");
 
             base.Initialize();
         }
