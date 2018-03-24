@@ -63,6 +63,9 @@ namespace HackISU_2018
             {
                 shootGun();
             }
+
+            //checkForBulletCollision();
+
             //Shoots gun at selected Rate of Fire
             else if (Game1.mouse.LeftButton == ButtonState.Pressed
                 && tick % rateOfFire == 0)
@@ -109,9 +112,9 @@ namespace HackISU_2018
                 }
             }
         }
-        public static void isBulletCollided()
+        public static void checkForBulletCollision()
         {
-
+            
         }
     }
 }
