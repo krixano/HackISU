@@ -86,8 +86,8 @@ namespace HackISU_2018
             if (canGoRight && (Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D)) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
             {
                 float increment = .25f;
-                float x1 = (sprite.position_wp.X - 1 + increment) / World.BLOCK_SIZE;
-                float x2 = (sprite.position_wp.X + sprite.size.X + 1 + increment) / World.BLOCK_SIZE;
+                float x1 = (sprite.position_wp.X  + 7 + increment) / World.BLOCK_SIZE;
+                float x2 = (sprite.position_wp.X + sprite.size.X - 7 + increment) / World.BLOCK_SIZE;
                 float y1 = (sprite.position_wp.Y) / World.BLOCK_SIZE;
                 float y2 = (sprite.position_wp.Y + sprite.size.Y - 1) / World.BLOCK_SIZE;
                 int i1 = (int) (x1 + y1 * World.WORLD_SIZE.X);
@@ -102,8 +102,8 @@ namespace HackISU_2018
                         break;
                     }
                     
-                    x1 = (sprite.position_wp.X - 1 + increment) / World.BLOCK_SIZE;
-                    x2 = (sprite.position_wp.X + sprite.size.X + 1 + increment) / World.BLOCK_SIZE;
+                    x1 = (sprite.position_wp.X + 7 + increment) / World.BLOCK_SIZE;
+                    x2 = (sprite.position_wp.X + sprite.size.X - 7 + increment) / World.BLOCK_SIZE;
 
                     i1 = (int) (x1 + y1 * World.WORLD_SIZE.X);
                     i2 = (int) (x1 + y2 * World.WORLD_SIZE.X);
@@ -162,7 +162,28 @@ namespace HackISU_2018
             if (isJumping && !isFalling)
             {
                 currentTmr++;
-                sprite.position_wp.Y -= playerYSpeed_p * 2;
+                float increment = playerYSpeed_p * 2;
+                float x1 = (sprite.position_wp.X) / World.BLOCK_SIZE;
+                float x2 = (sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE;
+                float y = (sprite.position_wp.Y - increment - 2) / World.BLOCK_SIZE;
+                int i = (int) (x1 + y * World.WORLD_SIZE.X);
+                int i2 = (int) (x2 + y * World.WORLD_SIZE.X);
+                while (World.blocks[i].solid || World.blocks[i2].solid)
+                {
+                    isFalling = false;
+                    increment--;
+                    if (increment <= 0) {
+                        increment = 0;
+                        break;
+                    }
+
+                    y = (sprite.position_wp.Y - increment - 2) / World.BLOCK_SIZE;
+
+                    i = (int) (x1 + y * World.WORLD_SIZE.X);
+                    i2 = (int) (x2 + y * World.WORLD_SIZE.X);
+                }
+
+                sprite.position_wp.Y -= increment;
                 if (currentTmr == tmrAmt)
                 {
                     currentTmr = 0;

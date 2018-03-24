@@ -41,7 +41,12 @@ namespace HackISU_2018
                 for (int x = 0; x < WORLD_SIZE.X; x++)
                 {
                     int i = x + y * (int) WORLD_SIZE.X;
-                    if (y < (WORLD_SIZE.Y / 2) - 1)
+                    if (y == 3)
+                    {
+                        blocks[i].type = BlockType.STONE;
+                        blocks[i].solid = true;
+                    }
+                    else if (y < (WORLD_SIZE.Y / 2) - 1)
                     {
                         if (x == 5 || x == 20)
                         {
