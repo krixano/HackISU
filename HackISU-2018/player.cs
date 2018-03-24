@@ -64,8 +64,8 @@ namespace HackISU_2018
             }*/
 
             sprite.position_wp.Y += playerYSpeed_p;
-            Vector2_Double gravityBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, sprite.position_wp.Y + sprite.size.Y + 1);
-            //if (World.blocks[(int) gravityBottomLeft.X + (int) gravityBottomLeft.Y * (int) World.WORLD_SIZE.X].solid)
+            Vector2_Double gravityBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            if (World.blocks[(int) gravityBottomLeft.X + (int) gravityBottomLeft.Y * (int) World.WORLD_SIZE.X].solid)
             {
                 sprite.position_wp.Y -= playerYSpeed_p;
             }

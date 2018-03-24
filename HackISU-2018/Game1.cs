@@ -24,6 +24,9 @@ namespace HackISU_2018
         public static Texture2D roseTexture;
         public static Texture2D sunflowerTexture;
         public static Texture2D wildgrassTexture;
+        public static Texture2D deepOceanTexture;
+        public static Texture2D shallowOceanTexture;
+        public static Texture2D skyTexture;
 
 
 
@@ -81,6 +84,9 @@ namespace HackISU_2018
             roseTexture = Content.Load<Texture2D>("Rose_Block_Texture_64x64");
             sunflowerTexture = Content.Load<Texture2D>("Sunflower_Block_Texture_64x64");
             wildgrassTexture = Content.Load<Texture2D>("Wildgrass_Block_Texture_64x64");
+            deepOceanTexture = Content.Load<Texture2D>("Deep_Ocean_Block_Texture_64x64");
+            shallowOceanTexture = Content.Load<Texture2D>("Shallow_Ocean_Block_Texture_64x64");
+            skyTexture = Content.Load<Texture2D>("Sky_Block_Texture_64x64");
             gunArmTexture = testTexture;
             bulletTexture = testTexture;
             gun.gunArm.origin.X = testTexture.Width / 2;
