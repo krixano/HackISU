@@ -7,10 +7,10 @@ namespace HackISU_2018
 {
     class gun
     {
-        static public Game1.SpriteStruct gunArm;
+        static public Game1.SpriteStruct gunArm, shell;
         static public Game1.SpriteStruct[] bullet;
         static public int bulletSpeed, shotgunSpread;
-        static public float bulletSize, rateOfFire, tick;
+        static public float bulletSize, shellSize, rateOfFire, tick;
 
         
         public enum GunSelections
@@ -26,8 +26,11 @@ namespace HackISU_2018
         {
             //INITIALIZATION            
             shotgunSpread = 5;
-            bulletSpeed = Game1.screenRectangle.Width / 15; 
-            
+            bulletSpeed = Game1.screenRectangle.Width / 15;
+
+            shell.position_wp.X = gunArm.position_wp.X;
+            shell.position_wp.Y = gunArm.position_wp.Y;
+
             //Rate Of Fire: The Higher it is the slower you shoot (out of 60)
             rateOfFire = (float)gunSelection;
             tick = 0;
@@ -44,7 +47,11 @@ namespace HackISU_2018
             else if (gunSelection == GunSelections.SMG)
                 bulletSize = gunArm.size.X / 6;
             else if (gunSelection == GunSelections.SHOTGUN)
+            {
                 bulletSize = gunArm.size.X / 12;
+                shell.size.X = bulletSize;
+                shell.size.Y = bulletSize;
+            }
 
             bullet = new Game1.SpriteStruct[100]; 
             for (int i=0; i< bullet.Length; i++)
@@ -92,6 +99,8 @@ namespace HackISU_2018
                     //This is what happens when a bullet is fired
                     bullet[i].position_wp.X += bulletSpeed * (float)Math.Cos(bullet[i].rotation);
                     bullet[i].position_wp.Y += bulletSpeed * (float)Math.Sin(bullet[i].rotation);
+                    shell.position_wp.X = gunArm.position_wp.X;
+                    shell.position_wp.Y = gunArm.position_wp.Y;
                     //if (bullet[i].position_wp.X > Game1.screenRectangle.Width * 2 || bullet[i].position_wp.Y > Game1.screenRectangle.Height * 2
                     //    || bullet[i].position_wp.X < Game1.screenRectangle.Width * -2 || bullet[i].position_wp.Y < Game1.screenRectangle.Height * -2)
                     //    bullet[i].isFired = false;
@@ -111,11 +120,14 @@ namespace HackISU_2018
         }
         public static void shootGun()
         {
+            
             //Do this whenever you click/bullet fired
             for (int i=0; i<bullet.Length; i+= shotgunSpread)
-            {
+            {              
+                
                 if (!bullet[i].isFired && gunSelection == GunSelections.SHOTGUN)
-                {
+                {                    
+                    
                     for (int j = 0; j < shotgunSpread; j++)
                     {
                         bullet[j].position_wp.X = player.sprite.position_wp.X + player.sprite.size.X / 2;

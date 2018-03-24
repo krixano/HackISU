@@ -26,7 +26,7 @@ namespace HackISU_2018
             tmr = new Timer(60);
 
             playerXSpeed_p = World.BLOCK_SIZE * .25f;
-            playerYSpeed_p = World.BLOCK_SIZE * .25f;
+            playerYSpeed_p = World.BLOCK_SIZE * .50f;
 
             sprite.size.X = Game1.screenRectangle.Width / 20;
             sprite.size.Y = Game1.screenRectangle.Width / 10;
@@ -52,13 +52,15 @@ namespace HackISU_2018
             Vector2_Double gravityCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
             //bool isFalling = false;
             isFalling = false;
+
+            Double addFalling = 0;
             
             //checking collision for bottom of player, left and right corners
             if ((World.blocks[(int)gravityCollisionBottomRight.X + (int)gravityCollisionBottomRight.Y * (int)World.WORLD_SIZE.X].solid != true
                 || gravityCollisionBottomRight.X < 0 || gravityCollisionBottomRight.X > World.WORLD_SIZE.X || gravityCollisionBottomRight.Y < 0 || gravityCollisionBottomRight.Y > World.WORLD_SIZE.Y)
                 && !isJumping)
             {
-                sprite.position_wp.Y += playerYSpeed_p;
+                addFalling = playerYSpeed_p;
                 isFalling = true;
             } else
             {
@@ -69,7 +71,7 @@ namespace HackISU_2018
                 || gravityCollisionBottomLeft.X < 0 || gravityCollisionBottomLeft.X > World.WORLD_SIZE.X || gravityCollisionBottomLeft.Y < 0 || gravityCollisionBottomLeft.Y > World.WORLD_SIZE.Y)
                 && !isJumping)
             {
-                sprite.position_wp.Y += playerYSpeed_p;
+                addFalling = playerYSpeed_p;
                 isFalling = true;
             }
              Vector2_Double sideCollisionTopLeft = new Vector2_Double((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
@@ -82,27 +84,46 @@ namespace HackISU_2018
 
             if (World.blocks[(int) sideCollisionTopLeft.X + (int) sideCollisionTopLeft.Y * (int) World.WORLD_SIZE.X].solid)
                 canGoLeft = false;
-            if (World.blocks[(int) sideCollisionBottomLeft.X + (int) sideCollisionBottomLeft.Y * (int) World.WORLD_SIZE.X].solid)
-                canGoLeft = false;
+            //if (World.blocks[(int) sideCollisionBottomLeft.X + (int) sideCollisionBottomLeft.Y * (int) World.WORLD_SIZE.X].solid)
+                //canGoLeft = false;
             if (World.blocks[(int) sideCollisionTopRight.X + (int) sideCollisionTopRight.Y * (int) World.WORLD_SIZE.X].solid)
                 canGoRight = false;
-            if (World.blocks[(int) sideCollisionBottomRight.X + (int) sideCollisionBottomRight.Y * (int) World.WORLD_SIZE.X].solid)
-                canGoRight = false;
+            //if (World.blocks[(int) sideCollisionBottomRight.X + (int) sideCollisionBottomRight.Y * (int) World.WORLD_SIZE.X].solid)
+            //canGoRight = false;
 
-            //Controls player moving left and right        
-            if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Right) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
+            //Slow fall if touching wall
+            if ((canGoLeft == false || canGoRight == false) && isFalling)
+            {
+                addFalling = playerYSpeed_p / 5;
+                //sprite.position_wp.Y += playerYSpeed_p;
+                if (Game1.keyboard.IsKeyDown(Keys.Space) && Game1.prevKeyboard.IsKeyUp(Keys.Space))
+                {
+                    sprite.position_wp.X += playerXSpeed_p;
+                    isFalling = false;                    
+                    playerJump();
+                }
+            }
+
+            //scrolls screen      
+            if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Right)
+                || Game1.keyboard.IsKeyDown(Keys.D) 
+                && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
                 World.offset_b.X += .25f;
-            if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Left) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
+            if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Left) 
+                || Game1.keyboard.IsKeyDown(Keys.A) 
+                && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
                 World.offset_b.X -= .25f;
             //else if (Game1.keyboard.IsKeyDown(Keys.Up) && sprite.position.Y <= Game1.screenRectangle.Bottom - Game1.screenRectangle.Height / 3)
             //    World.offset.Y -= .25f;
             //else if (Game1.keyboard.IsKeyDown(Keys.Down) && sprite.position.Y >= Game1.screenRectangle.Top - Game1.screenRectangle.Height / 3)
             //    World.offset.Y += .25f;
 
-            //Scrolls screen
-            if (canGoLeft && (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left)))
+            //moves player
+            if (canGoLeft && (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left)
+                || Game1.keyboard.IsKeyDown(Keys.A)))
                 sprite.position_wp.X -= playerXSpeed_p;
-            if (canGoRight && (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right)))
+            if (canGoRight && (Game1.pad1.IsButtonDown(Buttons.DPadRight) ||
+                Game1.keyboard.IsKeyDown(Keys.D) || Game1.keyboard.IsKeyDown(Keys.Right)))
                 sprite.position_wp.X += playerXSpeed_p;
 
             if (playerScreenPixels().Y >= Game1.screenRectangle.Height / 5 * 3)
@@ -112,9 +133,14 @@ namespace HackISU_2018
 
             // Jump
             // If pressing jump button, and not jumping or falling
-            if ((Game1.pad1.IsButtonDown(Buttons.A) || Game1.keyboard.IsKeyDown(Keys.Space) || Game1.keyboard.IsKeyDown(Keys.Up) || Game1.keyboard.IsKeyDown(Keys.W)) && !isJumping && !isFalling)
+            while ((Game1.pad1.IsButtonDown(Buttons.A) && Game1.prevPad1.IsButtonUp(Buttons.A)
+                || Game1.keyboard.IsKeyDown(Keys.Space) && Game1.prevKeyboard.IsKeyUp(Keys.Space)
+                || Game1.keyboard.IsKeyDown(Keys.Up) && Game1.prevKeyboard.IsKeyUp(Keys.Up)
+                || Game1.keyboard.IsKeyDown(Keys.W)) && Game1.prevKeyboard.IsKeyUp(Keys.W) && !isJumping && !isFalling)
                 isJumping = true;
             playerJump();
+
+            sprite.position_wp.Y += addFalling;
         }
         
 
@@ -122,8 +148,9 @@ namespace HackISU_2018
         {
             if (isJumping && !isFalling)
             {
+                
                 currentTmr++;
-                double increment = playerYSpeed_p * 2;
+                double increment = playerYSpeed_p ;
                 double x1 = (sprite.position_wp.X) / World.BLOCK_SIZE;
                 double x2 = (sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE;
                 double y = (sprite.position_wp.Y - increment - 2) / World.BLOCK_SIZE;
