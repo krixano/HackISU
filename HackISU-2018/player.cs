@@ -15,7 +15,7 @@ namespace HackISU_2018
         static private int playerXSpeed, playerYSpeed;
         static public Game1.SpriteStruct sprite;
 
-        static public void Init()
+        static public void playerInit()
         {
             playerXSpeed = Game1.screenRectangle.Width / 20;
             playerYSpeed = Game1.screenRectangle.Height / 20;
@@ -24,22 +24,20 @@ namespace HackISU_2018
             sprite.size.Y = Game1.screenRectangle.Width / 20;
             sprite.position.X = Game1.screenRectangle.Center.X - (sprite.size.X / 2);
             sprite.position.Y = Game1.screenRectangle.Center.Y - (sprite.size.Y / 2);
-
-
-            if (Game1.pad1.IsButtonDown(Buttons.DPadLeft))
+                       
+                        
+        }
+        public static void playerUpdate()
+        {
+            if (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left))
                 sprite.position.X += playerXSpeed;
-            if (Game1.pad1.IsButtonDown(Buttons.DPadRight))
+            if (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right))
                 sprite.position.X -= playerXSpeed;
             //if (Game1.pad1.IsButtonDown(Buttons.DPadUp))
             //    player.position.Y += playerYSpeed;
             //if (Game1.pad1.IsButtonDown(Buttons.DPadDown))
             //    player.position.Y -= playerYSpeed;
-                        
         }
-        static public void Update()
-        {
 
-        }
-        
     }
 }

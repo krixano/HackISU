@@ -11,7 +11,7 @@ namespace HackISU_2018
         public static GamePadState pad1, prevPad1;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        KeyboardState keyboard;
+        public static KeyboardState keyboard;
 
         World world;
         public static Rectangle screenRectangle;
@@ -49,7 +49,7 @@ namespace HackISU_2018
             graphics.PreferredBackBufferHeight = screenRectangle.Height;
             graphics.ApplyChanges();
             //playingAreaRectangle = new Rectangle(0, 0, 1280, 720);
-            player.Init();
+            player.playerInit();
 
             base.Initialize();
         }
@@ -78,12 +78,14 @@ namespace HackISU_2018
             pad1 = GamePad.GetState(PlayerIndex.One);
 
             keyboard = Keyboard.GetState();
+            player.playerUpdate();
 
             if (keyboard.IsKeyDown(Keys.Right)) world.offset.X += .25f;
             if (keyboard.IsKeyDown(Keys.Left)) world.offset.X -= .25f;
             if (keyboard.IsKeyDown(Keys.Up)) world.offset.Y -= .25f;
             if (keyboard.IsKeyDown(Keys.Down)) world.offset.Y += .25f;
-            
+
+
             //Put update code here
 
             prevPad1 = pad1;
@@ -98,7 +100,7 @@ namespace HackISU_2018
             spriteBatch.Begin();
             {
                 world.Draw(spriteBatch);
-                spriteBatch.Draw(testTexture, new Rectangle((int) player.sprite.position.X, (int) player.sprite.position.Y, (int) player.sprite.size.X, (int) player.sprite.position.Y), Color.White);
+                spriteBatch.Draw(testTexture, new Rectangle((int) player.sprite.position.X, (int) player.sprite.position.Y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
             }
             spriteBatch.End();
 
