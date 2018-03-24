@@ -75,6 +75,7 @@ namespace HackISU_2018
             World.Init();
             player.playerInit();
             gun.gunInit();
+            enemy.enemyInit();
 
             UserInterface.InitializeMenus();
 
@@ -124,6 +125,7 @@ namespace HackISU_2018
             mouse = Mouse.GetState();
             player.playerUpdate();
             gun.gunUpdate();
+            enemy.enemyUpdate();
             //prevMouse = mouse;
             prevPad1 = pad1;
             prevKeyboard = keyboard;
