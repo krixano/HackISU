@@ -72,6 +72,7 @@
     <Content Include="Content\Half_Heart_Block_Texture_64x64.png" />
     <Content Include="Content\Heart_Block_Texture_64x64.png" />
     <Content Include="Content\Rose_Block_Texture_64x64.png" />
+    <Content Include="Content\saved game.png" />
     <Content Include="Content\Shallow_Ocean_Block_Texture_64x64.png" />
     <Content Include="Content\Shotgun_Pellet_Texture_32x32.png" />
     <Content Include="Content\Shotgun_Shell_Texture_36x64.png" />

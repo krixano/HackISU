@@ -5,7 +5,7 @@ using System;
 
 namespace HackISU_2018
 {
-    
+
     public class Game1 : Game
     {
         public static GamePadState pad1, prevPad1;
@@ -27,6 +27,7 @@ namespace HackISU_2018
         public static Texture2D deepOceanTexture;
         public static Texture2D shallowOceanTexture;
         public static Texture2D skyTexture;
+        public static Texture2D quit, resume, newGame, settings, load;
         public static Texture2D spiralPlatformTexture;
         public static Texture2D shotgunShell;
 
@@ -37,7 +38,7 @@ namespace HackISU_2018
             MAIN_MENU, PAUSED, PLAYING
         }
 
-        static public GameStates gameState = GameStates.PLAYING;
+        static public GameStates gameState = GameStates.MAIN_MENU;
 
         public struct SpriteStruct
         {
@@ -55,6 +56,7 @@ namespace HackISU_2018
         public struct Menu
         {
             public Rectangle[] bottons;
+            public Texture2D[] textures;
             public Color color;
         }
 
@@ -82,7 +84,7 @@ namespace HackISU_2018
             base.Initialize();
         }
 
-        
+
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -102,27 +104,38 @@ namespace HackISU_2018
             shotgunShell = Content.Load<Texture2D>("Shotgun_Shell_Texture_36x64");
             gunArmTexture = testTexture;
             bulletTexture = Content.Load<Texture2D>("Shotgun_Pellet_Texture_32x32");
+            quit = Content.Load<Texture2D>("quit");
+            newGame = Content.Load<Texture2D>("new game");
+            resume = Content.Load<Texture2D>("resume");
+            settings = Content.Load<Texture2D>("options");
+            load = Content.Load<Texture2D>("saved game");
             gun.gunArm.origin.X = testTexture.Width / 2;
             gun.gunArm.origin.Y = testTexture.Height / 2;
             for (int i = 0; i < gun.bullet.Length; i++)
             {
-                gun.bullet[i].origin.Y = bulletTexture.Height / 2 ;                
+                gun.bullet[i].origin.Y = bulletTexture.Height / 2;
                 gun.bullet[i].origin.X = bulletTexture.Width / 2;
             }
+
+            UserInterface.LoadTexture();
         }
 
-        
+
         protected override void UnloadContent()
         {
 
         }
-        
+
         protected override void Update(GameTime gameTime)
-        {         
+        {
             pad1 = GamePad.GetState(PlayerIndex.One);
 
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
+            if (gameState == GameStates.MAIN_MENU)
+                UserInterface.UpdateButtonsStart();
+            if (gameState == GameStates.PAUSED)
+                UserInterface.UpdateButtonsPaused();
             player.playerUpdate();
             gun.gunUpdate();
             enemy.enemyUpdate();
@@ -132,7 +145,7 @@ namespace HackISU_2018
             base.Update(gameTime);
         }
 
-        
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -153,6 +166,11 @@ namespace HackISU_2018
                         spriteBatch.Draw(shotgunShell, new Rectangle((int)(gun.shell.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.shell.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.shell.size.X, (int)gun.shell.size.Y), Color.White);
                     if (gun.bullet[i].isFired)
                         spriteBatch.Draw(bulletTexture, new Rectangle((int)(gun.bullet[i].position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.bullet[i].position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.bullet[i].size.X, (int)gun.bullet[i].size.Y), null, Color.White, gun.bullet[i].rotation, gun.bullet[i].origin, SpriteEffects.None, 0);
+                spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, SpriteEffects.None, 0);
+                if (gameState == GameStates.MAIN_MENU)
+                    UserInterface.DrawStartingMenu(spriteBatch);
+                if (gameState == GameStates.PAUSED)
+                    UserInterface.DrawPauseMenu(spriteBatch);
                 }
                     spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, SpriteEffects.None,0);
             }
