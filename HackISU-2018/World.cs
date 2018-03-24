@@ -207,5 +207,10 @@ namespace HackISU_2018
             return new Vector2_Double((position.X * BLOCK_SIZE) - (offset_b.X * World.BLOCK_SIZE), (position.Y * BLOCK_SIZE) - (offset_b.Y * World.BLOCK_SIZE));
         }
 
+        public static Point worldOffsetPixels()
+        {
+            return new Point((int) (offset_b.X * World.BLOCK_SIZE), (int) (offset_b.Y * World.BLOCK_SIZE));
+        }
+
     }
 }
