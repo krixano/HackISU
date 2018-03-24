@@ -11,19 +11,34 @@ namespace HackISU_2018
 
         public int tickAmt;
         public int currentAmt = 0;
+        public bool running = false;
 
         public Timer(int tickAmt)
         {
             this.tickAmt = tickAmt;
         }
 
+        public void start()
+        {
+            running = true;
+        }
+
+        public void stop()
+        {
+            running = false;
+        }
+
         public bool Update()
         {
-            this.currentAmt++;
-            if (currentAmt == tickAmt)
+            if (running)
             {
-                this.currentAmt = 0;
-                return true;
+                this.currentAmt++;
+                if (currentAmt == tickAmt)
+                {
+                    this.currentAmt = 0;
+                    return true;
+                }
+                return false;
             }
             return false;
         }

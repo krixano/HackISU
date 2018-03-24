@@ -21,6 +21,7 @@ namespace HackISU_2018
         {
             public BlockType type;
             public Vector2 size; // In Blocks - which means size.x and size.y times blocksize.
+            public bool solid;
         };
 
         public static Vector2 offset; // In Blocks
@@ -39,12 +40,22 @@ namespace HackISU_2018
             {
                 for (int x = 0; x < WORLD_SIZE.X; x++)
                 {
+                    int i = x + y * (int) WORLD_SIZE.X;
                     if (y < (WORLD_SIZE.Y / 2) - 1)
-                        blocks[x + y * (int) WORLD_SIZE.X].type = BlockType.AIR;
+                    {
+                        blocks[i].type = BlockType.AIR;
+                        blocks[i].solid = false;
+                    }
                     else if (y == (WORLD_SIZE.Y / 2) - 1)
-                        blocks[x + y * (int) WORLD_SIZE.X].type = BlockType.GRASS;
-                    else blocks[x + y * (int) WORLD_SIZE.X].type = BlockType.DIRT;
-                    blocks[x + y * (int) WORLD_SIZE.X].size = new Vector2(1, 1);
+                    {
+                        blocks[i].type = BlockType.GRASS;
+                        blocks[i].solid = true;
+                    }
+                    else {
+                        blocks[i].type = BlockType.DIRT;
+                        blocks[i].solid = true;
+                    }
+                    blocks[i].size = new Vector2(1, 1);
                 }
             }
 
