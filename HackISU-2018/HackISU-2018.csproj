@@ -48,6 +48,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timer.cs" />
+    <Compile Include="UserInterface.cs" />
     <Compile Include="Vector2_Double.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
@@ -64,6 +65,10 @@
     <Content Include="Content\Deep_Ocean_Block_Texture_64x64.png" />
     <Content Include="Content\Dirt_Block_Texture_64x64.png" />
     <Content Include="Content\Grass_Block_Texture_64x64.png" />
+    <Content Include="Content\new game.png" />
+    <Content Include="Content\options.png" />
+    <Content Include="Content\quit.png" />
+    <Content Include="Content\Resume.png" />
     <Content Include="Content\Half_Heart_Block_Texture_64x64.png" />
     <Content Include="Content\Heart_Block_Texture_64x64.png" />
     <Content Include="Content\Rose_Block_Texture_64x64.png" />
