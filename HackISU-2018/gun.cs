@@ -9,8 +9,9 @@ namespace HackISU_2018
     {
         static public Game1.SpriteStruct gunArm;
         static public Game1.SpriteStruct[] bullet;
-        static public int bulletSpeed;
-        static public float bulletSize, rateOfFire, tick;     
+        static public int bulletSpeed, shotgunSpread;
+        static public float bulletSize, rateOfFire, tick;
+        public static Random rnd = new Random();
         
         public enum GunSelections
         {
@@ -19,27 +20,38 @@ namespace HackISU_2018
             ASSAULT_RIFLE = 10,
             SHOTGUN = 45
         }
-        static public GunSelections gunSelection = GunSelections.HANDGUN;
+        static public GunSelections gunSelection = GunSelections.SHOTGUN;
 
         static public void gunInit()
         {
-            //INITIALIZATION
-            bulletSpeed = Game1.screenRectangle.Width / 20;
-            bulletSize = gunArm.size.X / 4;
+            //INITIALIZATION            
+            shotgunSpread = 5;
+            bulletSpeed = Game1.screenRectangle.Width / 20; 
+            
             //Rate Of Fire: The Higher it is the slower you shoot (out of 60)
             rateOfFire = (float)gunSelection;
             tick = 0;
 
+            //Gun Arm Size
             gunArm.size.X = player.sprite.size.X;
             gunArm.size.Y = gunArm.size.X / 3;
 
+            //Bullet Sizes
+            if (gunSelection == GunSelections.HANDGUN)
+                bulletSize = gunArm.size.X / 4;
+            else if (gunSelection == GunSelections.ASSAULT_RIFLE)
+                bulletSize = gunArm.size.X / 8;
+            else if (gunSelection == GunSelections.SMG)
+                bulletSize = gunArm.size.X / 6;
+            else if (gunSelection == GunSelections.SHOTGUN)
+                bulletSize = gunArm.size.X / 8;
 
             bullet = new Game1.SpriteStruct[100]; 
             for (int i=0; i< bullet.Length; i++)
             {
                 bullet[i].isFired = false;
-                bullet[i].size.X = gunArm.size.X / 4;
-                bullet[i].size.Y = gunArm.size.Y / 2;
+                bullet[i].size.X = bulletSize;
+                bullet[i].size.Y = bulletSize / 2;
                 bullet[i].position_wp.X = gunArm.position_wp.X + gunArm.size.X / 2 - bullet[i].size.X / 2;
                 bullet[i].position_wp.Y = gunArm.position_wp.Y + gunArm.size.Y / 2 - bullet[i].size.Y / 2;
             }
@@ -100,21 +112,37 @@ namespace HackISU_2018
         public static void shootGun()
         {
             //Do this whenever you click/bullet fired
-            for (int i=0; i<bullet.Length; i++)
+            for (int i=0; i<bullet.Length; i+= shotgunSpread)
             {
-                if (!bullet[i].isFired)
+                if (!bullet[i].isFired && gunSelection == GunSelections.SHOTGUN)
                 {
-                    bullet[i].position_wp.X = player.sprite.position_wp.X + player.sprite.size.X / 2;                    
-                    bullet[i].position_wp.Y = player.sprite.position_wp.Y + player.sprite.size.Y / 2;
-                    bullet[i].isFired = true;                    
-                    bullet[i].rotation = gunArm.rotation;
+                    for (int j = 0; j < shotgunSpread; j++)
+                    {
+                        bullet[j].position_wp.X = player.sprite.position_wp.X + player.sprite.size.X / 2;
+                        bullet[j].position_wp.Y = player.sprite.position_wp.Y + player.sprite.size.Y / 2;
+                        bullet[j].isFired = true;
+                        //gives shotgun spread (Math.PI * 1/3 is how spread out)
+                        bullet[j].rotation = (float)( (Math.PI * 1/3) / shotgunSpread * j) + (float) (gunArm.rotation - (Math.PI * 1/3) / 2);
+                    }
                     break;
                 }
+                else if (!bullet[i].isFired)
+                    {
+                        bullet[i].position_wp.X = player.sprite.position_wp.X + player.sprite.size.X / 2;                    
+                        bullet[i].position_wp.Y = player.sprite.position_wp.Y + player.sprite.size.Y / 2;
+                        bullet[i].isFired = true;                    
+                        bullet[i].rotation = gunArm.rotation;
+                        break;
+                    }
             }
         }
         public static void checkForBulletCollision()
         {
             
+        }
+        public static void switchWeapons()
+        {
+            if 
         }
     }
 }
