@@ -6,7 +6,7 @@ using System;
 namespace HackISU_2018
 {
 
-    public class Game1 : Game
+    public class Game1 : Microsoft.Xna.Framework.Game
     {
         public static GamePadState pad1, prevPad1;
         public static MouseState mouse, prevMouse;
@@ -35,7 +35,8 @@ namespace HackISU_2018
 
         public enum GameStates
         {
-            MAIN_MENU, PAUSED, PLAYING
+            MAIN_MENU, PAUSED, PLAYING, Exit,
+            OPTIONS
         }
 
         static public GameStates gameState = GameStates.MAIN_MENU;
@@ -106,11 +107,11 @@ namespace HackISU_2018
             shotgunShell = Content.Load<Texture2D>("Shotgun_Shell_Texture_36x64");
             gunArmTexture = testTexture;
             bulletTexture = Content.Load<Texture2D>("Shotgun_Pellet_Texture_32x32");
-            quit = Content.Load<Texture2D>("quit");
-            newGame = Content.Load<Texture2D>("new game");
+            quit = Content.Load<Texture2D>("quit_game_texture_1280x720");
+            newGame = Content.Load<Texture2D>("new_game_texture_1280x720");
             resume = Content.Load<Texture2D>("resume");
-            settings = Content.Load<Texture2D>("options");
-            load = Content.Load<Texture2D>("saved game");
+            settings = Content.Load<Texture2D>("options_texture_1280x720");
+            load = Content.Load<Texture2D>("saved_game_texture_1280x720");
             gun.gunArm.origin.X = testTexture.Width / 2;
             gun.gunArm.origin.Y = testTexture.Height / 2;
             for (int i = 0; i < gun.bullet.Length; i++)
