@@ -11,10 +11,25 @@ namespace HackISU_2018
 {
     class player
     {
-        
-        static public void PlayerControls
+        public struct SpriteStruct
         {
-            player1.rectangle
+            public Texture2D texture;
+            public Vector2 position;
+            public Rectangle rectangle;
+            public Color color;
+            public float rotation;
+            public Vector2 origin, speed;
+            public float scale;
+            public SpriteEffects effect;
+            public float layerDepth;
+
+        }
+
+        public void Player()
+        {
+            SpriteStruct player;
+            player.rectangle.Width = screenRectangle.Width / 20;
+            player.rectangle.Height = screenRectangle.Height / 20;
         }
         
     }
