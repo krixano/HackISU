@@ -24,7 +24,7 @@ namespace HackISU_2018
             public bool solid;
         };
 
-        public static Vector2 offset; // In Blocks
+        public static Vector2 offset_b; // _b: In Blocks
         public static Vector2 WORLD_SIZE;
         public static Block[] blocks;
         public const int BLOCK_SIZE = 45;
@@ -33,7 +33,7 @@ namespace HackISU_2018
         {
             int worldHeight = ((Game1.screenRectangle.Height / 2) / BLOCK_SIZE) + 2;
             WORLD_SIZE = new Vector2(200, worldHeight * 2);
-            offset = new Vector2(0, 0);
+            offset_b = new Vector2(0, 0);
             blocks = new Block[(int) WORLD_SIZE.X * (int) WORLD_SIZE.Y];
 
             for (int y = 0; y < WORLD_SIZE.Y; y++)
@@ -75,7 +75,7 @@ namespace HackISU_2018
             {
                 for (int x = 0; x < WORLD_SIZE.X; x++)
                 {
-                    Rectangle destination = new Rectangle((int) ((x * BLOCK_SIZE) - (offset.X * BLOCK_SIZE)), (int) ((y * BLOCK_SIZE) - (offset.Y * BLOCK_SIZE)), (int) BLOCK_SIZE, (int) BLOCK_SIZE);
+                    Rectangle destination = new Rectangle((int) ((x * BLOCK_SIZE) - (offset_b.X * BLOCK_SIZE)), (int) ((y * BLOCK_SIZE) - (offset_b.Y * BLOCK_SIZE)), (int) BLOCK_SIZE, (int) BLOCK_SIZE);
                     Texture2D texture;
                     switch (blocks[x + y * (int) WORLD_SIZE.X].type)
                     {
@@ -106,13 +106,13 @@ namespace HackISU_2018
 
         public static Vector2 worldPixelsToScreenPixelsPosition(Vector2 position)
         {
-            return new Vector2(position.X - (World.offset.X * World.BLOCK_SIZE), position.Y - (World.offset.Y * World.BLOCK_SIZE));
+            return new Vector2(position.X - (World.offset_b.X * World.BLOCK_SIZE), position.Y - (World.offset_b.Y * World.BLOCK_SIZE));
         }
 
         // Note: Only works for sprites of same size as BLOCK_SIZE
         public static Vector2 worldBlocksToScreenPixelsPosition(Vector2 position)
         {
-            return new Vector2((position.X * BLOCK_SIZE) - (offset.X * World.BLOCK_SIZE), (position.Y * BLOCK_SIZE) - (offset.Y * World.BLOCK_SIZE));
+            return new Vector2((position.X * BLOCK_SIZE) - (offset_b.X * World.BLOCK_SIZE), (position.Y * BLOCK_SIZE) - (offset_b.Y * World.BLOCK_SIZE));
         }
 
     }

@@ -12,7 +12,7 @@ namespace HackISU_2018
 {
     class player
     {
-        static private float playerXSpeed, playerYSpeed; // In Pixels
+        static private float playerXSpeed_p, playerYSpeed_p; // _p: In Pixels
         static public Game1.SpriteStruct sprite;
         static Timer tmr;
         //tmrAmt = Jump length
@@ -25,13 +25,13 @@ namespace HackISU_2018
         {
             tmr = new Timer(60);
 
-            playerXSpeed = World.BLOCK_SIZE * .25f;
-            playerYSpeed = World.BLOCK_SIZE * .25f;
+            playerXSpeed_p = World.BLOCK_SIZE * .25f;
+            playerYSpeed_p = World.BLOCK_SIZE * .25f;
 
             sprite.size.X = Game1.screenRectangle.Width / 20;
             sprite.size.Y = Game1.screenRectangle.Width / 20;
-            sprite.position.X = ((Game1.screenRectangle.Center.X - (sprite.size.X / 2) / World.BLOCK_SIZE) + World.offset.X); // In World Pixels
-            sprite.position.Y = (((World.WORLD_SIZE.Y / 2) - 1) * World.BLOCK_SIZE) - sprite.size.Y;
+            sprite.position_wp.X = ((Game1.screenRectangle.Center.X - (sprite.size.X / 2) / World.BLOCK_SIZE) + World.offset_b.X); // In World Pixels
+            sprite.position_wp.Y = (((World.WORLD_SIZE.Y / 2) - 1) * World.BLOCK_SIZE) - sprite.size.Y;
             
                        
         }
@@ -41,10 +41,10 @@ namespace HackISU_2018
             // Gravity/Ground Collision
             if (!isJumping || isFalling)
             {
-                float increment = playerYSpeed;
-                float x1 = (sprite.position.X) / World.BLOCK_SIZE;
-                float x2 = (sprite.position.X + sprite.size.X) / World.BLOCK_SIZE;
-                float y = (sprite.position.Y + sprite.size.Y + increment - 2) / World.BLOCK_SIZE;
+                float increment = playerYSpeed_p;
+                float x1 = (sprite.position_wp.X) / World.BLOCK_SIZE;
+                float x2 = (sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE;
+                float y = (sprite.position_wp.Y + sprite.size.Y + increment - 2) / World.BLOCK_SIZE;
                 int i = (int) (x1 + y * World.WORLD_SIZE.X);
                 int i2 = (int) (x2 + y * World.WORLD_SIZE.X);
                 while (World.blocks[i].solid || World.blocks[i2].solid)
@@ -55,17 +55,17 @@ namespace HackISU_2018
                         increment = 0;
                         break;
                     }
-                    y = (sprite.position.Y + sprite.size.Y + increment - 2) / World.BLOCK_SIZE;
+                    y = (sprite.position_wp.Y + sprite.size.Y + increment - 2) / World.BLOCK_SIZE;
                     i = (int) (x1 + y * World.WORLD_SIZE.X);
                     i2 = (int) (x2 + y * World.WORLD_SIZE.X);
                 }
-                sprite.position.Y += increment;
+                sprite.position_wp.Y += increment;
             }
 
-            Vector2 sideCollisionTopLeft = new Vector2((sprite.position.X - 1) / World.BLOCK_SIZE, (sprite.position.Y) / World.BLOCK_SIZE);
-            Vector2 sideCollisionBottomLeft = new Vector2((sprite.position.X - 1) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);
-            Vector2 sideCollisionTopRight = new Vector2((sprite.position.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position.Y) / World.BLOCK_SIZE);
-            Vector2 sideCollisionBottomRight = new Vector2((sprite.position.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);
+            Vector2 sideCollisionTopLeft = new Vector2((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
+            Vector2 sideCollisionBottomLeft = new Vector2((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);
+            Vector2 sideCollisionTopRight = new Vector2((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
+            Vector2 sideCollisionBottomRight = new Vector2((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - 1) / World.BLOCK_SIZE);
 
             bool canGoLeft = true;
             bool canGoRight = true;
@@ -81,17 +81,17 @@ namespace HackISU_2018
                 canGoRight = false;
 
             // Controls player moving left and right
-            if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
-                World.offset.X += .25f;
-            if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Left) || Game1.keyboard.IsKeyDown(Keys.A) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
-                World.offset.X -= .25f;
+            if (canGoRight && (Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D)) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
+                World.offset_b.X += .25f;
+            if (canGoLeft && (Game1.keyboard.IsKeyDown(Keys.Left) || Game1.keyboard.IsKeyDown(Keys.A)) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
+                World.offset_b.X -= .25f;
             
 
             // Scrolls screen
             if (canGoLeft && (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left) || Game1.keyboard.IsKeyDown(Keys.A)))
-                sprite.position.X -= playerXSpeed;
+                sprite.position_wp.X -= playerXSpeed_p;
             if (canGoRight && (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right) || Game1.keyboard.IsKeyDown(Keys.D)))
-                sprite.position.X += playerXSpeed;
+                sprite.position_wp.X += playerXSpeed_p;
 
             // Jump
             // If pressing jump button, and not jumping or falling
@@ -106,7 +106,7 @@ namespace HackISU_2018
             if (isJumping && !isFalling)
             {
                 currentTmr++;
-                sprite.position.Y -= playerYSpeed * 2;
+                sprite.position_wp.Y -= playerYSpeed_p * 2;
                 if (currentTmr == tmrAmt)
                 {
                     currentTmr = 0;
@@ -119,12 +119,12 @@ namespace HackISU_2018
 
         public static Vector2 playerScreenPixels()
         {
-            return new Vector2(player.sprite.position.X - (World.offset.X * World.BLOCK_SIZE), player.sprite.position.Y - (World.offset.Y * World.BLOCK_SIZE));
+            return new Vector2(player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE), player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE));
         }
 
         public static Vector2 playerWorldBlocks()
         {
-            return new Vector2(player.sprite.position.X / World.BLOCK_SIZE, player.sprite.position.Y / World.BLOCK_SIZE);
+            return new Vector2(player.sprite.position_wp.X / World.BLOCK_SIZE, player.sprite.position_wp.Y / World.BLOCK_SIZE);
         }
 
     }
