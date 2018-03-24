@@ -14,7 +14,7 @@ namespace HackISU_2018
         static public string fileName;
         public enum BlockType
         {
-            AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS, SHALLOW_OCEAN, DEEP_OCEAN
+            AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS, SHALLOW_OCEAN, DEEP_OCEAN, SPIRAL
         };
 
         public struct Block
@@ -85,14 +85,19 @@ namespace HackISU_2018
                         blocks[index].type = BlockType.DIRT;
                         blocks[index].solid = true;
                     }
-                    else if (map[j, i] == 'p')
+                    else if (map[j, i] == 'o')
                     {
                         blocks[index].type = BlockType.SHALLOW_OCEAN;
                         blocks[index].solid = true;
                     }
-                    else if (map[j, i] == 'o')
+                    else if (map[j, i] == 'O')
                     {
                         blocks[index].type = BlockType.DEEP_OCEAN;
+                        blocks[index].solid = true;
+                    }
+                    else if (map[j, i] == 'p')
+                    {
+                        blocks[index].type = BlockType.SPIRAL;
                         blocks[index].solid = true;
                     }
                     else if (map[j, i] == 'a')
@@ -116,6 +121,7 @@ namespace HackISU_2018
                 {
                     Rectangle destination = new Rectangle((int) ((x * BLOCK_SIZE) - (offset_b.X * BLOCK_SIZE)), (int) ((y * BLOCK_SIZE) - (offset_b.Y * BLOCK_SIZE)), (int) BLOCK_SIZE, (int) BLOCK_SIZE);
                     Texture2D texture;
+                    Color color = Color.White;
                     switch (blocks[x + y * (int) WORLD_SIZE.X].type)
                     {
                         case BlockType.AIR:
@@ -129,12 +135,17 @@ namespace HackISU_2018
                             break;
                         case BlockType.SHALLOW_OCEAN:
                             texture = Game1.shallowOceanTexture;
+                            color = new Color(255, 255, 255, 50);
                             break;
                         case BlockType.DEEP_OCEAN:
                             texture = Game1.deepOceanTexture;
+                            color = new Color(255, 255, 255, 50);
                             break;                        
                         case BlockType.STONE:
                             texture = Game1.stoneTexture;
+                            break;
+                        case BlockType.SPIRAL:
+                            texture = Game1.spiralPlatformTexture;
                             break;
                         case BlockType.ROSE:
                             texture = Game1.roseTexture;
@@ -151,7 +162,7 @@ namespace HackISU_2018
                     }
                     if (texture != null)
                     {
-                        spriteBatch.Draw(texture, destination, Color.White);
+                        spriteBatch.Draw(texture, destination, color);
                     }
                 }
             }
