@@ -56,8 +56,13 @@ namespace HackISU_2018
             //playerJump();
         }
         void playerJump()
-        {
+        {            
             Timer tmr = new Timer(30);
+            tmr.start();
+            if (tmr.running == true)
+                sprite.position.Y -= playerYSpeed;
+            //if (tmr.Update() == false)
+
         }
 
     }
