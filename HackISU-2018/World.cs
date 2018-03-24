@@ -14,7 +14,7 @@ namespace HackISU_2018
 
         public enum BlockType
         {
-            AIR, DIRT, GRASS
+            AIR, DIRT, GRASS, STONE
         };
 
         public struct Block
@@ -45,7 +45,7 @@ namespace HackISU_2018
                     {
                         if (x == 5 || x == 20)
                         {
-                            blocks[i].type = BlockType.DIRT;
+                            blocks[i].type = BlockType.STONE;
                             blocks[i].solid = true;
                         } else
                         {
@@ -87,6 +87,9 @@ namespace HackISU_2018
                             break;
                         case BlockType.GRASS:
                             texture = Game1.grassTexture;
+                            break;
+                        case BlockType.STONE:
+                            texture = Game1.stoneTexture;
                             break;
                         default:
                             texture = null;
