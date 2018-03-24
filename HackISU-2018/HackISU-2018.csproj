@@ -73,7 +73,11 @@
     <Content Include="Content\Heart_Block_Texture_64x64.png" />
     <Content Include="Content\Rose_Block_Texture_64x64.png" />
     <Content Include="Content\Shallow_Ocean_Block_Texture_64x64.png" />
+    <Content Include="Content\Shotgun_Pellet_Texture_32x32.png" />
+    <Content Include="Content\Shotgun_Shell_Texture_36x64.png" />
     <Content Include="Content\Sky_Block_Texture_64x64.png" />
+    <Content Include="Content\Spiral_Platform_Texture_256x40.png" />
+    <Content Include="Content\Spiral_Tower_Colored_Block_Texture_64x64.png" />
     <Content Include="Content\Stone_Block_Texture_64x64.png" />
     <Content Include="Content\Sunflower_Block_Texture_64x64.png" />
     <Content Include="Content\WhiteSquare100x100.png" />
