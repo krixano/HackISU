@@ -88,7 +88,7 @@ namespace HackISU_2018
             shallowOceanTexture = Content.Load<Texture2D>("Shallow_Ocean_Block_Texture_64x64");
             skyTexture = Content.Load<Texture2D>("Sky_Block_Texture_64x64");
             gunArmTexture = testTexture;
-            bulletTexture = Content.Load<Texture2D>("bullet_Texture_20x60");
+            bulletTexture = Content.Load<Texture2D>("Shotgun_Pellet_Texture_32x32");
             gun.gunArm.origin.X = testTexture.Width / 2;
             gun.gunArm.origin.Y = testTexture.Height / 2;
             for (int i = 0; i < gun.bullet.Length; i++)

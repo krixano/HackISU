@@ -26,7 +26,7 @@ namespace HackISU_2018
         {
             //INITIALIZATION            
             shotgunSpread = 5;
-            bulletSpeed = Game1.screenRectangle.Width / 20; 
+            bulletSpeed = Game1.screenRectangle.Width / 15; 
             
             //Rate Of Fire: The Higher it is the slower you shoot (out of 60)
             rateOfFire = (float)gunSelection;
@@ -44,14 +44,14 @@ namespace HackISU_2018
             else if (gunSelection == GunSelections.SMG)
                 bulletSize = gunArm.size.X / 6;
             else if (gunSelection == GunSelections.SHOTGUN)
-                bulletSize = gunArm.size.X / 8;
+                bulletSize = gunArm.size.X / 12;
 
             bullet = new Game1.SpriteStruct[100]; 
             for (int i=0; i< bullet.Length; i++)
             {
                 bullet[i].isFired = false;
                 bullet[i].size.X = bulletSize;
-                bullet[i].size.Y = bulletSize / 2;
+                bullet[i].size.Y = bulletSize;
                 bullet[i].position_wp.X = gunArm.position_wp.X + gunArm.size.X / 2 - bullet[i].size.X / 2;
                 bullet[i].position_wp.Y = gunArm.position_wp.Y + gunArm.size.Y / 2 - bullet[i].size.Y / 2;
             }
