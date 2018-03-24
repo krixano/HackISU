@@ -33,12 +33,12 @@ namespace HackISU_2018
         {
             int worldHeight = 50;// ((Game1.screenRectangle.Height / 2) / BLOCK_SIZE) + 2;
             WORLD_SIZE = new Vector2(100, worldHeight * 2);
-            offset_b = new Vector2_Double(0, 0);
+            offset_b = new Vector2_Double(0,28);
             blocks = new Block[(int) WORLD_SIZE.X * (int) WORLD_SIZE.Y];
             Console.WriteLine(worldHeight);
 
             char[,] map = new char[100,worldHeight];
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Owner\source\repos\HackISU-2018\HackISU-2018\testWorld.txt");
+            string[] lines = System.IO.File.ReadAllLines(@"testWorld.txt");
             for (int i=0; i< worldHeight; i++)
             {                
                 for (int j=0; j<100; j++)

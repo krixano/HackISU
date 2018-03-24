@@ -92,9 +92,9 @@ namespace HackISU_2018
                     //This is what happens when a bullet is fired
                     bullet[i].position_wp.X += bulletSpeed * (float)Math.Cos(bullet[i].rotation);
                     bullet[i].position_wp.Y += bulletSpeed * (float)Math.Sin(bullet[i].rotation);
-                    if (bullet[i].position_wp.X > Game1.screenRectangle.Width * 2 || bullet[i].position_wp.Y > Game1.screenRectangle.Height * 2
-                        || bullet[i].position_wp.X < Game1.screenRectangle.Width * -2 || bullet[i].position_wp.Y < Game1.screenRectangle.Height * -2)
-                        bullet[i].isFired = false;
+                    //if (bullet[i].position_wp.X > Game1.screenRectangle.Width * 2 || bullet[i].position_wp.Y > Game1.screenRectangle.Height * 2
+                    //    || bullet[i].position_wp.X < Game1.screenRectangle.Width * -2 || bullet[i].position_wp.Y < Game1.screenRectangle.Height * -2)
+                    //    bullet[i].isFired = false;
                 }
 
             }
