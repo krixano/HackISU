@@ -139,6 +139,7 @@ namespace HackISU_2018
 
             spriteBatch.Begin();
             {
+                enemy.Draw(spriteBatch);
                 player.Draw(spriteBatch);
                 World.Draw(spriteBatch);
 
