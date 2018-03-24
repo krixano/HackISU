@@ -61,8 +61,11 @@
     <Content Include="Content\Ball-White-Round.png" />
     <Content Include="Content\Dirt_Block_Texture_64x64.png" />
     <Content Include="Content\Grass_Block_Texture_64x64.png" />
+    <Content Include="Content\Rose_Block_Texture_64x64.png" />
     <Content Include="Content\Stone_Block_Texture_64x64.png" />
+    <Content Include="Content\Sunflower_Block_Texture_64x64.png" />
     <Content Include="Content\WhiteSquare100x100.png" />
+    <Content Include="Content\Wildgrass_Block_Texture_64x64.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
