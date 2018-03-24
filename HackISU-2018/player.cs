@@ -41,22 +41,6 @@ namespace HackISU_2018
         public static void playerUpdate()
         {
 
-            //Controls player moving left and right        
-            if (Game1.keyboard.IsKeyDown(Keys.Right) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
-                World.offset.X += .25f;
-            if (Game1.keyboard.IsKeyDown(Keys.Left) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
-                World.offset.X -= .25f;
-            //else if (Game1.keyboard.IsKeyDown(Keys.Up) && sprite.position.Y <= Game1.screenRectangle.Bottom - Game1.screenRectangle.Height / 3)
-            //    World.offset.Y -= .25f;
-            //else if (Game1.keyboard.IsKeyDown(Keys.Down) && sprite.position.Y >= Game1.screenRectangle.Top - Game1.screenRectangle.Height / 3)
-            //    World.offset.Y += .25f;
-
-            //Scrolls screen
-            if (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left))
-                sprite.position.X -= playerXSpeed;
-            if (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right))
-                sprite.position.X += playerXSpeed;
-
             Vector2 gravityCollisionBottomRight = new Vector2((sprite.position.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
             Vector2 gravityCollisionBottomLeft = new Vector2((sprite.position.X) / World.BLOCK_SIZE, (sprite.position.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
             bool isFalling = false;
