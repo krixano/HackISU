@@ -10,6 +10,11 @@ namespace HackISU_2018
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        enum GameStates
+        {
+            
+        }
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
