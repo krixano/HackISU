@@ -34,7 +34,7 @@ namespace HackISU_2018
                 pausedMenu.bottons[r-1].X = areaPaused.X + GAP;
                 pausedMenu.bottons[r-1].Width = areaPaused.Width - (2*GAP);
                 pausedMenu.bottons[r-1].Height = (areaPaused.Height - (MAX_Bottons * GAP)) / MAX_Bottons;
-                pausedMenu.bottons[r-1].Y = areaPaused.Y + ((r-1) * pausedMenu.bottons[r].Height) + GAP * (r);
+                pausedMenu.bottons[r-1].Y = areaPaused.Y + ((r-1) * pausedMenu.bottons[r-1].Height) + GAP * (r);
             }
         }
 
