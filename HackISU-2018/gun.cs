@@ -17,7 +17,7 @@ namespace HackISU_2018
             HANDGUN = 40,
             SMG = 30,
             ASSAULT_RIFLE = 10,
-            SHOTGUN = 50;
+            SHOTGUN = 50,
 
         }
 
