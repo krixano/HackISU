@@ -6,7 +6,7 @@ using System;
 namespace HackISU_2018
 {
 
-    public class Game1 : Game
+    public class Game1 : Microsoft.Xna.Framework.Game
     {
         public static GamePadState pad1, prevPad1;
         public static MouseState mouse, prevMouse;
@@ -35,7 +35,8 @@ namespace HackISU_2018
 
         public enum GameStates
         {
-            MAIN_MENU, PAUSED, PLAYING
+            MAIN_MENU, PAUSED, PLAYING, Exit,
+            OPTIONS
         }
 
         static public GameStates gameState = GameStates.MAIN_MENU;
@@ -51,6 +52,7 @@ namespace HackISU_2018
             public SpriteEffects effect;
             public float layerDepth;
             public bool isFired;
+            public bool visible;
         }
 
         public struct Menu
@@ -79,6 +81,7 @@ namespace HackISU_2018
             gun.gunInit();
             enemy.enemyInit();
 
+            gameState = GameStates.MAIN_MENU;
             UserInterface.InitializeMenus();
 
             base.Initialize();
@@ -104,11 +107,11 @@ namespace HackISU_2018
             shotgunShell = Content.Load<Texture2D>("Shotgun_Shell_Texture_36x64");
             gunArmTexture = testTexture;
             bulletTexture = Content.Load<Texture2D>("Shotgun_Pellet_Texture_32x32");
-            quit = Content.Load<Texture2D>("quit");
-            newGame = Content.Load<Texture2D>("new game");
+            quit = Content.Load<Texture2D>("quit_game_texture_1280x720");
+            newGame = Content.Load<Texture2D>("new_game_texture_1280x720");
             resume = Content.Load<Texture2D>("resume");
-            settings = Content.Load<Texture2D>("options");
-            load = Content.Load<Texture2D>("saved game");
+            settings = Content.Load<Texture2D>("options_texture_1280x720");
+            load = Content.Load<Texture2D>("saved_game_texture_1280x720");
             gun.gunArm.origin.X = testTexture.Width / 2;
             gun.gunArm.origin.Y = testTexture.Height / 2;
             for (int i = 0; i < gun.bullet.Length; i++)
@@ -129,16 +132,20 @@ namespace HackISU_2018
         protected override void Update(GameTime gameTime)
         {
             pad1 = GamePad.GetState(PlayerIndex.One);
-
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
-            if (gameState == GameStates.MAIN_MENU)
-                UserInterface.UpdateButtonsStart();
-            if (gameState == GameStates.PAUSED)
-                UserInterface.UpdateButtonsPaused();
-            player.playerUpdate();
-            gun.gunUpdate();
-            enemy.enemyUpdate();
+
+            
+                if (gameState == GameStates.MAIN_MENU)
+                    UserInterface.UpdateButtonsStart();
+                if (gameState == GameStates.PAUSED)
+                    UserInterface.UpdateButtonsPaused();
+            if (gameState == GameStates.PLAYING)
+            {
+                player.playerUpdate();
+                gun.gunUpdate();
+                enemy.enemyUpdate();
+            }
             //prevMouse = mouse;
             prevPad1 = pad1;
             prevKeyboard = keyboard;
@@ -151,13 +158,11 @@ namespace HackISU_2018
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            {
-                enemy.Draw(spriteBatch);
-
-                World.Draw(spriteBatch);
+            {                
+                enemy.Draw(spriteBatch);               
 
                 player.Draw(spriteBatch);
-                
+                World.Draw(spriteBatch);
 
                 //spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
                 for (int i = 0; i < gun.bullet.Length; i++)

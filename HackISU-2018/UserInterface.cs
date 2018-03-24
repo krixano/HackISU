@@ -89,11 +89,11 @@ namespace HackISU_2018
                 }
                 else if (startingMenu.bottons[2].Contains(mouse1.X, mouse1.Y))
                 {
-
+                    Game1.gameState = Game1.GameStates.OPTIONS;
                 }
                 else if (startingMenu.bottons[3].Contains(mouse1.X, mouse1.Y))
                 {
-
+                    Game1.gameState = Game1.GameStates.Exit;
                 }
             }
             
@@ -101,7 +101,23 @@ namespace HackISU_2018
 
         public static void UpdateButtonsPaused()
         {
+            if (startingMenu.bottons[0].Contains(mouse1.X, mouse1.Y))
+            {
+                Game1.gameState = Game1.GameStates.PLAYING;
+            }
+            else if (startingMenu.bottons[1].Contains(mouse1.X, mouse1.Y))
+            {
+                Game1.gameState = Game1.GameStates.OPTIONS;
+            }
+            else if (startingMenu.bottons[2].Contains(mouse1.X, mouse1.Y))
+            {
+                Game1.gameState = Game1.GameStates.Exit;
+            }
+        }
 
+        public static void UpdateButtonsOptions()
+        {
+            
         }
         static public void DrawStartingMenu(SpriteBatch spriteBatch)
         {
