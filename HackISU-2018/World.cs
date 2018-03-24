@@ -87,7 +87,7 @@ namespace HackISU_2018
                     else if (map[j, i] == 'a')
                     {
                         blocks[index].type = BlockType.AIR;
-                        blocks[index].solid = true;
+                        blocks[index].solid = false;
                     }
                     
                 }
