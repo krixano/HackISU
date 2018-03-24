@@ -19,7 +19,7 @@ namespace HackISU_2018
 
         enum GameStates
         {
-            
+            MAIN_MENU, PAUSED, PLAYING
         }        
 
         public struct SpriteStruct
