@@ -47,6 +47,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timer.cs" />
+    <Compile Include="Vector2_Double.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -60,8 +61,11 @@
     <Content Include="Content\Ball-White-Round.png" />
     <Content Include="Content\Dirt_Block_Texture_64x64.png" />
     <Content Include="Content\Grass_Block_Texture_64x64.png" />
+    <Content Include="Content\Rose_Block_Texture_64x64.png" />
     <Content Include="Content\Stone_Block_Texture_64x64.png" />
+    <Content Include="Content\Sunflower_Block_Texture_64x64.png" />
     <Content Include="Content\WhiteSquare100x100.png" />
+    <Content Include="Content\Wildgrass_Block_Texture_64x64.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

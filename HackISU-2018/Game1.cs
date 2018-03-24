@@ -24,14 +24,16 @@ namespace HackISU_2018
 
         
 
-        enum GameStates
+        public enum GameStates
         {
             MAIN_MENU, PAUSED, PLAYING
         }
 
+        static public GameStates gameState = GameStates.PLAYING;
+
         public struct SpriteStruct
         {
-            public Vector2 position_wp;
+            public Vector2_Double position_wp;
             public Vector2 size;
             public Color color;
             public float rotation;
