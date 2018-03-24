@@ -16,6 +16,7 @@ namespace HackISU_2018
             bulletSpeed = Game1.screenRectangle.Width / 20;
             gunArm.size.X = player.sprite.size.X;
             gunArm.size.Y = gunArm.size.X / 3;
+<<<<<<< HEAD
             gunArm.position.X = player.sprite.position.X + (player.sprite.size.X / 2);
             gunArm.position.Y = player.sprite.position.Y + (player.sprite.size.Y / 2);
 
@@ -29,11 +30,17 @@ namespace HackISU_2018
                 bullet[i].position.Y = gunArm.position.Y + gunArm.size.Y / 2 - bullet[i].size.Y / 2;
             }
             
+=======
+            gunArm.position_wp.X = player.sprite.position_wp.X + (player.sprite.size.X / 2);
+            gunArm.position_wp.Y = player.sprite.position_wp.Y + (player.sprite.size.Y / 2);
+            //gunArm.origin.X += gunArm.size.Y;
+            //gunArm.origin.Y += gunArm.size.Y / 2;
+>>>>>>> 0a5bfed3705297139090af1cb152b7abe9d630e9
         }
         public static void gunUpdate()
         {
-            gunArm.position.X = player.sprite.position.X + gunArm.size.X / 2;
-            gunArm.position.Y = player.sprite.position.Y + gunArm.size.Y;
+            gunArm.position_wp.X = player.sprite.position_wp.X + gunArm.size.X / 2;
+            gunArm.position_wp.Y = player.sprite.position_wp.Y + gunArm.size.Y;
             gunArm.rotation = (float) getMouseAngle();
 
 
@@ -68,8 +75,8 @@ namespace HackISU_2018
             Vector2 distance;
             double angle;
             
-            distance.X = Game1.mouse.X - (gunArm.position.X - World.offset.X * World.BLOCK_SIZE);
-            distance.Y = Game1.mouse.Y - (gunArm.position.Y - World.offset.Y * World.BLOCK_SIZE);
+            distance.X = Game1.mouse.X - (gunArm.position_wp.X - World.offset_b.X * World.BLOCK_SIZE);
+            distance.Y = Game1.mouse.Y - (gunArm.position_wp.Y - World.offset_b.Y * World.BLOCK_SIZE);
                                   
             angle = Math.Atan2(distance.Y , distance.X);            
             

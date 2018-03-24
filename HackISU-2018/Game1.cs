@@ -31,7 +31,7 @@ namespace HackISU_2018
 
         public struct SpriteStruct
         {
-            public Vector2 position;
+            public Vector2 position_wp;
             public Vector2 size;
             public Color color;
             public float rotation;
@@ -104,11 +104,13 @@ namespace HackISU_2018
             spriteBatch.Begin();
             {
                 World.Draw(spriteBatch);
-                spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position.X - (World.offset.X * World.BLOCK_SIZE)), (int) (player.sprite.position.Y - (World.offset.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
-                spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position.X - (World.offset.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position.Y - (World.offset.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, SpriteEffects.None,0);
+
+                spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
+                spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, SpriteEffects.None,0);
                 for (int i = 0; i < gun.bullet.Length; i++)
                     if (gun.bullet[i].isFired)
-                        spriteBatch.Draw(bulletTexture, new Rectangle((int)(gun.bullet[i].position.X - (World.offset.X * World.BLOCK_SIZE)), (int)(gun.bullet[i].position.Y - (World.offset.Y * World.BLOCK_SIZE)), (int)gun.bullet[i].size.X, (int)gun.bullet[i].size.Y), null, Color.White, gun.bullet[i].rotation, gun.bullet[i].origin, SpriteEffects.None, 0);
+                        spriteBatch.Draw(bulletTexture, new Rectangle((int)(gun.bullet[i].position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.bullet[i].position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.bullet[i].size.X, (int)gun.bullet[i].size.Y), null, Color.White, gun.bullet[i].rotation, gun.bullet[i].origin, SpriteEffects.None, 0);
+
             }
             spriteBatch.End();
 
