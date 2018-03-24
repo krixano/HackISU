@@ -43,8 +43,15 @@ namespace HackISU_2018
                     int i = x + y * (int) WORLD_SIZE.X;
                     if (y < (WORLD_SIZE.Y / 2) - 1)
                     {
-                        blocks[i].type = BlockType.AIR;
-                        blocks[i].solid = false;
+                        if (x == 5 || x == 20)
+                        {
+                            blocks[i].type = BlockType.DIRT;
+                            blocks[i].solid = true;
+                        } else
+                        {
+                            blocks[i].type = BlockType.AIR;
+                            blocks[i].solid = false;
+                        }
                     }
                     else if (y == (WORLD_SIZE.Y / 2) - 1)
                     {
