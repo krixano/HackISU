@@ -13,8 +13,12 @@ namespace HackISU_2018
     class player
     {
         static private float playerXSpeed, playerYSpeed; // In Pixels
-        static public Game1.SpriteStruct sprite;
+        static public Game1.SpriteStruct sprite, gun;
         static Timer tmr;
+        //tmrAmt = Jump length
+        static int tmrAmt = 10;
+        static int currentTmr = 0;
+        static bool isJumping = false;
 
         static public void playerInit()
         {
@@ -28,9 +32,15 @@ namespace HackISU_2018
             sprite.position.X = Game1.screenRectangle.Center.X - (sprite.size.X / 2); // In World Pixels
             sprite.position.Y = (((World.WORLD_SIZE.Y / 2) - 1) * World.BLOCK_SIZE) - sprite.size.Y;
 
+            gun.size.X = sprite.size.X;
+            gun.size.Y = gun.size.Y / 2f;
+            gun.position.X = sprite.position.X + gun.size.X / 2;
+            gun.position.Y = sprite.position.Y + gun.size.Y / 2;
+
         }
         public static void playerUpdate()
         {
+
             //Controls player moving left and right        
             if (Game1.keyboard.IsKeyDown(Keys.Right) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
                 World.offset.X += .25f;
@@ -74,10 +84,7 @@ namespace HackISU_2018
                 isJumping = true;
             playerJump();
         }
-
-        static int tmrAmt = 10;
-        static int currentTmr = 0;
-        static bool isJumping = false;
+        
 
         public static void playerJump()
         {
@@ -102,6 +109,12 @@ namespace HackISU_2018
             }*/
             //else
             //    tmr.stop();
+        }
+
+        public static void gunUpdate()
+        {
+            gun.position.X = sprite.position.X + gun.size.X;
+            gun.position.Y = sprite.position.Y + gun.size.Y;
         }
 
         public static Vector2 playerScreenPixels()
