@@ -14,7 +14,7 @@ namespace HackISU_2018
         static public string fileName;
         public enum BlockType
         {
-            AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS
+            AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS, SHALLOW_OCEAN, DEEP_OCEAN
         };
 
         public struct Block
@@ -33,7 +33,7 @@ namespace HackISU_2018
         {
             fileName = "testWorld.txt";
             int worldHeight = 50;// ((Game1.screenRectangle.Height / 2) / BLOCK_SIZE) + 2;
-            WORLD_SIZE = new Vector2(100, worldHeight * 2);
+            WORLD_SIZE = new Vector2(200, worldHeight);
             offset_b = new Vector2_Double(0,28);
             blocks = new Block[(int) WORLD_SIZE.X * (int) WORLD_SIZE.Y];
             Console.WriteLine(worldHeight);
@@ -85,6 +85,16 @@ namespace HackISU_2018
                         blocks[index].type = BlockType.DIRT;
                         blocks[index].solid = true;
                     }
+                    else if (map[j, i] == 'p')
+                    {
+                        blocks[index].type = BlockType.SHALLOW_OCEAN;
+                        blocks[index].solid = true;
+                    }
+                    else if (map[j, i] == 'o')
+                    {
+                        blocks[index].type = BlockType.DEEP_OCEAN;
+                        blocks[index].solid = true;
+                    }
                     else if (map[j, i] == 'a')
                     {
                         blocks[index].type = BlockType.AIR;
@@ -94,61 +104,6 @@ namespace HackISU_2018
                 }
 
             }
-
-            //for (int y = 0; y < WORLD_SIZE.Y; y++)
-            //{
-            //    for (int x = 0; x < WORLD_SIZE.X; x++)
-            //    {
-            //        int i = x + y * (int) WORLD_SIZE.X;
-            //        if (y == 3)
-            //        {
-            //            blocks[i].type = BlockType.STONE;
-            //            blocks[i].solid = true;
-            //        }
-            //        else if ((y == (WORLD_SIZE.Y / 2 - 2) && (x == 9 || x == 10)))
-            //        {
-            //            blocks[i].type = BlockType.WILDGRASS;
-            //            blocks[i].solid = false;
-
-            //        }
-            //        else if ((y == (WORLD_SIZE.Y / 2 - 2) && (x == 8 || x == 14)))
-            //        {
-            //            blocks[i].type = BlockType.SUNFLOWER;
-            //            blocks[i].solid = false;
-
-            //        }
-            //        else if ((y == (WORLD_SIZE.Y / 2 - 2 ) && (x == 7 || x == 16)))
-            //        {
-            //            blocks[i].type = BlockType.ROSE;
-            //            blocks[i].solid = false;
-
-            //        }
-            //        else if (y < (WORLD_SIZE.Y / 2) - 1)
-            //        {
-            //            if (x == 5 || x == 20)
-            //            {
-            //                blocks[i].type = BlockType.STONE;
-            //                blocks[i].solid = true;
-            //            } 
-            //            else
-            //            {
-            //                blocks[i].type = BlockType.AIR;
-            //                blocks[i].solid = false;
-            //            }
-            //        }
-            //        else if (y == (WORLD_SIZE.Y / 2) - 1)
-            //        {
-            //            blocks[i].type = BlockType.GRASS;
-            //            blocks[i].solid = true;
-            //        }                    
-            //        else {
-            //            blocks[i].type = BlockType.DIRT;
-            //            blocks[i].solid = true;
-            //        }
-            //blocks[i].size = new Vector2(1, 1);
-
-            //    }
-            //}
 
         }
 
@@ -172,6 +127,12 @@ namespace HackISU_2018
                         case BlockType.GRASS:
                             texture = Game1.grassTexture;
                             break;
+                        case BlockType.SHALLOW_OCEAN:
+                            texture = Game1.shallowOceanTexture;
+                            break;
+                        case BlockType.DEEP_OCEAN:
+                            texture = Game1.deepOceanTexture;
+                            break;                        
                         case BlockType.STONE:
                             texture = Game1.stoneTexture;
                             break;
