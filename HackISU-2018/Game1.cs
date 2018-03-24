@@ -39,7 +39,7 @@ namespace HackISU_2018
             OPTIONS
         }
 
-        static public GameStates gameState = GameStates.MAIN_MENU;
+        static public GameStates gameState;
 
         public struct SpriteStruct
         {
@@ -135,11 +135,20 @@ namespace HackISU_2018
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
 
-            
-                if (gameState == GameStates.MAIN_MENU)
-                    UserInterface.UpdateButtonsStart();
-                if (gameState == GameStates.PAUSED)
-                    UserInterface.UpdateButtonsPaused();
+            if (keyboard.IsKeyDown(Keys.P) && prevKeyboard.IsKeyDown(Keys.P))
+            {
+                gameState = GameStates.PAUSED;
+            }
+            if (gameState == GameStates.MAIN_MENU)
+            {
+                UserInterface.UpdateButtonsStart();
+            }
+
+            if (gameState == GameStates.PAUSED)
+            {
+                UserInterface.UpdateButtonsPaused();
+            }
+
             if (gameState == GameStates.PLAYING)
             {
                 player.playerUpdate();
