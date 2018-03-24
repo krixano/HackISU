@@ -168,12 +168,15 @@ namespace HackISU_2018
                     UserInterface.DrawStartingMenu(spriteBatch);
                 if (gameState == GameStates.PAUSED)
                     UserInterface.DrawPauseMenu(spriteBatch);
-                }
+                if (gameState == GameStates.PLAYING)
+                {
                     spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, SpriteEffects.None,0);
+                }
             }
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
     }
+}
 }
