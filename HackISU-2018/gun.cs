@@ -8,20 +8,65 @@ namespace HackISU_2018
     class gun
     {
         static public Game1.SpriteStruct gunArm;
+        static public Game1.SpriteStruct[] bullet;
+        static public int bulletSpeed;        
+
         static public void gunInit()
         {
+            bulletSpeed = Game1.screenRectangle.Width / 20;
             gunArm.size.X = player.sprite.size.X;
             gunArm.size.Y = gunArm.size.X / 3;
+
+
+            bullet = new Game1.SpriteStruct[100]; 
+            for (int i=0; i< bullet.Length; i++)
+            {
+                bullet[i].isFired = false;
+                bullet[i].size.X = gunArm.size.X / 4;
+                bullet[i].size.Y = gunArm.size.Y / 2;
+                bullet[i].position_wp.X = gunArm.position_wp.X + gunArm.size.X / 2 - bullet[i].size.X / 2;
+                bullet[i].position_wp.Y = gunArm.position_wp.Y + gunArm.size.Y / 2 - bullet[i].size.Y / 2;
+            }
+            
+
             gunArm.position_wp.X = player.sprite.position_wp.X + (player.sprite.size.X / 2);
             gunArm.position_wp.Y = player.sprite.position_wp.Y + (player.sprite.size.Y / 2);
             //gunArm.origin.X += gunArm.size.Y;
             //gunArm.origin.Y += gunArm.size.Y / 2;
+
         }
         public static void gunUpdate()
         {
             gunArm.position_wp.X = player.sprite.position_wp.X + gunArm.size.X / 2;
             gunArm.position_wp.Y = player.sprite.position_wp.Y + gunArm.size.Y;
             gunArm.rotation = (float) getMouseAngle();
+
+
+
+            if (Game1.mouse.LeftButton == ButtonState.Pressed)
+            {
+                for (int i = 0; i < bullet.Length; i++)
+                { 
+                bullet[i].position_wp.X = gunArm.position_wp.X + gunArm.size.X / 2 - bullet[i].size.X / 2;
+                bullet[i].position_wp.Y = gunArm.position_wp.Y + gunArm.size.Y / 2 - bullet[i].size.Y / 2;
+                    bullet[i].rotation = gunArm.rotation;
+                }
+                shootGun();
+            }
+
+            for (int i = 0; i < bullet.Length; i++)
+            {
+
+                if (bullet[i].isFired)
+                {
+
+                    bullet[i].position_wp.X += bulletSpeed * (float)Math.Cos(getMouseAngle());
+                    bullet[i].position_wp.Y += bulletSpeed * (float)Math.Sin(getMouseAngle());
+                    if (bullet[i].position_wp.X > Game1.screenRectangle.Width * 2 || bullet[i].position_wp.Y > Game1.screenRectangle.Height * 2
+                        || bullet[i].position_wp.X < Game1.screenRectangle.Width * -2 || bullet[i].position_wp.Y < Game1.screenRectangle.Height * -2)
+                        bullet[i].isFired = false;
+                }
+            }
         }
         public static double getMouseAngle()
         {
@@ -34,6 +79,18 @@ namespace HackISU_2018
             angle = Math.Atan2(distance.Y , distance.X);            
             
             return angle;
+        }
+        public static void shootGun()
+        {
+            for (int i=0; i<bullet.Length; i++)
+            {
+                if (!bullet[i].isFired)
+                {
+                    bullet[i].isFired = true;
+                    bullet[i].rotation = (float)getMouseAngle();
+                    break;
+                }
+            }
         }
     }
 }
