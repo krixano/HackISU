@@ -97,6 +97,8 @@ namespace HackISU_2018
             if (World.blocks[(int) sideCollisionMiddleRight.X + (int) sideCollisionMiddleRight.Y * (int) World.WORLD_SIZE.X].solid)
                 canGoRight = false;
 
+
+            //WALL JUMPING
             //Slow fall if touching wall
             if ((canGoLeft == false || canGoRight == false) && isFalling)
             {
@@ -104,9 +106,9 @@ namespace HackISU_2018
                 //sprite.position_wp.Y += playerYSpeed_p;
                 if (Game1.keyboard.IsKeyDown(Keys.Space) && Game1.prevKeyboard.IsKeyUp(Keys.Space))
                 {
-                    sprite.position_wp.X += playerXSpeed_p;
+                    //playerXSpeed_p += playerXSpeed_p;
                     isFalling = false;                    
-                    playerJump();
+                    playerJump();                    
                 }
             }
 
@@ -152,6 +154,7 @@ namespace HackISU_2018
 
         public static void playerJump()
         {
+
             if (isJumping && !isFalling)
             {
                 
