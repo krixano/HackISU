@@ -163,6 +163,7 @@ namespace HackISU_2018
                         enemy.enemySprite[j].visible = false;
                         bullet[i].isFired = false;
                         enemy.spawnRate -= 100;
+                        enemy.enemiesLeft--;
                     }
                    }
         public static void switchWeapons()
