@@ -108,7 +108,7 @@ namespace HackISU_2018
             graphics.PreferredBackBufferHeight = screenRectangle.Height;
             graphics.ApplyChanges();
 
-            World.Init();
+            World.Init("map1.txt");
             World.offset_b.Y = -.01;
             player.playerInit();
             gun.gunInit();
