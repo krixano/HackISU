@@ -175,7 +175,7 @@ namespace HackISU_2018
            
             if (gameState == GameStates.MAIN_MENU)
             {
-                World.offset_b.X += .24; 
+                //World.offset_b.X += .24; 
                 UserInterface.UpdateButtonsStart();
             }
 
@@ -183,7 +183,7 @@ namespace HackISU_2018
             if (Game1.gameState == Game1.GameStates.PLAYING)
             {
                 World.BLOCK_SIZE = 45;
-                World.offset_b = new Vector2_Double(0, 28);
+                //World.offset_b = new Vector2_Double(0, 28);
             }
 
             if (gameState == GameStates.PLAYING)
