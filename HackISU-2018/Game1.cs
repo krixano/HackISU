@@ -139,7 +139,7 @@ namespace HackISU_2018
             newGame = Content.Load<Texture2D>("new_game_texture_1280x720");
             resume = Content.Load<Texture2D>("resume");
             settings = Content.Load<Texture2D>("options_texture_1280x720");
-            load = Content.Load<Texture2D>("saved_game_texture_1280x720");
+            load = Content.Load<Texture2D>("saved game");
             playerTexture = Content.Load<Texture2D>("player_sprite_sheet_textures_180x720");
             crabEnemyTexture = Content.Load<Texture2D>("Enemy_Rude_Crab_Texture_160x128");
 
@@ -180,13 +180,14 @@ namespace HackISU_2018
 
             if (gameState == GameStates.PLAYING)
             {
+                
+                player.playerUpdate();
+                gun.gunUpdate();
+                enemy.enemyUpdate();
                 if (keyboard.IsKeyDown(Keys.P) && prevKeyboard.IsKeyUp(Keys.P))
                 {
                     gameState = GameStates.PAUSED;
                 }
-                player.playerUpdate();
-                gun.gunUpdate();
-                enemy.enemyUpdate();
             }
             if (gameState == GameStates.PAUSED)
             {
