@@ -17,6 +17,9 @@ namespace HackISU_2018
         public static Rectangle screenRectangle;
         public static Rectangle playerAnimation;
 
+        public static SpriteFont font;
+        public static Vector2 fontVector;
+
         public static SpriteEffects playerEffect = SpriteEffects.None;
         public static Texture2D testTexture;
         public static Texture2D dirtTexture;
@@ -102,6 +105,7 @@ namespace HackISU_2018
             enemy.enemyInit();
 
             
+            
             UserInterface.InitializeMenus();
 
             base.Initialize();
@@ -150,6 +154,7 @@ namespace HackISU_2018
             heartTexture = Content.Load<Texture2D>("Heart_Block_Texture_64x64");
             halfHeartTexture = Content.Load<Texture2D>("Half_Heart_Block_Texture_64x64");
 
+            font = Content.Load<SpriteFont>("font");
 
             playerAnimation = new Rectangle(0, 0, playerTexture.Width, 720/4);
 
@@ -178,7 +183,7 @@ namespace HackISU_2018
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
 
-           
+            Console.WriteLine(fontVector);
             if (gameState == GameStates.MAIN_MENU)
             {
                 //World.offset_b.X += .24; 
@@ -223,6 +228,7 @@ namespace HackISU_2018
 
             spriteBatch.Begin();
             {                
+
                 //spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
                 for (int i = 0; i < gun.bullet.Length; i++)
                 {
@@ -242,6 +248,7 @@ namespace HackISU_2018
                                    
                     World.Draw(spriteBatch);
                     player.Draw(spriteBatch);
+                    gun.Draw(spriteBatch);
                     //spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
                     spriteBatch.Draw(shotgunTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, gun.gunArm.effect, 0);
                     for (int i = 0; i < gun.bullet.Length; i++)
