@@ -159,16 +159,18 @@ namespace HackISU_2018
             {
                 for (int j = 0; j < enemy.enemySprite.Length; j++)
                 {
-                    if (bullet[i].position_wp.X >= enemy.enemySprite[j].position_wp.X && bullet[i].position_wp.X <= enemy.enemySprite[j].position_wp.X + enemy.enemySprite[j].size.X
-                        && bullet[i].position_wp.Y <= enemy.enemySprite[j].position_wp.Y + enemy.enemySprite[j].size.Y && bullet[i].position_wp.Y >= enemy.enemySprite[j].size.Y)
+                    if (bullet[i].isFired)
                     {
-                        enemy.enemySprite[j].health -= 5; // 5% hit/decrease
-                        bullet[i].isFired = false;
-                        //enemy.enemySprite[j].visible = false;
-                        //enemy.spawnRate -= 100;
-                        //enemy.enemiesLeft--;
+                        if (bullet[i].position_wp.X >= enemy.enemySprite[j].position_wp.X && bullet[i].position_wp.X <= enemy.enemySprite[j].position_wp.X + enemy.enemySprite[j].size.X
+                            && bullet[i].position_wp.Y <= enemy.enemySprite[j].position_wp.Y + enemy.enemySprite[j].size.Y && bullet[i].position_wp.Y >= enemy.enemySprite[j].size.Y)
+                        {
+                            enemy.enemySprite[j].health -= 5; // 5% hit/decrease
+                            bullet[i].isFired = false;
+                            //enemy.enemySprite[j].visible = false;
+                            //enemy.spawnRate -= 100;
+                            //enemy.enemiesLeft--;
+                        }
                     }
-
                     //if (bullet[i].position_wp.X )
                 }
             }
