@@ -67,6 +67,7 @@
     <Content Include="Content\Grass_Block_Texture_64x64.png" />
     <Content Include="Content\New_Game_Texture_1280x720.png" />
     <Content Include="Content\Options_Texture_1280x720.png" />
+    <Content Include="Content\Player_Sprite_Sheet_Textures_180x720.png" />
     <Content Include="Content\Quit_Game_Texture_1280x720.png" />
     <Content Include="Content\Resume.png" />
     <Content Include="Content\Half_Heart_Block_Texture_64x64.png" />

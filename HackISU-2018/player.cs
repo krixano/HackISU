@@ -209,7 +209,7 @@ namespace HackISU_2018
         {
             int x = (int) (player.sprite.position_wp.X - World.worldOffsetPixels().X);
             int y = (int) (player.sprite.position_wp.Y - World.worldOffsetPixels().Y);
-            spriteBatch.Draw(Game1.testTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
+            spriteBatch.Draw(Game1.playerTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Game1.playerAnimation, Color.White);
         }
 
     }
