@@ -7,7 +7,7 @@ namespace HackISU_2018
 {
     class UserInterface
     {
-        static public Game1.Menu startingMenu, pausedMenu, optionMenu;
+        static public Game1.Menu startingMenu, pausedMenu, optionMenu, levels;
         static public Rectangle areaMenu, areaPaused;
         const int MAX_Bottons = 3, GAP = 50;
         static public MouseState mouse1;
@@ -21,6 +21,10 @@ namespace HackISU_2018
             pausedMenu.bottons = new Rectangle[MAX_Bottons];
             pausedMenu.textures = new Texture2D[MAX_Bottons];
             optionMenu.bottons = new Rectangle[MAX_Bottons - 1];
+            optionMenu.textures = new Texture2D[MAX_Bottons - 1];
+
+            levels.bottons = new Rectangle[5];
+            levels.textures = new Texture2D[5];
 
             for (int r = 0; r <= MAX_Bottons; r++)
             {
@@ -45,6 +49,15 @@ namespace HackISU_2018
             for (int k = 0; k < 2; k++)
             {
                 optionMenu.bottons[k] = pausedMenu.bottons[k];
+            }
+
+            levels.color = Color.White;
+            for (int r = 0; r < 5; r++)
+            {
+                levels.bottons[r].X = areaMenu.X + GAP;
+                levels.bottons[r].Width = areaMenu.Width - (2 * GAP);
+                levels.bottons[r].Height = (areaMenu.Height - (5 * GAP)) / MAX_Bottons;
+                levels.bottons[r].Y = areaMenu.Y + ((r) * levels.bottons[r].Height) + GAP * (r + 1);
             }
         }
         static public void LoadTexture()
@@ -82,7 +95,36 @@ namespace HackISU_2018
             }
             for (int k = 0; k < 2; k++)
             {
-
+                switch(k)
+                {
+                    case 0:
+                        optionMenu.textures[k] = Game1.resume;
+                        break;
+                    case 1:
+                        optionMenu.textures[k] = Game1.quit;
+                        break;
+                }
+            }
+            for(int i=0; i<5; i++)
+            {
+                switch(i)
+                {
+                    case 0:
+                        levels.textures[i] = Game1.l1;
+                        break;
+                    case 1:
+                        levels.textures[i] = Game1.l2;
+                        break;
+                    case 2:
+                        levels.textures[i] = Game1.l3;
+                        break;
+                    case 3:
+                        levels.textures[i] = Game1.l4;
+                        break;
+                    case 4:
+                        levels.textures[i] = Game1.l5;
+                        break;
+                }
             }
         }
 
@@ -97,11 +139,11 @@ namespace HackISU_2018
                 if (startingMenu.bottons[0].Contains(mouse1.X, mouse1.Y))
                 {
                     Game1.gameState = Game1.GameStates.PLAYING;
-                    World.fileName = "map2.txt";
+                    //World.fileName = "map2.txt";
                 }
                 else if (startingMenu.bottons[1].Contains(mouse1.X, mouse1.Y))
                 {
-
+                    Game1.gameState = Game1.GameStates.Levels;
                 }
                 else if (startingMenu.bottons[2].Contains(mouse1.X, mouse1.Y))
                 {
@@ -138,7 +180,19 @@ namespace HackISU_2018
 
         public static void UpdateButtonsOptions()
         {
-
+            mouse1 = Game1.mouse;
+            if (mouse1.LeftButton == ButtonState.Pressed && Game1.prevMouse.LeftButton == ButtonState.Released)
+            {
+                if (optionMenu.bottons[0].Contains(mouse1.X, mouse1.Y))
+                {
+                    Game1.gameState = Game1.GameStates.PLAYING;
+                }
+                else if (optionMenu.bottons[1].Contains(mouse1.X, mouse1.Y))
+                {
+                    Game1.gameState = Game1.GameStates.Exit;
+                }
+                
+            }
         }
         static public void DrawStartingMenu(SpriteBatch spriteBatch)
         {
@@ -158,7 +212,60 @@ namespace HackISU_2018
             }
 
         }
+        static public void DrawOptionsMenu(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Game1.testTexture, areaPaused, Color.DimGray);
+            for (int r = 0; r < MAX_Bottons-1; r++)
+            {
+                spriteBatch.Draw(optionMenu.textures[r], optionMenu.bottons[r], optionMenu.color);
+            }
+        }
 
+        static public void UpdateLevels()
+        {
 
+            mouse1 = Game1.mouse;
+            if (mouse1.LeftButton == ButtonState.Pressed && Game1.prevMouse.LeftButton == ButtonState.Released)
+            {
+                if (levels.bottons[0].Contains(mouse1.X, mouse1.Y))
+                {
+                    Game1.gameState = Game1.GameStates.PLAYING;
+                    World.fileName = "map1.txt";
+                }
+                else if (levels.bottons[1].Contains(mouse1.X, mouse1.Y))
+                {
+                    Game1.gameState = Game1.GameStates.PLAYING;
+                    World.fileName = "map2.txt";
+                }
+                else if (levels.bottons[2].Contains(mouse1.X, mouse1.Y))
+                {
+                    Game1.gameState = Game1.GameStates.PLAYING;
+                    World.fileName = "map3.txt";
+                }
+                else if (levels.bottons[3].Contains(mouse1.X, mouse1.Y))
+                {
+                    Game1.gameState = Game1.GameStates.PLAYING;
+                    World.fileName = "map4.txt";
+                }
+                else if (levels.bottons[4].Contains(mouse1.X, mouse1.Y))
+                {
+                    //Game1.gameState = Game1.GameStates.PLAYING;
+                    //World.fileName = "map5.txt";
+                }
+            }    
+                   
+                   
+              
+           
+        }
+
+        static public void DrawLevels(SpriteBatch sprite)
+        {
+            sprite.Draw(Game1.testTexture, areaPaused, Color.DimGray);
+            for (int r = 0; r < MAX_Bottons+2; r++)
+            {
+                sprite.Draw(levels.textures[r], levels.bottons[r], optionMenu.color);
+            }
+        }
     }
 }

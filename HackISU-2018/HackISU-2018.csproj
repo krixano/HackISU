@@ -60,6 +60,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\1.png" />
+    <Content Include="Content\2.png" />
+    <Content Include="Content\3.png" />
+    <Content Include="Content\4.png" />
+    <Content Include="Content\5.png" />
+    <Content Include="Content\Asault_Rifle_Texture_115x45.png" />
     <Content Include="Content\assault_rifle_64x22.png" />
     <Content Include="Content\Ball-White-Round.png" />
     <Content Include="Content\Bullet_Texture_20x60.png" />
@@ -69,6 +75,7 @@
     <Content Include="Content\Deep_Ocean_Block_Texture_64x64.png" />
     <Content Include="Content\Dirt_Block_Texture_64x64.png" />
     <Content Include="Content\Enemy_Rude_Crab_Texture_160x128.png" />
+    <Content Include="Content\Grass_Blades_Block_Texture_64x64.png" />
     <Content Include="Content\Grass_Block_Texture_64x64.png" />
     <Content Include="Content\Mountain_Ice_Block_Texture_64x64.png" />
     <Content Include="Content\New_Game_Texture_1280x720.png" />
@@ -85,10 +92,14 @@
     <Content Include="Content\shotgun_64x22.png" />
     <Content Include="Content\Shotgun_Pellet_Texture_32x32.png" />
     <Content Include="Content\Shotgun_Shell_Texture_36x64.png" />
+    <Content Include="Content\Shotgun_Texture_123x31.png" />
     <Content Include="Content\Sky_Block_Texture_64x64.png" />
     <Content Include="Content\Spiral_Platform_Texture_256x40.png" />
     <Content Include="Content\Spiral_Tower_Colored_Block_Texture_64x64.png" />
     <Content Include="Content\Stone_Block_Texture_64x64.png" />
+    <Content Include="Content\Stone_Brick_Block_Texture_64x64.png" />
+    <Content Include="Content\Stone_Brick_Left_Peg_Block_Texture_64x64.png" />
+    <Content Include="Content\Stone_Brick_Right_Peg_Block_Texture_64x64.png" />
     <Content Include="Content\Sunflower_Block_Texture_64x64.png" />
     <Content Include="Content\Tree_Texture_128x256.png" />
     <Content Include="Content\WhiteSquare100x100.png" />
