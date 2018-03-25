@@ -29,7 +29,7 @@ namespace HackISU_2018
             tmr = new Timer(60);
 
             playerXSpeed_p = World.BLOCK_SIZE * .20f;
-            playerYSpeed_p = World.BLOCK_SIZE * .25f;
+            playerYSpeed_p = World.BLOCK_SIZE * .20f;
 
             sprite.size.X = Game1.screenRectangle.Width / 20;
             sprite.size.Y = Game1.screenRectangle.Width / 10;
