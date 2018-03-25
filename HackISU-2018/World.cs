@@ -29,9 +29,9 @@ namespace HackISU_2018
         public static Block[] blocks;
         public static int BLOCK_SIZE = 45;
 
-        public static void Init()
+        public static void Init(string file)
         {
-            fileName = "map4.txt";
+            fileName = file;
             int worldHeight = 50;// ((Game1.screenRectangle.Height / 2) / BLOCK_SIZE) + 2;
             WORLD_SIZE = new Vector2(200, worldHeight);
             offset_b = new Vector2_Double(0,28);

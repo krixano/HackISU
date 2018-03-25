@@ -25,6 +25,10 @@ namespace HackISU_2018
 
             levels.bottons = new Rectangle[5];
             levels.textures = new Texture2D[5];
+            optionMenu.textures = new Texture2D[MAX_Bottons - 1];
+
+            levels.bottons = new Rectangle[5];
+            levels.textures = new Texture2D[5];
 
             for (int r = 0; r <= MAX_Bottons; r++)
             {
@@ -54,8 +58,8 @@ namespace HackISU_2018
             levels.color = Color.White;
             for (int r = 0; r < 5; r++)
             {
-                levels.bottons[r].X = screen.Left + screen.Width / 2 - levels.bottons[r].Width /2;
-                levels.bottons[r].Width = areaPaused.Width / 5 - (2 * GAP);
+                levels.bottons[r].X = areaPaused.X + GAP;
+                levels.bottons[r].Width = areaPaused.Width - (2 * GAP);
                 levels.bottons[r].Height = (areaPaused.Height - (5 * GAP)) / 5;
                 levels.bottons[r].Y = areaPaused.Y + ((r) * levels.bottons[r].Height) + GAP * (r + 1);
             }
@@ -139,7 +143,7 @@ namespace HackISU_2018
                 if (startingMenu.bottons[0].Contains(mouse1.X, mouse1.Y))
                 {
                     Game1.gameState = Game1.GameStates.PLAYING;
-                    World.fileName = "map2.txt";
+                    //World.fileName = "map2.txt";
                 }
                 else if (startingMenu.bottons[1].Contains(mouse1.X, mouse1.Y))
                 {

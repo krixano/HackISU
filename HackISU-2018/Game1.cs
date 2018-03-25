@@ -85,6 +85,8 @@ namespace HackISU_2018
             public float layerDepth;
             public bool isFired;
             public bool visible;
+            public bool isFalling;
+            public bool isJumping;
         }
 
         public struct Menu
@@ -108,7 +110,7 @@ namespace HackISU_2018
             graphics.PreferredBackBufferHeight = screenRectangle.Height;
             graphics.ApplyChanges();
 
-            World.Init();
+            World.Init("map1.txt");
             World.offset_b.Y = -.01;
             player.playerInit();
             gun.gunInit();
@@ -275,7 +277,7 @@ namespace HackISU_2018
                     UserInterface.DrawLevels(spriteBatch);
                 else if (gameState == GameStates.PLAYING)
                 {
-                    enemy.Draw(spriteBatch);             
+                    enemy.Draw(spriteBatch);
                                    
                     World.Draw(spriteBatch);
                     player.Draw(spriteBatch);

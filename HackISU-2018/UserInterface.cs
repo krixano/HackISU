@@ -230,28 +230,28 @@ namespace HackISU_2018
             {
                 if (levels.bottons[0].Contains(mouse1.X, mouse1.Y))
                 {
-                    World.fileName = "map1.txt";
+                    World.Init( "map1.txt");
                     Game1.gameState = Game1.GameStates.PLAYING;
                 }
                 else if (levels.bottons[1].Contains(mouse1.X, mouse1.Y))
                 {
-                    World.fileName = "map2.txt";
+                    World.Init( "map2.txt");
                     Game1.gameState = Game1.GameStates.PLAYING;
                 }
                 else if (levels.bottons[2].Contains(mouse1.X, mouse1.Y))
                 {
-                    World.fileName = "map3.txt";
+                    World.Init( "map3.txt");
                     Game1.gameState = Game1.GameStates.PLAYING;
                 }
                 else if (levels.bottons[3].Contains(mouse1.X, mouse1.Y))
                 {
-                    World.fileName = "map4.txt";
+                    World.Init( "map4.txt");
                     Game1.gameState = Game1.GameStates.PLAYING;
                 }
                 else if (levels.bottons[4].Contains(mouse1.X, mouse1.Y))
                 {
                     //Game1.gameState = Game1.GameStates.PLAYING;
-                    //World.fileName = "map5.txt";
+                    // World.Init( "map5.txt");
                 }
             }    
                    
