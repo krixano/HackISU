@@ -14,12 +14,14 @@ namespace HackISU_2018
         static public void InitializeMenus()
         {
             Rectangle screen = Game1.screenRectangle;
-            areaMenu = new Rectangle(screen.X, screen.Y, screen.Width, screen.Height);
+            areaMenu = new Rectangle(screen.X + screen.Width / 4, screen.Y, screen.Width/2, screen.Height);
             areaPaused = new Rectangle(areaMenu.X + GAP, areaMenu.Y + GAP, areaMenu.Width - 100, areaMenu.Height - 100);
             startingMenu.bottons = new Rectangle[MAX_Bottons + 1];
             startingMenu.textures = new Texture2D[MAX_Bottons + 1];
             pausedMenu.bottons = new Rectangle[MAX_Bottons];
             pausedMenu.textures = new Texture2D[MAX_Bottons];
+            optionMenu.bottons = new Rectangle[MAX_Bottons - 1];
+
             for (int r = 0; r <= MAX_Bottons; r++)
             {
                 startingMenu.bottons[r].X = areaMenu.X + 100;
@@ -31,18 +33,18 @@ namespace HackISU_2018
             startingMenu.color = Color.White;
 
             pausedMenu.color = Color.White;
-            for (int r = 1; r <= MAX_Bottons; r++)
+            for (int r = 0; r < MAX_Bottons; r++)
             {
-                pausedMenu.bottons[r - 1].X = areaPaused.X + GAP;
-                pausedMenu.bottons[r - 1].Width = areaPaused.Width - (2 * GAP);
-                pausedMenu.bottons[r - 1].Height = (areaPaused.Height - (MAX_Bottons * GAP)) / MAX_Bottons;
-                pausedMenu.bottons[r - 1].Y = areaPaused.Y + ((r - 1) * pausedMenu.bottons[r - 1].Height) + GAP * (r);
+                pausedMenu.bottons[r ].X = areaPaused.X + GAP;
+                pausedMenu.bottons[r ].Width = areaPaused.Width - (2 * GAP);
+                pausedMenu.bottons[r ].Height = (areaPaused.Height - (MAX_Bottons * GAP)) / MAX_Bottons;
+                pausedMenu.bottons[r ].Y = areaPaused.Y + ((r ) * pausedMenu.bottons[r].Height) + GAP * (r+1);
             }
 
             optionMenu.color = Color.White;
-            for(int k =0; k < 2; k++)
+            for (int k = 0; k < 2; k++)
             {
-                optionMenu.bottons[k]= pausedMenu.bottons[k];
+                optionMenu.bottons[k] = pausedMenu.bottons[k];
             }
         }
         static public void LoadTexture()
@@ -78,7 +80,7 @@ namespace HackISU_2018
                         break;
                 }
             }
-            for(int k = 0; k<2; k++)
+            for (int k = 0; k < 2; k++)
             {
 
             }
@@ -86,12 +88,16 @@ namespace HackISU_2018
 
         static public void UpdateButtonsStart()
         {
+            
+
+            
             mouse1 = Game1.mouse;
             if (mouse1.LeftButton == ButtonState.Pressed && Game1.prevMouse.LeftButton == ButtonState.Released)
             {
                 if (startingMenu.bottons[0].Contains(mouse1.X, mouse1.Y))
                 {
                     Game1.gameState = Game1.GameStates.PLAYING;
+                    World.fileName = "map2.txt";
                 }
                 else if (startingMenu.bottons[1].Contains(mouse1.X, mouse1.Y))
                 {
@@ -106,28 +112,33 @@ namespace HackISU_2018
                     Game1.gameState = Game1.GameStates.Exit;
                 }
             }
-            
+
         }
 
         public static void UpdateButtonsPaused()
         {
-            if (startingMenu.bottons[0].Contains(mouse1.X, mouse1.Y))
+            mouse1 = Game1.mouse;
+            if (mouse1.LeftButton == ButtonState.Pressed && Game1.prevMouse.LeftButton == ButtonState.Released)
             {
-                Game1.gameState = Game1.GameStates.PLAYING;
-            }
-            else if (startingMenu.bottons[1].Contains(mouse1.X, mouse1.Y))
-            {
-                Game1.gameState = Game1.GameStates.OPTIONS;
-            }
-            else if (startingMenu.bottons[2].Contains(mouse1.X, mouse1.Y))
-            {
-                Game1.gameState = Game1.GameStates.Exit;
+                if (pausedMenu.bottons[0].Contains(mouse1.X, mouse1.Y))
+                {
+                    Game1.gameState = Game1.GameStates.PLAYING;
+                }
+                else if (pausedMenu.bottons[1].Contains(mouse1.X, mouse1.Y))
+                {
+                    Game1.gameState = Game1.GameStates.OPTIONS;
+                }
+                else if (pausedMenu.bottons[2].Contains(mouse1.X, mouse1.Y))
+                {
+                    Game1.gameState = Game1.GameStates.Exit;
+
+                }
             }
         }
 
         public static void UpdateButtonsOptions()
         {
-            
+
         }
         static public void DrawStartingMenu(SpriteBatch spriteBatch)
         {
@@ -148,6 +159,6 @@ namespace HackISU_2018
 
         }
 
-        
+
     }
 }
