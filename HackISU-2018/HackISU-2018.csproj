@@ -62,8 +62,12 @@
   <ItemGroup>
     <Content Include="Content\Ball-White-Round.png" />
     <Content Include="Content\Bullet_Texture_20x60.png" />
+    <Content Include="Content\Cave_Entrance_Block_Texture_64x64.png" />
+    <Content Include="Content\Cave_Walkway_Path_Block_Texture_64x64.png" />
+    <Content Include="Content\Dark_Stone_Block_Texture_64x64.png" />
     <Content Include="Content\Deep_Ocean_Block_Texture_64x64.png" />
     <Content Include="Content\Dirt_Block_Texture_64x64.png" />
+    <Content Include="Content\Enemy_Rude_Crab_Texture_160x128.png" />
     <Content Include="Content\Grass_Block_Texture_64x64.png" />
     <Content Include="Content\New_Game_Texture_1280x720.png" />
     <Content Include="Content\Options_Texture_1280x720.png" />
