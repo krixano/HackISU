@@ -69,6 +69,7 @@
     <Content Include="Content\Dirt_Block_Texture_64x64.png" />
     <Content Include="Content\Enemy_Rude_Crab_Texture_160x128.png" />
     <Content Include="Content\Grass_Block_Texture_64x64.png" />
+    <Content Include="Content\Mountain_Ice_Block_Texture_64x64.png" />
     <Content Include="Content\New_Game_Texture_1280x720.png" />
     <Content Include="Content\Options_Texture_1280x720.png" />
     <Content Include="Content\Player_Sprite_Sheet_Textures_180x720.png" />
@@ -86,6 +87,7 @@
     <Content Include="Content\Spiral_Tower_Colored_Block_Texture_64x64.png" />
     <Content Include="Content\Stone_Block_Texture_64x64.png" />
     <Content Include="Content\Sunflower_Block_Texture_64x64.png" />
+    <Content Include="Content\Tree_Texture_128x256.png" />
     <Content Include="Content\WhiteSquare100x100.png" />
     <Content Include="Content\Wildgrass_Block_Texture_64x64.png" />
     <Content Include="Icon.ico" />
@@ -97,6 +99,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy $(ProjectDir)maps $(ProjectDir)$(OutDir)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

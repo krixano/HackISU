@@ -15,6 +15,9 @@ namespace HackISU_2018
         public static KeyboardState keyboard, prevKeyboard;
 
         public static Rectangle screenRectangle;
+        public static Rectangle playerAnimation;
+
+        public static SpriteEffects playerEffect = SpriteEffects.None;
         public static Texture2D testTexture;
         public static Texture2D dirtTexture;
         public static Texture2D grassTexture;
@@ -31,6 +34,8 @@ namespace HackISU_2018
         public static Texture2D darkCaveTexture;
         public static Texture2D caveEntranceTexture;
         public static Texture2D spiralTexture;
+        public static Texture2D snowTexture;
+        public static Texture2D playerTexture;
 
         public static Texture2D quit, resume, newGame, settings, load;
 
@@ -55,8 +60,10 @@ namespace HackISU_2018
 
         public struct SpriteStruct
         {
+            public double health; // Out of 100% (max = 100)
             public Vector2_Double position_wp;
             public Vector2 size;
+            public Rectangle source; // TODO: Use for player as well as enemies
             public Color color;
             public float rotation;
             public Vector2 origin, speed;
@@ -106,6 +113,8 @@ namespace HackISU_2018
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             testTexture = Content.Load<Texture2D>("WhiteSquare100x100");
+            playerTexture = Content.Load<Texture2D>("Player_Sprite_Sheet_Textures_180x720");
+
             dirtTexture = Content.Load<Texture2D>("Dirt_Block_Texture_64x64");
             grassTexture = Content.Load<Texture2D>("Grass_Block_Texture_64x64");
             stoneTexture = Content.Load<Texture2D>("Stone_Block_Texture_64x64");
@@ -120,6 +129,7 @@ namespace HackISU_2018
             darkCaveTexture = Content.Load<Texture2D>("Cave_Walkway_Path_Block_Texture_64x64");
             caveEntranceTexture = Content.Load<Texture2D>("Cave_Entrance_Block_Texture_64x64");
             spiralTexture = Content.Load <Texture2D>("Spiral_Tower_Colored_Block_Texture_64x64");
+            snowTexture = Content.Load<Texture2D>("Mountain_Ice_Block_Texture_64x64");
 
             shotgunShell = Content.Load<Texture2D>("Shotgun_Shell_Texture_36x64");
             gunArmTexture = testTexture;

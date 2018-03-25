@@ -70,7 +70,7 @@ namespace HackISU_2018
                     World.offset_b.X = World.WORLD_SIZE.X - Game1.screenRectangle.Width / World.BLOCK_SIZE;
                 } else
                 {
-                    World.offset_b.X += .25f;
+                    World.offset_b.X += playerXSpeed_p / World.BLOCK_SIZE;
                 }
             }
             if (canGoLeft && Game1.keyboard.IsKeyDown(Keys.Left) 
@@ -82,7 +82,7 @@ namespace HackISU_2018
                     World.offset_b.X = 0;
                 } else
                 {
-                    World.offset_b.X -= .25f;
+                    World.offset_b.X -= playerXSpeed_p / World.BLOCK_SIZE;
                 }
             }
 
