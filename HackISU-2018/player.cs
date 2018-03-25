@@ -35,6 +35,7 @@ namespace HackISU_2018
             sprite.size.Y = Game1.screenRectangle.Width / 10;
             sprite.position_wp.X = ((Game1.screenRectangle.Center.X - (sprite.size.X / 2)) + World.offset_b.X); // In World Pixels
             sprite.position_wp.Y = 28 * World.BLOCK_SIZE; //(((World.WORLD_SIZE.Y / 2) - 1) * World.BLOCK_SIZE) - sprite.size.Y;
+            sprite.health = 6.0d;
         }
         public static void playerUpdate()
         {
@@ -141,7 +142,6 @@ namespace HackISU_2018
             if ((((isPlayerCollidingBottomLeft() || isPlayerCollidingBottomRight()))
                 || isJumping))
             {
-                Console.WriteLine("Test, " + isPlayerCollidingBottomLeft() + ", " + isPlayerCollidingBottomRight());
                 isFalling = false;
                 addFalling = 0;
                 sprite.position_wp.Y = (int) (sprite.position_wp.Y / World.BLOCK_SIZE) * World.BLOCK_SIZE;
@@ -231,6 +231,23 @@ namespace HackISU_2018
             int y = (int) (player.sprite.position_wp.Y - World.worldOffsetPixels().Y);
             //spriteBatch.Draw(Game1.playerTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Game1.playerAnimation, Color.White);
             spriteBatch.Draw(Game1.playerTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Game1.playerAnimation, Color.White, 0, new Vector2(0, 0), Game1.playerEffect, 0);
+
+
+            
+            int heartAmt = (int) player.sprite.health;
+            bool halfHeart = player.sprite.health - heartAmt > 0 && player.sprite.health - heartAmt < 1;
+            Console.WriteLine(heartAmt + ", " + halfHeart);
+            int gap = 3; // In pixels
+            for (int i = 0; i < heartAmt + 1; i++)
+            {
+                Rectangle destination = new Rectangle(Game1.screenRectangle.Right - (Game1.heartTexture.Width / 4 * 3) * i - gap * i, gap, Game1.heartTexture.Width / 4 * 3, Game1.heartTexture.Height / 4 * 3);
+                spriteBatch.Draw(Game1.heartTexture, destination, Color.White);
+            }
+            if (halfHeart)
+            {
+                Rectangle destination = new Rectangle(Game1.screenRectangle.Right - (Game1.halfHeartTexture.Width / 4 * 3) - gap, gap, Game1.halfHeartTexture.Width / 4 * 3, Game1.halfHeartTexture.Height / 4 * 3);
+                spriteBatch.Draw(Game1.halfHeartTexture, destination, Color.White);
+            }
         }
 
         public static bool isPlayerCollidingTopLeftSide()

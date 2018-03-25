@@ -37,6 +37,9 @@ namespace HackISU_2018
         public static Texture2D snowTexture;
         public static Texture2D playerTexture;
 
+        public static Texture2D heartTexture;
+        public static Texture2D halfHeartTexture;
+
         public static Texture2D quit, resume, newGame, settings, load;
 
         public static Texture2D spiralPlatformTexture;
@@ -57,7 +60,7 @@ namespace HackISU_2018
 
         public struct SpriteStruct
         {
-            public double health; // Out of 100% (max = 100)
+            public double health; // Out of 100% (max = 100) for enemies, 6 for player
             public Vector2_Double position_wp;
             public Vector2 size;
             public Rectangle source; // TODO: Use for player as well as enemies
@@ -143,6 +146,9 @@ namespace HackISU_2018
             load = Content.Load<Texture2D>("saved game");
             playerTexture = Content.Load<Texture2D>("player_sprite_sheet_textures_180x720");
             crabEnemyTexture = Content.Load<Texture2D>("Enemy_Rude_Crab_Texture_160x128");
+
+            heartTexture = Content.Load<Texture2D>("Heart_Block_Texture_64x64");
+            halfHeartTexture = Content.Load<Texture2D>("Half_Heart_Block_Texture_64x64");
 
 
             playerAnimation = new Rectangle(0, 0, playerTexture.Width, 720/4);
