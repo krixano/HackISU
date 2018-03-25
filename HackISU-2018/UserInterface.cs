@@ -14,7 +14,7 @@ namespace HackISU_2018
         static public void InitializeMenus()
         {
             Rectangle screen = Game1.screenRectangle;
-            areaMenu = new Rectangle(screen.X, screen.Y, screen.Width, screen.Height);
+            areaMenu = new Rectangle(screen.X + screen.Width / 3, screen.Y, screen.Width/3, screen.Height);
             areaPaused = new Rectangle(areaMenu.X + GAP, areaMenu.Y + GAP, areaMenu.Width - 100, areaMenu.Height - 100);
             startingMenu.bottons = new Rectangle[MAX_Bottons + 1];
             startingMenu.textures = new Texture2D[MAX_Bottons + 1];
@@ -76,12 +76,16 @@ namespace HackISU_2018
 
         static public void UpdateButtonsStart()
         {
+            
+
+            
             mouse1 = Game1.mouse;
             if (mouse1.LeftButton == ButtonState.Pressed && Game1.prevMouse.LeftButton == ButtonState.Released)
             {
                 if (startingMenu.bottons[0].Contains(mouse1.X, mouse1.Y))
                 {
                     Game1.gameState = Game1.GameStates.PLAYING;
+                    World.fileName = "map2.txt";
                 }
                 else if (startingMenu.bottons[1].Contains(mouse1.X, mouse1.Y))
                 {

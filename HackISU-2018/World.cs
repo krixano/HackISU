@@ -27,7 +27,7 @@ namespace HackISU_2018
         public static Vector2_Double offset_b; // _b: In Blocks
         public static Vector2 WORLD_SIZE;
         public static Block[] blocks;
-        public const int BLOCK_SIZE = 45;
+        public static int BLOCK_SIZE;
 
         public static void Init()
         {
@@ -37,6 +37,13 @@ namespace HackISU_2018
             offset_b = new Vector2_Double(0,28);
             blocks = new Block[(int) WORLD_SIZE.X * (int) WORLD_SIZE.Y];
             Console.WriteLine(worldHeight);
+
+            Game1.gameState = Game1.GameStates.MAIN_MENU;
+            if (Game1.gameState == Game1.GameStates.MAIN_MENU)
+            {
+                BLOCK_SIZE = 15;
+            }
+            
 
             char[] map = new char[(int) (World.WORLD_SIZE.Y * World.WORLD_SIZE.X)];
             string[] lines = System.IO.File.ReadAllLines(@fileName);
@@ -151,69 +158,146 @@ namespace HackISU_2018
         public static void Draw(SpriteBatch spriteBatch)
         {
 
+
+            int round = 0;
+            
             for (int y = 0; y < WORLD_SIZE.Y; y++)
             {
                 for (int x = 0; x < WORLD_SIZE.X; x++)
                 {
-                    Rectangle destination = new Rectangle((int) ((x * BLOCK_SIZE) - (offset_b.X * BLOCK_SIZE)), (int) ((y * BLOCK_SIZE) - (offset_b.Y * BLOCK_SIZE)), (int) BLOCK_SIZE, (int) BLOCK_SIZE);
-                    Texture2D texture;
-                    Color color = Color.White;
-                    switch (blocks[x + y * (int) WORLD_SIZE.X].type)
+                    if (Game1.gameState == Game1.GameStates.MAIN_MENU)
                     {
-                        case BlockType.AIR:
-                            texture = null;
-                            break;
-                        case BlockType.DIRT:
-                            texture = Game1.dirtTexture;
-                            break;
-                        case BlockType.GRASS:
-                            texture = Game1.grassTexture;
-                            break;
-                        case BlockType.SHALLOW_OCEAN:
-                            texture = Game1.shallowOceanTexture;
-                            color = new Color(255, 255, 255, 50);
-                            break;
-                        case BlockType.DEEP_OCEAN:
-                            texture = Game1.deepOceanTexture;
-                            color = new Color(255, 255, 255, 50);
-                            break;                        
-                        case BlockType.STONE:
-                            texture = Game1.stoneTexture;
-                            break;
-                        case BlockType.PLATFORM:
-                            texture = Game1.spiralPlatformTexture;
-                            break;
-                        case BlockType.ROSE:
-                            texture = Game1.roseTexture;
-                            break;
-                        case BlockType.SUNFLOWER:
-                            texture = Game1.sunflowerTexture;
-                            break;
-                        case BlockType.WILDGRASS:
-                            texture = Game1.wildgrassTexture;
-                            break;
-                        case BlockType.CAVE:
-                            texture = Game1.caveTexture;
-                            break;
-                        case BlockType.DARK_CAVE:
-                            texture = Game1.darkCaveTexture;
-                            break;
-                        case BlockType.CAVE_ENTRANCE:
-                            texture = Game1.caveEntranceTexture;
-                            break;
-                        case BlockType.TOWER:
-                            texture = Game1.spiralTexture;
-                            break;
-                        case BlockType.SNOW:
-                            texture = Game1.snowTexture;
-                            break;
-                        default:
-                            texture = null;
-                            break;
+                        int index = (int)(x + y * World.WORLD_SIZE.X);
+                        int xpixels = (int)(x * World.BLOCK_SIZE - World.offset_b.X * World.BLOCK_SIZE);
+                        if (xpixels <= Game1.screenRectangle.Left)
+                        {
+                            if (x == 0) round++;
+                            //xpixels = (int)((World.WORLD_SIZE.X - World.offset_b.X) + World.blocks[(int)(x + y * World.WORLD_SIZE.X)].size.X * x - World.offset_b.X);
+                            xpixels = (int)(x * World.BLOCK_SIZE - World.offset_b.X * World.BLOCK_SIZE + ((World.WORLD_SIZE.X - 50) * World.BLOCK_SIZE * round));
+                        }
+                        Rectangle destination = new Rectangle((xpixels), (int)((y * BLOCK_SIZE) - (offset_b.Y * BLOCK_SIZE)), (int)BLOCK_SIZE, (int)BLOCK_SIZE);
+                        Texture2D texture;
+                        Color color = Color.White;
+                        switch (blocks[x + y * (int)WORLD_SIZE.X].type)
+                        {
+                            case BlockType.AIR:
+                                texture = null;
+                                break;
+                            case BlockType.DIRT:
+                                texture = Game1.dirtTexture;
+                                break;
+                            case BlockType.GRASS:
+                                texture = Game1.grassTexture;
+                                break;
+                            case BlockType.SHALLOW_OCEAN:
+                                texture = Game1.shallowOceanTexture;
+                                color = new Color(255, 255, 255, 50);
+                                break;
+                            case BlockType.DEEP_OCEAN:
+                                texture = Game1.deepOceanTexture;
+                                color = new Color(255, 255, 255, 50);
+                                break;
+                            case BlockType.STONE:
+                                texture = Game1.stoneTexture;
+                                break;
+                            case BlockType.PLATFORM:
+                                texture = Game1.spiralPlatformTexture;
+                                break;
+                            case BlockType.ROSE:
+                                texture = Game1.roseTexture;
+                                break;
+                            case BlockType.SUNFLOWER:
+                                texture = Game1.sunflowerTexture;
+                                break;
+                            case BlockType.WILDGRASS:
+                                texture = Game1.wildgrassTexture;
+                                break;
+                            case BlockType.CAVE:
+                                texture = Game1.caveTexture;
+                                break;
+                            case BlockType.DARK_CAVE:
+                                texture = Game1.darkCaveTexture;
+                                break;
+                            case BlockType.CAVE_ENTRANCE:
+                                texture = Game1.caveEntranceTexture;
+                                break;
+                            case BlockType.TOWER:
+                                texture = Game1.spiralTexture;
+                                break;
+                            case BlockType.SNOW:
+                                texture = Game1.snowTexture;
+                                break;
+                            default:
+                                texture = null;
+                                break;
+                        }
+                        if (texture != null)
+                        {
+                            spriteBatch.Draw(texture, destination, color);
+                        }
                     }
-                    if (texture != null)
+                    else
                     {
-                        spriteBatch.Draw(texture, destination, color);
+                        Rectangle destination = new Rectangle((int)((x * BLOCK_SIZE) - (offset_b.X * BLOCK_SIZE)), (int)((y * BLOCK_SIZE) - (offset_b.Y * BLOCK_SIZE)), (int)BLOCK_SIZE, (int)BLOCK_SIZE);
+                        Texture2D texture;
+                        Color color = Color.White;
+                        switch (blocks[x + y * (int)WORLD_SIZE.X].type)
+                        {
+                            case BlockType.AIR:
+                                texture = null;
+                                break;
+                            case BlockType.DIRT:
+                                texture = Game1.dirtTexture;
+                                break;
+                            case BlockType.GRASS:
+                                texture = Game1.grassTexture;
+                                break;
+                            case BlockType.SHALLOW_OCEAN:
+                                texture = Game1.shallowOceanTexture;
+                                color = new Color(255, 255, 255, 50);
+                                break;
+                            case BlockType.DEEP_OCEAN:
+                                texture = Game1.deepOceanTexture;
+                                color = new Color(255, 255, 255, 50);
+                                break;
+                            case BlockType.STONE:
+                                texture = Game1.stoneTexture;
+                                break;
+                            case BlockType.PLATFORM:
+                                texture = Game1.spiralPlatformTexture;
+                                break;
+                            case BlockType.ROSE:
+                                texture = Game1.roseTexture;
+                                break;
+                            case BlockType.SUNFLOWER:
+                                texture = Game1.sunflowerTexture;
+                                break;
+                            case BlockType.WILDGRASS:
+                                texture = Game1.wildgrassTexture;
+                                break;
+                            case BlockType.CAVE:
+                                texture = Game1.caveTexture;
+                                break;
+                            case BlockType.DARK_CAVE:
+                                texture = Game1.darkCaveTexture;
+                                break;
+                            case BlockType.CAVE_ENTRANCE:
+                                texture = Game1.caveEntranceTexture;
+                                break;
+                            case BlockType.TOWER:
+                                texture = Game1.spiralTexture;
+                                break;
+                            case BlockType.SNOW:
+                                texture = Game1.snowTexture;
+                                break;
+                            default:
+                                texture = null;
+                                break;
+                        }
+                        if (texture != null)
+                        {
+                            spriteBatch.Draw(texture, destination, color);
+                        }
                     }
                 }
             }
