@@ -80,6 +80,7 @@ namespace HackISU_2018
             {
                 sprite.position_wp.X -= playerXSpeed_p;
                 isMoving = true;
+                Game1.playerEffect = SpriteEffects.FlipHorizontally;
                 if (isPlayerCollidingMiddleLeftSide() || isPlayerCollidingTopLeftSide())
                 {
                     double difference = sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE);
@@ -92,6 +93,7 @@ namespace HackISU_2018
             {
                 sprite.position_wp.X += playerXSpeed_p;
                 isMoving = true;
+                Game1.playerEffect = SpriteEffects.None;
                 if (isPlayerCollidingMiddleRightSide() || isPlayerCollidingTopRightSide())
                 {
                     double difference = sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE);
@@ -189,14 +191,24 @@ namespace HackISU_2018
             Console.WriteLine(addFalling);
 
             tick++;
-            if (isMoving)
+            if (isJumping)
+            {
+                currentAnimation = 3;
+                Game1.playerAnimation.Y = 840/4 * currentAnimation;
+            }
+            else if (isMoving)
             {
                 if (tick % 30 == 0)
                 {
+                    if (currentAnimation == 3) currentAnimation = 0;
                     currentAnimation++;
                     if (currentAnimation == 3) currentAnimation = 1;
-                    Game1.playerAnimation.Y = 720/3 * currentAnimation;
+                    Game1.playerAnimation.Y = 840/4 * currentAnimation;
                 }
+            } else
+            {
+                currentAnimation = 0;
+                Game1.playerAnimation.Y = 840/4 * currentAnimation;
             }
         }
         
@@ -239,7 +251,7 @@ namespace HackISU_2018
             int x = (int) (player.sprite.position_wp.X - World.worldOffsetPixels().X);
             int y = (int) (player.sprite.position_wp.Y - World.worldOffsetPixels().Y);
             //spriteBatch.Draw(Game1.playerTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Game1.playerAnimation, Color.White);
-            spriteBatch.Draw(Game1.playerTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Game1.playerAnimation, Color.White);
+            spriteBatch.Draw(Game1.playerTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Game1.playerAnimation, Color.White, 0, new Vector2(0, 0), Game1.playerEffect, 0);
         }
 
         public static bool isPlayerCollidingTopLeftSide()

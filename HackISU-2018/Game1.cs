@@ -14,6 +14,7 @@ namespace HackISU_2018
         SpriteBatch spriteBatch;
         public static KeyboardState keyboard, prevKeyboard;
 
+        public static SpriteEffects playerEffect = SpriteEffects.None;
         public static Rectangle playerAnimation;
         public static Texture2D playerTexture;
         public static Rectangle screenRectangle;
