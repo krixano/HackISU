@@ -107,16 +107,16 @@ namespace HackISU_2018
                     /*if (enemySprite[i].position_wp.X - player.sprite.position_wp.X < player.sprite.size.X / 2 && enemySprite[i].position_wp.Y - player.sprite.position_wp.Y < player.sprite.size.Y / 2)
                         hitsTilDeath--;*/
 
-                    /*if (enemySprite[i].health <= 0)
+                    if (enemySprite[i].health <= 0)
                     {
                         enemySprite[i].visible = false;
                         enemy.enemiesLeft--;
                         enemy.spawnRate -= 100;
                         // Reset health back to 100
                         enemySprite[i].health = 100d;
-                    }*/
+                    }
 
-                    /*if (tick % 20 == 0)
+                    if (tick % 20 == 0)
                     {
                         if (enemySprite[i].source.X == 0)
                         {
@@ -135,7 +135,7 @@ namespace HackISU_2018
                             enemySprite[i].source.X = 0;
                             enemySprite[i].source.Y = 0;
                         }
-                    }*/
+                    }
                 } else
                 {
                     if (!enemySprite[i].visible && enemiesLeft > 0)
@@ -143,46 +143,6 @@ namespace HackISU_2018
                 }
             }
 
-        }
-
-        static public void EnemyMovement(SpriteStruct enemySprite)
-        {
-            double addFalling = World.BLOCK_SIZE * .25f; // TODO
-            bool canGoLeft = true;
-            bool canGoRight = true;
-
-            /*if (isCollidingTopLeftSide(enemySprite))
-                canGoLeft = false;
-            if (isCollidingBottomLeftSide(enemySprite))
-                canGoLeft = false;
-            if (isCollidingTopRightSide(enemySprite))
-                canGoRight = false;
-            if (isCollidingBottomRightSide(enemySprite))
-                canGoRight = false;
-            if (isCollidingMiddleLeftSide(enemySprite))
-                canGoLeft = false;
-            if (isCollidingMiddleRightSide(enemySprite))
-                canGoRight = false;*/
-
-            /*if (((isCollidingBottomLeft(enemySprite) || isCollidingBottomRight(enemySprite))))
-            {
-                enemySprite.isFalling = false;
-                addFalling = 0;
-                enemySprite.position_wp.Y = (int) (enemySprite.position_wp.Y / World.BLOCK_SIZE) * World.BLOCK_SIZE;
-            }*/
-
-            if (isCollidingBottomLeftPlus(enemySprite) || isCollidingBottomRightPlus(enemySprite))
-            {
-                enemySprite.isFalling = false;
-            }
-
-            enemySprite.position_wp.Y += addFalling;
-            Console.WriteLine(addFalling);
-            Console.WriteLine(enemySprite.position_wp.Y);
-            /*if ((isCollidingBottomLeft(enemySprite) || isCollidingBottomRight(enemySprite)))
-            {
-                enemySprite.position_wp.Y = ((int)(enemySprite.position_wp.Y / World.BLOCK_SIZE) * World.BLOCK_SIZE) + 5;
-            }*/
         }
 
         static public void spawnEnemy()
