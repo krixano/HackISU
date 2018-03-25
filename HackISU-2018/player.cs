@@ -26,7 +26,7 @@ namespace HackISU_2018
             tmr = new Timer(60);
 
             playerXSpeed_p = World.BLOCK_SIZE * .25f;
-            playerYSpeed_p = World.BLOCK_SIZE * .50f;
+            playerYSpeed_p = World.BLOCK_SIZE * .30f;
 
             sprite.size.X = Game1.screenRectangle.Width / 20;
             sprite.size.Y = Game1.screenRectangle.Width / 10;
@@ -37,6 +37,80 @@ namespace HackISU_2018
         }
         public static void playerUpdate()
         {
+            isFalling = false;
+
+            Double addFalling = playerYSpeed_p;
+            bool canGoLeft = true;
+            bool canGoRight = true;
+
+            if (isPlayerCollidingTopLeftSide())
+                canGoLeft = false;
+            if (isPlayerCollidingBottomLeftSide())
+                canGoLeft = false;
+            if (isPlayerCollidingTopRightSide())
+                canGoRight = false;
+            if (isPlayerCollidingBottomRightSide())
+                canGoRight = false;
+            if (isPlayerCollidingMiddleLeftSide())
+                canGoLeft = false;
+            if (isPlayerCollidingMiddleRightSide())
+                canGoRight = false;
+            
+            //scrolls screen      
+            if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Right)
+                || Game1.keyboard.IsKeyDown(Keys.D) 
+                && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
+            {
+                World.offset_b.X += .25f;
+            }
+            if (canGoLeft && Game1.keyboard.IsKeyDown(Keys.Left) 
+                || Game1.keyboard.IsKeyDown(Keys.A) 
+                && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
+            {
+                World.offset_b.X -= .25f;
+            }
+
+            //moves player
+            if (canGoLeft && (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left)
+                || Game1.keyboard.IsKeyDown(Keys.A)))
+            {
+                sprite.position_wp.X -= playerXSpeed_p;
+                if (isPlayerCollidingMiddleLeftSide() || isPlayerCollidingTopLeftSide())
+                {
+                    double difference = sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE);
+                    sprite.position_wp.X = ((int) (sprite.position_wp.X / World.BLOCK_SIZE) * World.BLOCK_SIZE);
+                    World.offset_b.X = (sprite.position_wp.X - difference) / World.BLOCK_SIZE;
+                }
+            }
+            if (canGoRight && (Game1.pad1.IsButtonDown(Buttons.DPadRight) ||
+                Game1.keyboard.IsKeyDown(Keys.D) || Game1.keyboard.IsKeyDown(Keys.Right)))
+            {
+                sprite.position_wp.X += playerXSpeed_p;
+                if (isPlayerCollidingMiddleRightSide() || isPlayerCollidingTopRightSide())
+                {
+                    double difference = sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE);
+                    sprite.position_wp.X = ((int) (sprite.position_wp.X / World.BLOCK_SIZE) * World.BLOCK_SIZE) + Math.Abs(World.BLOCK_SIZE - sprite.size.X) + 5;
+                    World.offset_b.X = (sprite.position_wp.X - difference) / World.BLOCK_SIZE;
+                }
+            }
+
+            bool wallJumpOverride = false;
+            //WALL JUMPING
+            //Slow fall if touching wall
+            if ((canGoLeft == false || canGoRight == false) && isFalling)
+            {
+                wallJumpOverride = true;
+                addFalling = playerYSpeed_p / 5;
+                //sprite.position_wp.Y += playerYSpeed_p;
+                if (Game1.keyboard.IsKeyDown(Keys.Space) && Game1.prevKeyboard.IsKeyUp(Keys.Space))
+                {
+                    //playerXSpeed_p += playerXSpeed_p;
+                    isFalling = false;
+                    playerJump();                    
+                }
+            }
+            
+
             if (Game1.keyboard.IsKeyDown(Keys.Right) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
                 World.offset_b.X += .25f;
             if (Game1.keyboard.IsKeyDown(Keys.Left) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
@@ -46,94 +120,33 @@ namespace HackISU_2018
             /*if (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left))
                 sprite.position_wp.X -= playerXSpeed_p;
             if (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right))
-
                 sprite.position_wp.X += playerXSpeed_p;*/
 
-            Vector2_Double gravityCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
-            Vector2_Double gravityCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
-            //bool isFalling = false;
-            isFalling = false;
-
-            Double addFalling = 0;
+            /*Vector2_Double gravityCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            Vector2_Double gravityCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);*/
             
             //checking collision for bottom of player, left and right corners
-            if ((World.blocks[(int)gravityCollisionBottomRight.X + (int)gravityCollisionBottomRight.Y * (int)World.WORLD_SIZE.X].solid != true
+            /*if ((World.blocks[(int)gravityCollisionBottomRight.X + (int)gravityCollisionBottomRight.Y * (int)World.WORLD_SIZE.X].solid != true
                 || gravityCollisionBottomRight.X < 0 || gravityCollisionBottomRight.X > World.WORLD_SIZE.X || gravityCollisionBottomRight.Y < 0 || gravityCollisionBottomRight.Y > World.WORLD_SIZE.Y)
                 && !isJumping)
             {
                 addFalling = playerYSpeed_p;
                 isFalling = true;
-            }/* else
+            }*//* else
             {
                 isFalling = false;
                 sprite.position_wp.Y = (gravityCollisionBottomRight.Y * World.BLOCK_SIZE) - 1 - sprite.size.Y;
             }*/
-            if ((World.blocks[(int)gravityCollisionBottomLeft.X + (int)gravityCollisionBottomLeft.Y * (int)World.WORLD_SIZE.X].solid != true
+            /*if ((World.blocks[(int)gravityCollisionBottomLeft.X + (int)gravityCollisionBottomLeft.Y * (int)World.WORLD_SIZE.X].solid != true
                 || gravityCollisionBottomLeft.X < 0 || gravityCollisionBottomLeft.X > World.WORLD_SIZE.X || gravityCollisionBottomLeft.Y < 0 || gravityCollisionBottomLeft.Y > World.WORLD_SIZE.Y)
                 && !isJumping)
             {
                 addFalling = playerYSpeed_p;
                 isFalling = true;
-            }
-             Vector2_Double sideCollisionTopLeft = new Vector2_Double((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
-            Vector2_Double sideCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - (sprite.size.Y / 4)) / World.BLOCK_SIZE);
-            Vector2_Double sideCollisionTopRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
-            Vector2_Double sideCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - (sprite.size.Y / 4)) / World.BLOCK_SIZE);
-            Vector2_Double sideCollisionMiddleLeft = new Vector2_Double((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + (sprite.size.Y / 2)) / World.BLOCK_SIZE);
-            Vector2_Double sideCollisionMiddleRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + (sprite.size.Y / 2)) / World.BLOCK_SIZE);
-
-            bool canGoLeft = true;
-            bool canGoRight = true;
-
-            if (World.blocks[(int) sideCollisionTopLeft.X + (int) sideCollisionTopLeft.Y * (int) World.WORLD_SIZE.X].solid)
-                canGoLeft = false;
-            if (World.blocks[(int) sideCollisionBottomLeft.X + (int) sideCollisionBottomLeft.Y * (int) World.WORLD_SIZE.X].solid)
-                canGoLeft = false;
-            if (World.blocks[(int) sideCollisionTopRight.X + (int) sideCollisionTopRight.Y * (int) World.WORLD_SIZE.X].solid)
-                canGoRight = false;
-            if (World.blocks[(int) sideCollisionBottomRight.X + (int) sideCollisionBottomRight.Y * (int) World.WORLD_SIZE.X].solid)
-                canGoRight = false;
-            if (World.blocks[(int) sideCollisionMiddleLeft.X + (int) sideCollisionMiddleLeft.Y * (int) World.WORLD_SIZE.X].solid)
-                canGoLeft = false;
-            if (World.blocks[(int) sideCollisionMiddleRight.X + (int) sideCollisionMiddleRight.Y * (int) World.WORLD_SIZE.X].solid)
-                canGoRight = false;
+            }*/
 
 
-            //WALL JUMPING
-            //Slow fall if touching wall
-            if ((canGoLeft == false || canGoRight == false) && isFalling)
-            {
-                addFalling = playerYSpeed_p / 5;
-                //sprite.position_wp.Y += playerYSpeed_p;
-                if (Game1.keyboard.IsKeyDown(Keys.Space) && Game1.prevKeyboard.IsKeyUp(Keys.Space))
-                {
-                    //playerXSpeed_p += playerXSpeed_p;
-                    isFalling = false;                    
-                    playerJump();                    
-                }
-            }
 
-            //scrolls screen      
-            if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Right)
-                || Game1.keyboard.IsKeyDown(Keys.D) 
-                && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
-                World.offset_b.X += .25f;
-            if (canGoLeft && Game1.keyboard.IsKeyDown(Keys.Left) 
-                || Game1.keyboard.IsKeyDown(Keys.A) 
-                && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
-                World.offset_b.X -= .25f;
-            //else if (Game1.keyboard.IsKeyDown(Keys.Up) && sprite.position.Y <= Game1.screenRectangle.Bottom - Game1.screenRectangle.Height / 3)
-            //    World.offset.Y -= .25f;
-            //else if (Game1.keyboard.IsKeyDown(Keys.Down) && sprite.position.Y >= Game1.screenRectangle.Top - Game1.screenRectangle.Height / 3)
-            //    World.offset.Y += .25f;
-
-            //moves player
-            if (canGoLeft && (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left)
-                || Game1.keyboard.IsKeyDown(Keys.A)))
-                sprite.position_wp.X -= playerXSpeed_p;
-            if (canGoRight && (Game1.pad1.IsButtonDown(Buttons.DPadRight) ||
-                Game1.keyboard.IsKeyDown(Keys.D) || Game1.keyboard.IsKeyDown(Keys.Right)))
-                sprite.position_wp.X += playerXSpeed_p;
 
             if (playerScreenPixels().Y >= Game1.screenRectangle.Height / 5 * 3)
             {
@@ -152,7 +165,22 @@ namespace HackISU_2018
                 isJumping = true;
             playerJump();
 
+            if (!wallJumpOverride && (((isPlayerCollidingBottomLeft() || isPlayerCollidingBottomRight()))
+                || isJumping))
+            {
+                Console.WriteLine("Test");
+                isFalling = false;
+                addFalling = 0;
+                sprite.position_wp.Y = (int) (sprite.position_wp.Y / World.BLOCK_SIZE) * World.BLOCK_SIZE;
+            }
+
+
             sprite.position_wp.Y += addFalling;
+            if (!wallJumpOverride && (isPlayerCollidingBottomLeft() || isPlayerCollidingBottomRight()))
+            {
+                sprite.position_wp.Y = ((int) (sprite.position_wp.Y / World.BLOCK_SIZE) * World.BLOCK_SIZE) + 5;
+            }
+            Console.WriteLine(addFalling);
         }
         
 
@@ -163,28 +191,12 @@ namespace HackISU_2018
             {
                 
                 currentTmr++;
-                double increment = playerYSpeed_p ;
-                double x1 = (sprite.position_wp.X) / World.BLOCK_SIZE;
-                double x2 = (sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE;
-                double y = (sprite.position_wp.Y - increment - 2) / World.BLOCK_SIZE;
-                int i = (int) (x1 + y * World.WORLD_SIZE.X);
-                int i2 = (int) (x2 + y * World.WORLD_SIZE.X);
-                while (World.blocks[i].solid || World.blocks[i2].solid)
+                sprite.position_wp.Y -= playerYSpeed_p;
+                if (isPlayerCollidingTopLeft() || isPlayerCollidingTopRight())
                 {
-                    isFalling = false;
-                    increment--;
-                    if (increment <= 0) {
-                        increment = 0;
-                        break;
-                    }
-
-                    y = (sprite.position_wp.Y - increment - 2) / World.BLOCK_SIZE;
-
-                    i = (int) (x1 + y * World.WORLD_SIZE.X);
-                    i2 = (int) (x2 + y * World.WORLD_SIZE.X);
+                    isJumping = false;
+                    isFalling = true;
                 }
-
-                sprite.position_wp.Y -= increment;
                 if (currentTmr == tmrAmt)
                 {
                     currentTmr = 0;
@@ -210,6 +222,66 @@ namespace HackISU_2018
             int x = (int) (player.sprite.position_wp.X - World.worldOffsetPixels().X);
             int y = (int) (player.sprite.position_wp.Y - World.worldOffsetPixels().Y);
             spriteBatch.Draw(Game1.playerTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Game1.playerAnimation, Color.White);
+        }
+
+        public static bool isPlayerCollidingTopLeftSide()
+        {
+            Vector2_Double sideCollisionTopLeft = new Vector2_Double((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
+            return World.blocks[(int) sideCollisionTopLeft.X + (int) sideCollisionTopLeft.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isPlayerCollidingTopRightSide()
+        {
+            Vector2_Double sideCollisionTopRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
+            return World.blocks[(int) sideCollisionTopRight.X + (int) sideCollisionTopRight.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isPlayerCollidingBottomLeftSide()
+        {
+            Vector2_Double sideCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - (sprite.size.Y / 4)) / World.BLOCK_SIZE);
+            return World.blocks[(int) sideCollisionBottomLeft.X + (int) sideCollisionBottomLeft.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isPlayerCollidingBottomRightSide()
+        {
+            Vector2_Double sideCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - (sprite.size.Y / 4)) / World.BLOCK_SIZE);
+            return World.blocks[(int) sideCollisionBottomRight.X + (int) sideCollisionBottomRight.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isPlayerCollidingMiddleLeftSide()
+        {
+            Vector2_Double sideCollisionMiddleLeft = new Vector2_Double((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + (sprite.size.Y / 2)) / World.BLOCK_SIZE);
+            return World.blocks[(int) sideCollisionMiddleLeft.X + (int) sideCollisionMiddleLeft.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isPlayerCollidingMiddleRightSide()
+        {
+            Vector2_Double sideCollisionMiddleRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + (sprite.size.Y / 2)) / World.BLOCK_SIZE);
+            return World.blocks[(int) sideCollisionMiddleRight.X + (int) sideCollisionMiddleRight.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isPlayerCollidingBottomLeft() // TODO
+        {
+            Vector2_Double gravityCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            return World.blocks[(int) gravityCollisionBottomLeft.X + (int) gravityCollisionBottomLeft.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isPlayerCollidingBottomRight() // TODO
+        {
+            Vector2_Double gravityCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            return World.blocks[(int) gravityCollisionBottomRight.X + (int) gravityCollisionBottomRight.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isPlayerCollidingTopLeft()
+        {
+            Vector2_Double collisionTopLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y - 1) / World.BLOCK_SIZE);
+            return World.blocks[(int) collisionTopLeft.X + (int) collisionTopLeft.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isPlayerCollidingTopRight()
+        {
+            Vector2_Double collisionTopRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE, (sprite.position_wp.Y - 1) / World.BLOCK_SIZE);
+            return World.blocks[(int) collisionTopRight.X + (int) collisionTopRight.Y * (int) World.WORLD_SIZE.X].solid;
         }
 
     }
