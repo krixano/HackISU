@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using static HackISU_2018.Game1;
 
 namespace HackISU_2018
 {
@@ -65,17 +66,18 @@ namespace HackISU_2018
             {
                 if (enemySprite[i].visible)
                 {
-                    if (enemySprite[i].position_wp.X < player.sprite.position_wp.X)
+                    EnemyMovement(enemySprite[i]);
+                    /*if (enemySprite[i].position_wp.X < player.sprite.position_wp.X)
                         enemySprite[i].position_wp.X += enemyXSpeed_p;
                     if (enemySprite[i].position_wp.Y < player.sprite.position_wp.Y)
                         enemySprite[i].position_wp.Y += enemyYSpeed_p;
                     if (enemySprite[i].position_wp.X > player.sprite.position_wp.X)
                         enemySprite[i].position_wp.X -= enemyXSpeed_p;
                     if (enemySprite[i].position_wp.Y > player.sprite.position_wp.Y)
-                        enemySprite[i].position_wp.Y -= enemyYSpeed_p;
+                        enemySprite[i].position_wp.Y -= enemyYSpeed_p;*/
 
-                    if (enemySprite[i].position_wp.X - player.sprite.position_wp.X < player.sprite.size.X / 2 && enemySprite[i].position_wp.Y - player.sprite.position_wp.Y < player.sprite.size.Y / 2)
-                        hitsTilDeath--;
+                    /*if (enemySprite[i].position_wp.X - player.sprite.position_wp.X < player.sprite.size.X / 2 && enemySprite[i].position_wp.Y - player.sprite.position_wp.Y < player.sprite.size.Y / 2)
+                        hitsTilDeath--;*/
 
                     if (enemySprite[i].health <= 0)
                     {
@@ -114,6 +116,45 @@ namespace HackISU_2018
             }
 
         }
+
+        static public void EnemyMovement(SpriteStruct enemySprite)
+        {
+            Double addFalling = World.BLOCK_SIZE * .25; // TODO
+            bool canGoLeft = true;
+            bool canGoRight = true;
+
+            if (isCollidingTopLeftSide(enemySprite))
+                canGoLeft = false;
+            if (isCollidingBottomLeftSide(enemySprite))
+                canGoLeft = false;
+            if (isCollidingTopRightSide(enemySprite))
+                canGoRight = false;
+            if (isCollidingBottomRightSide(enemySprite))
+                canGoRight = false;
+            if (isCollidingMiddleLeftSide(enemySprite))
+                canGoLeft = false;
+            if (isCollidingMiddleRightSide(enemySprite))
+                canGoRight = false;
+
+            if (((isCollidingBottomLeft(enemySprite) || isCollidingBottomRight(enemySprite))))
+            {
+                enemySprite.isFalling = false;
+                addFalling = 0;
+                enemySprite.position_wp.Y = (int) (enemySprite.position_wp.Y / World.BLOCK_SIZE) * World.BLOCK_SIZE;
+            }
+
+            if (isCollidingBottomLeftPlus(enemySprite) || isCollidingBottomRightPlus(enemySprite))
+            {
+                enemySprite.isFalling = false;
+            }
+
+            enemySprite.position_wp.Y += addFalling;
+            if ((isCollidingBottomLeft(enemySprite) || isCollidingBottomRight(enemySprite)))
+            {
+                enemySprite.position_wp.Y = ((int)(enemySprite.position_wp.Y / World.BLOCK_SIZE) * World.BLOCK_SIZE) + 5;
+            }
+        }
+
         static public void spawnEnemy()
         {
             
@@ -140,6 +181,78 @@ namespace HackISU_2018
                     spriteBatch.Draw(Game1.crabEnemyTexture, new Rectangle(x, y, (int) enemySprite[i].size.X, (int) enemySprite[i].size.Y), enemySprite[i].source, Color.White);
                 }
             }
+        }
+
+        public static bool isCollidingTopLeftSide(SpriteStruct sprite)
+        {
+            Vector2_Double sideCollisionTopLeft = new Vector2_Double((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
+            return World.blocks[(int) sideCollisionTopLeft.X + (int) sideCollisionTopLeft.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isCollidingTopRightSide(SpriteStruct sprite)
+        {
+            Vector2_Double sideCollisionTopRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y) / World.BLOCK_SIZE);
+            return World.blocks[(int) sideCollisionTopRight.X + (int) sideCollisionTopRight.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isCollidingBottomLeftSide(SpriteStruct sprite)
+        {
+            Vector2_Double sideCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - (sprite.size.Y / 4)) / World.BLOCK_SIZE);
+            return World.blocks[(int) sideCollisionBottomLeft.X + (int) sideCollisionBottomLeft.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isCollidingBottomRightSide(SpriteStruct sprite)
+        {
+            Vector2_Double sideCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y - (sprite.size.Y / 4)) / World.BLOCK_SIZE);
+            return World.blocks[(int) sideCollisionBottomRight.X + (int) sideCollisionBottomRight.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isCollidingMiddleLeftSide(SpriteStruct sprite)
+        {
+            Vector2_Double sideCollisionMiddleLeft = new Vector2_Double((sprite.position_wp.X - 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + (sprite.size.Y / 2)) / World.BLOCK_SIZE);
+            return World.blocks[(int) sideCollisionMiddleLeft.X + (int) sideCollisionMiddleLeft.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isCollidingMiddleRightSide(SpriteStruct sprite)
+        {
+            Vector2_Double sideCollisionMiddleRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + (sprite.size.Y / 2)) / World.BLOCK_SIZE);
+            return World.blocks[(int) sideCollisionMiddleRight.X + (int) sideCollisionMiddleRight.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isCollidingBottomLeft(SpriteStruct sprite) // TODO
+        {
+            Vector2_Double gravityCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            return World.blocks[(int) gravityCollisionBottomLeft.X + (int) gravityCollisionBottomLeft.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isCollidingBottomRight(SpriteStruct sprite) // TODO
+        {
+            Vector2_Double gravityCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            return World.blocks[(int) gravityCollisionBottomRight.X + (int) gravityCollisionBottomRight.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isCollidingBottomLeftPlus(SpriteStruct sprite) // TODO
+        {
+            Vector2_Double gravityCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 5) / World.BLOCK_SIZE);
+            return World.blocks[(int) gravityCollisionBottomLeft.X + (int) gravityCollisionBottomLeft.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isCollidingBottomRightPlus(SpriteStruct sprite) // TODO
+        {
+            Vector2_Double gravityCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 5) / World.BLOCK_SIZE);
+            return World.blocks[(int) gravityCollisionBottomRight.X + (int) gravityCollisionBottomRight.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isCollidingTopLeft(SpriteStruct sprite)
+        {
+            Vector2_Double collisionTopLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y - 1) / World.BLOCK_SIZE);
+            return World.blocks[(int) collisionTopLeft.X + (int) collisionTopLeft.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isCollidingTopRight(SpriteStruct sprite)
+        {
+            Vector2_Double collisionTopRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE, (sprite.position_wp.Y - 1) / World.BLOCK_SIZE);
+            return World.blocks[(int) collisionTopRight.X + (int) collisionTopRight.Y * (int) World.WORLD_SIZE.X].solid;
         }
     }
 }

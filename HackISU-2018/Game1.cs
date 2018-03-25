@@ -75,6 +75,8 @@ namespace HackISU_2018
             public float layerDepth;
             public bool isFired;
             public bool visible;
+            public bool isFalling;
+            public bool isJumping;
         }
 
         public struct Menu
@@ -244,7 +246,7 @@ namespace HackISU_2018
                     UserInterface.DrawPauseMenu(spriteBatch);
                 if (gameState == GameStates.PLAYING)
                 {
-                    enemy.Draw(spriteBatch);             
+                    enemy.Draw(spriteBatch);
                                    
                     World.Draw(spriteBatch);
                     player.Draw(spriteBatch);
