@@ -38,69 +38,79 @@ namespace HackISU_2018
             blocks = new Block[(int) WORLD_SIZE.X * (int) WORLD_SIZE.Y];
             Console.WriteLine(worldHeight);
 
-            char[,] map = new char[200,worldHeight];
+            char[] map = new char[worldHeight * 200];
             string[] lines = System.IO.File.ReadAllLines(@"map3.txt");
-            for (int i=0; i< 50; i++)
-            {                
-                for (int j=0; j<200; j++)
-                {
-                    char[] mapLine = lines[i].ToString().ToCharArray();
-                    map[i,j] = mapLine[j];
-                    //Console.Write(map[j, i]);                    
-                }
-                Console.WriteLine();
-            }
-            for (int i = 0; i < worldHeight; i++)
+            Console.WriteLine(lines.Length);
+            Console.WriteLine(lines);
+            for (int y = 0; y < worldHeight; y++)
             {
-                for (int j = 0; j < 100; j++)
+                if (y >= lines.Length)
                 {
-                    int index = (int)(j + i * World.WORLD_SIZE.X);
-                    if (map[j, i] == 's')
+                    Console.WriteLine("Error!"); break;
+                }
+                char[] mapLine = lines[y].ToString().ToCharArray();
+                Console.WriteLine(mapLine.Length);
+                for (int x = 0; x < 200; x++) // Width
+                {
+                    if (x >= mapLine.Length)
+                    {
+                        Console.WriteLine("Error!"); break;
+                    }
+                    map[x + y * 200] = mapLine[x];
+                }
+            }
+            Console.WriteLine();
+            for (int y = 0; y < worldHeight; y++)
+            {
+                for (int x = 0; x < 200; x++)
+                {
+                    int index = (int)(x + y * World.WORLD_SIZE.X);
+                    if (map[index] == 's')
                     {
                         blocks[index].type = BlockType.STONE;
                         blocks[index].solid = true;
                     }
-                    else if (map[j, i] == '1')
+                    else if (map[index] == '1')
                     {
                         blocks[index].type = BlockType.ROSE;
                         blocks[index].solid = false;
                     }
-                    else if (map[j, i] == '2')
+                    else if (map[index] == '2')
                     {
                         blocks[index].type = BlockType.SUNFLOWER;
                         blocks[index].solid = false;
                     }
-                    else if (map[j, i] == '3')
+                    else if (map[index] == '3')
                     {
                         blocks[index].type = BlockType.WILDGRASS;
                         blocks[index].solid = false;
                     }
-                    else if (map[j, i] == 'g')
+                    else if (map[index] == 'g')
                     {
                         blocks[index].type = BlockType.GRASS;
                         blocks[index].solid = true;
                     }
-                    else if (map[j, i] == 'd')
+                    else if (map[index] == 'd')
                     {
                         blocks[index].type = BlockType.DIRT;
                         blocks[index].solid = true;
                     }
-                    else if (map[j, i] == 'o')
+                    else if (map[index] == 'o')
                     {
                         blocks[index].type = BlockType.SHALLOW_OCEAN;
                         blocks[index].solid = false;
                     }
-                    else if (map[j, i] == 'O')
+                    else if (map[index] == 'O')
                     {
                         blocks[index].type = BlockType.DEEP_OCEAN;
                         blocks[index].solid = false;
                     }
-                    else if (map[j, i] == 'p')
+                    else if (map[index] == 'p')
                     {
                         blocks[index].type = BlockType.SPIRAL;
                         blocks[index].solid = true;
                     }
-                    else if (map[j, i] == 'a')
+                    else if (map[index] == 'a')
                     {
                         blocks[index].type = BlockType.AIR;
                         blocks[index].solid = false;
