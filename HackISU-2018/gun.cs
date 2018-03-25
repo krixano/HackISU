@@ -20,7 +20,7 @@ namespace HackISU_2018
             ASSAULT_RIFLE = 10,
             SHOTGUN = 45
         }
-        static public GunSelections gunSelection = GunSelections.HANDGUN;
+        static public GunSelections gunSelection = GunSelections.SHOTGUN;
 
         static public void gunInit()
         {
@@ -38,6 +38,7 @@ namespace HackISU_2018
             //Gun Arm Size
             gunArm.size.X = player.sprite.size.X;
             gunArm.size.Y = gunArm.size.X / 3;
+            Console.WriteLine(gunArm.size.X + " " + gunArm.size.Y);
 
             //Bullet Sizes
             if (gunSelection == GunSelections.HANDGUN)
@@ -51,6 +52,7 @@ namespace HackISU_2018
                 bulletSize = gunArm.size.X / 12;
                 shell.size.X = bulletSize;
                 shell.size.Y = bulletSize;
+                Game1.gunArmTexture = Game1.shotgunTexture;
             }
 
             bullet = new Game1.SpriteStruct[100]; 

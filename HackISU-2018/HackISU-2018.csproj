@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assault_rifle_64x22.png" />
     <Content Include="Content\Ball-White-Round.png" />
     <Content Include="Content\Bullet_Texture_20x60.png" />
     <Content Include="Content\Cave_Entrance_Block_Texture_64x64.png" />
@@ -80,6 +81,7 @@
     <Content Include="Content\Rose_Block_Texture_64x64.png" />
     <Content Include="Content\Saved_Game_Texture_1280x720.png" />
     <Content Include="Content\Shallow_Ocean_Block_Texture_64x64.png" />
+    <Content Include="Content\shotgun_64x22.png" />
     <Content Include="Content\Shotgun_Pellet_Texture_32x32.png" />
     <Content Include="Content\Shotgun_Shell_Texture_36x64.png" />
     <Content Include="Content\Sky_Block_Texture_64x64.png" />

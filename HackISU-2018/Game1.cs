@@ -41,6 +41,7 @@ namespace HackISU_2018
 
         public static Texture2D spiralPlatformTexture;
         public static Texture2D shotgunShell;
+        public static Texture2D shotgunTexture;
 
         public static Texture2D crabEnemyTexture;
 
@@ -125,6 +126,7 @@ namespace HackISU_2018
             spiralTexture = Content.Load <Texture2D>("Spiral_Tower_Colored_Block_Texture_64x64");
             snowTexture = Content.Load<Texture2D>("Mountain_Ice_Block_Texture_64x64");
 
+            
             shotgunShell = Content.Load<Texture2D>("Shotgun_Shell_Texture_36x64");
             gunArmTexture = testTexture;
             bulletTexture = Content.Load<Texture2D>("Shotgun_Pellet_Texture_32x32");
@@ -137,6 +139,8 @@ namespace HackISU_2018
             crabEnemyTexture = Content.Load<Texture2D>("Enemy_Rude_Crab_Texture_160x128");
 
             playerAnimation = new Rectangle(0, 0, playerTexture.Width, 720/4);
+
+            shotgunTexture = Content.Load<Texture2D>("shotgun_64x22");
 
             gun.gunArm.origin.X = testTexture.Width / 2;
             gun.gunArm.origin.Y = testTexture.Height / 2;
