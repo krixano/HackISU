@@ -96,6 +96,9 @@ namespace HackISU_2018
                     }
 
                     enemySprite[i].position_wp.Y += addFalling;
+                    if (enemySprite[i].position_wp.Y >= World.WORLD_SIZE.Y) {
+                        enemySprite[i].position_wp.Y = World.WORLD_SIZE.Y - enemySprite[i].size.Y;
+                    }
                     Console.WriteLine(addFalling);
                     Console.WriteLine(enemySprite[i].position_wp.Y);
                     /*if ((isCollidingBottomLeft(enemySprite[i]) || isCollidingBottomRight(enemySprite[i])))
