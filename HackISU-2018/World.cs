@@ -14,7 +14,7 @@ namespace HackISU_2018
         static public string fileName;
         public enum BlockType
         {
-            AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS, SHALLOW_OCEAN, DEEP_OCEAN, PLATFORM, CAVE, DARK_CAVE, CAVE_ENTRANCE, TOWER, SNOW, COBBLE, COBBLE_LEFT, COBBLE_RIGHT, SHORT_GRASS
+            AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS, SHALLOW_OCEAN, DEEP_OCEAN, PLATFORM, CAVE, DARK_CAVE, CAVE_ENTRANCE, TOWER, SNOW, COBBLE, COBBLE_LEFT, COBBLE_RIGHT, SHORT_GRASS, WALL
         };
 
         public struct Block
@@ -37,6 +37,7 @@ namespace HackISU_2018
             offset_b = new Vector2_Double(0,28);
             blocks = new Block[(int) WORLD_SIZE.X * (int) WORLD_SIZE.Y];
             Console.WriteLine(worldHeight);
+            
 
             Game1.gameState = Game1.GameStates.MAIN_MENU;
             if (Game1.gameState == Game1.GameStates.MAIN_MENU)
@@ -168,7 +169,12 @@ namespace HackISU_2018
                         blocks[index].type = BlockType.AIR;
                         blocks[index].solid = false;
                     }
-                    
+                    else if (map[index] == '0')
+                    {
+                        blocks[index].type = BlockType.WALL;
+                        blocks[index].solid = true;
+                    }
+
                 }
 
             }
@@ -333,6 +339,9 @@ namespace HackISU_2018
                                 break;
                             case BlockType.SHORT_GRASS:
                                 texture = Game1.shortGrassTexture;
+                                break;
+                            case BlockType.WALL:
+                                texture = null;
                                 break;
                             default:
                                 texture = null;

@@ -85,6 +85,16 @@ namespace HackISU_2018
         }
         public static void gunUpdate()
         {
+            if (Game1.keyboard.IsKeyDown(Keys.F) && Game1.prevKeyboard.IsKeyUp(Keys.F))
+            {
+                gunSelection = GunSelections.SHOTGUN;
+                ammo = 2;
+            }
+            else
+            {
+                gunSelection = GunSelections.ASSAULT_RIFLE;
+                ammo = 30;
+            }
             if (Game1.mouse.X < player.sprite.position_wp.X - World.offset_b.X * World.BLOCK_SIZE)
             {
                 gunArm.effect = SpriteEffects.FlipVertically;
