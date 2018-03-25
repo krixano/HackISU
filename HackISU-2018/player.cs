@@ -113,11 +113,6 @@ namespace HackISU_2018
                 }
             }
 
-            if (Game1.keyboard.IsKeyDown(Keys.Right) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
-                World.offset_b.X += .25f;
-            if (Game1.keyboard.IsKeyDown(Keys.Left) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
-                World.offset_b.X -= .25f;
-
             if (playerScreenPixels().Y >= Game1.screenRectangle.Height / 5 * 3)
             {
                 if (World.offset_b.Y >= World.WORLD_SIZE.Y)
