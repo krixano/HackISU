@@ -28,9 +28,9 @@ namespace HackISU_2018
         static public void enemyInit()
         {            
             enemySprite = new Game1.SpriteStruct[(int) enemiesPerLevel];
-            spawnEnemy();
             spawnRate = 9;
-            rnd = new Random();
+            enemy.rnd = new Random();
+            spawnEnemy();
             enemiesLeft = (int) enemiesPerLevel;
 
             enemyXSpeed_p = World.BLOCK_SIZE * .10f;
@@ -51,7 +51,7 @@ namespace HackISU_2018
                 enemiesPerLevel = EnemiesPerLevel.level2;
                 World.fileName = "map2.txt";
             }
-            if (rnd.Next(0, 10) == spawnRate)
+            if (rnd.Next(0, 20) >= 8)
                 spawnEnemy();
 
             //Enemy AI
@@ -77,6 +77,7 @@ namespace HackISU_2018
             {
 
                 //enemySprite[i].position_wp.X = rnd.Next(0, (int) World.WORLD_SIZE.X);
+                enemySprite[i].position_wp.X = enemy.rnd.Next(0, (int) World.WORLD_SIZE.X * World.BLOCK_SIZE);
                 enemySprite[i].position_wp.Y = 0;
                 enemySprite[i].visible = true;
             }
@@ -89,7 +90,7 @@ namespace HackISU_2018
                 {
                     int x = (int)(enemySprite[i].position_wp.X - World.worldOffsetPixels().X);
                     int y = (int)(enemySprite[i].position_wp.Y - World.worldOffsetPixels().Y);
-                    spriteBatch.Draw(Game1.testTexture, new Rectangle(x, y, (int)player.sprite.size.X, (int)player.sprite.size.Y), Color.White);
+                    spriteBatch.Draw(Game1.crabEnemyTexture, new Rectangle(x, y, (int)player.sprite.size.X, (int)player.sprite.size.Y), Color.White);
                 }
             }
         }
