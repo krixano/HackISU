@@ -14,10 +14,10 @@ namespace HackISU_2018
         SpriteBatch spriteBatch;
         public static KeyboardState keyboard, prevKeyboard;
 
-        public static SpriteEffects playerEffect = SpriteEffects.None;
-        public static Rectangle playerAnimation;
-        public static Texture2D playerTexture;
         public static Rectangle screenRectangle;
+        public static Rectangle playerAnimation;
+
+        public static SpriteEffects playerEffect = SpriteEffects.None;
         public static Texture2D testTexture;
         public static Texture2D dirtTexture;
         public static Texture2D grassTexture;
@@ -34,6 +34,8 @@ namespace HackISU_2018
         public static Texture2D darkCaveTexture;
         public static Texture2D caveEntranceTexture;
         public static Texture2D spiralTexture;
+        public static Texture2D snowTexture;
+        public static Texture2D playerTexture;
 
         public static Texture2D quit, resume, newGame, settings, load;
         public static Texture2D spiralPlatformTexture;
@@ -85,8 +87,6 @@ namespace HackISU_2018
             graphics.PreferredBackBufferWidth = screenRectangle.Width;
             graphics.PreferredBackBufferHeight = screenRectangle.Height;
             graphics.ApplyChanges();
-            
-            
 
             World.Init();
             player.playerInit();
@@ -107,6 +107,7 @@ namespace HackISU_2018
 
             testTexture = Content.Load<Texture2D>("WhiteSquare100x100");
             playerTexture = Content.Load<Texture2D>("Player_Sprite_Sheet_Textures_180x720");
+
             dirtTexture = Content.Load<Texture2D>("Dirt_Block_Texture_64x64");
             grassTexture = Content.Load<Texture2D>("Grass_Block_Texture_64x64");
             stoneTexture = Content.Load<Texture2D>("Stone_Block_Texture_64x64");
@@ -121,11 +122,12 @@ namespace HackISU_2018
             darkCaveTexture = Content.Load<Texture2D>("Cave_Walkway_Path_Block_Texture_64x64");
             caveEntranceTexture = Content.Load<Texture2D>("Cave_Entrance_Block_Texture_64x64");
             spiralTexture = Content.Load <Texture2D>("Spiral_Tower_Colored_Block_Texture_64x64");
+            snowTexture = Content.Load<Texture2D>("Mountain_Ice_Block_Texture_64x64");
 
             shotgunShell = Content.Load<Texture2D>("Shotgun_Shell_Texture_36x64");
             gunArmTexture = testTexture;
             bulletTexture = Content.Load<Texture2D>("Shotgun_Pellet_Texture_32x32");
-            quit = Content.Load<Texture2D>("Quit_game_texture_1280x720");
+            quit = Content.Load<Texture2D>("quit_game_texture_1280x720");
             newGame = Content.Load<Texture2D>("new_game_texture_1280x720");
             resume = Content.Load<Texture2D>("resume");
             settings = Content.Load<Texture2D>("options_texture_1280x720");
@@ -158,11 +160,6 @@ namespace HackISU_2018
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
 
-            if (gameState == GameStates.MAIN_MENU)
-                    UserInterface.UpdateButtonsStart();
-                if (gameState == GameStates.PAUSED)
-                    UserInterface.UpdateButtonsPaused();
-
             if (keyboard.IsKeyDown(Keys.P) && prevKeyboard.IsKeyDown(Keys.P))
             {
                 gameState = GameStates.PAUSED;
@@ -177,15 +174,19 @@ namespace HackISU_2018
                 UserInterface.UpdateButtonsPaused();
             }
 
-
             if (gameState == GameStates.PLAYING)
             {
+                if (keyboard.IsKeyDown(Keys.P) && prevKeyboard.IsKeyUp(Keys.P))
+                {
+                    gameState = GameStates.PAUSED;
+                }
                 player.playerUpdate();
                 gun.gunUpdate();
                 enemy.enemyUpdate();
             }
             if (gameState == GameStates.Exit)
                 Exit();
+           
             //prevMouse = mouse;
             prevPad1 = pad1;
             prevKeyboard = keyboard;

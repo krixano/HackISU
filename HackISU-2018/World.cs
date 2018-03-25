@@ -14,7 +14,7 @@ namespace HackISU_2018
         static public string fileName;
         public enum BlockType
         {
-            AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS, SHALLOW_OCEAN, DEEP_OCEAN, PLATFORM, CAVE, DARK_CAVE, CAVE_ENTRANCE, TOWER
+            AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS, SHALLOW_OCEAN, DEEP_OCEAN, PLATFORM, CAVE, DARK_CAVE, CAVE_ENTRANCE, TOWER, SNOW
         };
 
         public struct Block
@@ -31,7 +31,7 @@ namespace HackISU_2018
 
         public static void Init()
         {
-            fileName = "map3.txt";
+            fileName = "map2.txt";
             int worldHeight = 50;// ((Game1.screenRectangle.Height / 2) / BLOCK_SIZE) + 2;
             WORLD_SIZE = new Vector2(200, worldHeight);
             offset_b = new Vector2_Double(0,28);
@@ -119,7 +119,7 @@ namespace HackISU_2018
                     else if (map[index] == 'C')
                     {
                         blocks[index].type = BlockType.DARK_CAVE;
-                        blocks[index].solid = false;
+                        blocks[index].solid = true;
                     }
                     else if (map[index] == 'E')
                     {
@@ -130,6 +130,11 @@ namespace HackISU_2018
                     {
                         blocks[index].type = BlockType.TOWER;
                         blocks[index].solid = false;
+                    }
+                    else if (map[index] == 'w')
+                    {
+                        blocks[index].type = BlockType.SNOW;
+                        blocks[index].solid = true;
                     }
                     else if (map[index] == 'a')
                     {
@@ -198,6 +203,9 @@ namespace HackISU_2018
                             break;
                         case BlockType.TOWER:
                             texture = Game1.spiralTexture;
+                            break;
+                        case BlockType.SNOW:
+                            texture = Game1.snowTexture;
                             break;
                         default:
                             texture = null;
