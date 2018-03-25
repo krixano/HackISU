@@ -85,7 +85,7 @@ namespace HackISU_2018
         }
         public static void gunUpdate()
         {
-            if (Game1.mouse.X < player.sprite.position_wp.X)
+            if (Game1.mouse.X < player.sprite.position_wp.X - World.offset_b.X * World.BLOCK_SIZE)
             {
                 gunArm.effect = SpriteEffects.FlipVertically;
             } else
