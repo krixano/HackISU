@@ -14,7 +14,7 @@ namespace HackISU_2018
         static public void InitializeMenus()
         {
             Rectangle screen = Game1.screenRectangle;
-            areaMenu = new Rectangle(screen.X + screen.Width / 4, screen.Y, screen.Width/2, screen.Height);
+            areaMenu = new Rectangle(screen.X, screen.Y, screen.Width, screen.Height);
             areaPaused = new Rectangle(areaMenu.X + GAP, areaMenu.Y + GAP, areaMenu.Width - 100, areaMenu.Height - 100);
             startingMenu.bottons = new Rectangle[MAX_Bottons + 1];
             startingMenu.textures = new Texture2D[MAX_Bottons + 1];
@@ -54,10 +54,10 @@ namespace HackISU_2018
             levels.color = Color.White;
             for (int r = 0; r < 5; r++)
             {
-                levels.bottons[r].X = areaMenu.X + GAP;
-                levels.bottons[r].Width = areaMenu.Width - (2 * GAP);
-                levels.bottons[r].Height = (areaMenu.Height - (5 * GAP)) / MAX_Bottons;
-                levels.bottons[r].Y = areaMenu.Y + ((r) * levels.bottons[r].Height) + GAP * (r + 1);
+                levels.bottons[r].X = areaPaused.X + GAP;
+                levels.bottons[r].Width = areaPaused.Width - (2 * GAP);
+                levels.bottons[r].Height = (areaPaused.Height - (5 * GAP)) / 5;
+                levels.bottons[r].Y = areaPaused.Y + ((r) * levels.bottons[r].Height) + GAP * (r + 1);
             }
         }
         static public void LoadTexture()
@@ -225,27 +225,28 @@ namespace HackISU_2018
         {
 
             mouse1 = Game1.mouse;
+            //Console.WriteLine("Update Levels Activated!");
             if (mouse1.LeftButton == ButtonState.Pressed && Game1.prevMouse.LeftButton == ButtonState.Released)
             {
                 if (levels.bottons[0].Contains(mouse1.X, mouse1.Y))
                 {
-                    Game1.gameState = Game1.GameStates.PLAYING;
                     World.fileName = "map1.txt";
+                    Game1.gameState = Game1.GameStates.PLAYING;
                 }
                 else if (levels.bottons[1].Contains(mouse1.X, mouse1.Y))
                 {
-                    Game1.gameState = Game1.GameStates.PLAYING;
                     World.fileName = "map2.txt";
+                    Game1.gameState = Game1.GameStates.PLAYING;
                 }
                 else if (levels.bottons[2].Contains(mouse1.X, mouse1.Y))
                 {
-                    Game1.gameState = Game1.GameStates.PLAYING;
                     World.fileName = "map3.txt";
+                    Game1.gameState = Game1.GameStates.PLAYING;
                 }
                 else if (levels.bottons[3].Contains(mouse1.X, mouse1.Y))
                 {
-                    Game1.gameState = Game1.GameStates.PLAYING;
                     World.fileName = "map4.txt";
+                    Game1.gameState = Game1.GameStates.PLAYING;
                 }
                 else if (levels.bottons[4].Contains(mouse1.X, mouse1.Y))
                 {
@@ -261,10 +262,11 @@ namespace HackISU_2018
 
         static public void DrawLevels(SpriteBatch sprite)
         {
-            sprite.Draw(Game1.testTexture, areaPaused, Color.DimGray);
+            sprite.Draw(Game1.testTexture, areaMenu, Color.DimGray);
+            //Console.WriteLine("drawing.");
             for (int r = 0; r < MAX_Bottons+2; r++)
             {
-                sprite.Draw(levels.textures[r], levels.bottons[r], optionMenu.color);
+                sprite.Draw(levels.textures[r], levels.bottons[r], levels.color);
             }
         }
     }
