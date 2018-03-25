@@ -39,6 +39,14 @@ namespace HackISU_2018
         }
         public static void playerUpdate()
         {
+            if (Game1.mouse.X < player.sprite.position_wp.X - World.offset_b.X * World.BLOCK_SIZE)
+            {
+                Game1.playerEffect = SpriteEffects.FlipHorizontally;
+            }
+            else
+            {
+                Game1.playerEffect = SpriteEffects.None;
+            }
             //isFalling = false;
             bool isMoving = false;
 
@@ -91,7 +99,7 @@ namespace HackISU_2018
             {
                 sprite.position_wp.X -= playerXSpeed_p;
                 isMoving = true;
-                Game1.playerEffect = SpriteEffects.FlipHorizontally;
+                //Game1.playerEffect = SpriteEffects.FlipHorizontally;
                 if (isPlayerCollidingMiddleLeftSide() || isPlayerCollidingTopLeftSide())
                 {
                     double difference = sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE);
@@ -104,7 +112,7 @@ namespace HackISU_2018
             {
                 sprite.position_wp.X += playerXSpeed_p;
                 isMoving = true;
-                Game1.playerEffect = SpriteEffects.None;
+                //Game1.playerEffect = SpriteEffects.None;
                 if (isPlayerCollidingMiddleRightSide() || isPlayerCollidingTopRightSide())
                 {
                     double difference = sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE);

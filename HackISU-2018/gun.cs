@@ -104,12 +104,17 @@ namespace HackISU_2018
                 if (gunSelection == GunSelections.HANDGUN)
                     ammo = 10;
                 if (gunSelection == GunSelections.ASSAULT_RIFLE)
+                {
                     ammo = 30;
+                    isEmpty = false;
+                }
                 if (gunSelection == GunSelections.SMG)
                     ammo = 25;
                 if (gunSelection == GunSelections.SHOTGUN)
+                {
                     ammo = 2;
-                isEmpty = false;
+                    isEmpty = false;
+                }
             }
             //Gun Arm Position Update
             gunArm.position_wp.X = player.sprite.position_wp.X + player.sprite.size.X / 2;
@@ -145,10 +150,11 @@ namespace HackISU_2018
                     //if (bullet[i].position_wp.X > Game1.screenRectangle.Width * 2 || bullet[i].position_wp.Y > Game1.screenRectangle.Height * 2
                     //    || bullet[i].position_wp.X < Game1.screenRectangle.Width * -2 || bullet[i].position_wp.Y < Game1.screenRectangle.Height * -2)
                     //    bullet[i].isFired = false;
-                }
+                
                 if (bullet[i].position_wp.X > World.WORLD_SIZE.X || bullet[i].position_wp.X < World.WORLD_SIZE.X
                     || bullet[i].position_wp.Y > World.WORLD_SIZE.Y || bullet[i].position_wp.Y < World.WORLD_SIZE.Y)
                     bullet[i].visible = false;
+                }
 
             }
         }
