@@ -65,13 +65,25 @@ namespace HackISU_2018
                 || Game1.keyboard.IsKeyDown(Keys.D) 
                 && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
             {
-                World.offset_b.X += .25f;
+                if (World.offset_b.X >= World.WORLD_SIZE.X)
+                {
+                    World.offset_b.X = World.WORLD_SIZE.X - Game1.screenRectangle.Width / World.BLOCK_SIZE;
+                } else
+                {
+                    World.offset_b.X += .25f;
+                }
             }
             if (canGoLeft && Game1.keyboard.IsKeyDown(Keys.Left) 
                 || Game1.keyboard.IsKeyDown(Keys.A) 
                 && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
             {
-                World.offset_b.X -= .25f;
+                if (World.offset_b.X <= 0)
+                {
+                    World.offset_b.X = 0;
+                } else
+                {
+                    World.offset_b.X -= .25f;
+                }
             }
 
             //moves player
@@ -158,10 +170,22 @@ namespace HackISU_2018
 
             if (playerScreenPixels().Y >= Game1.screenRectangle.Height / 5 * 3)
             {
-                World.offset_b.Y += playerYSpeed_p / World.BLOCK_SIZE;
+                if (World.offset_b.Y >= World.WORLD_SIZE.Y)
+                {
+                    World.offset_b.Y = World.WORLD_SIZE.Y - (Game1.screenRectangle.Height / World.BLOCK_SIZE);
+                } else
+                {
+                    World.offset_b.Y += playerYSpeed_p / World.BLOCK_SIZE;
+                }
             } else if (playerScreenPixels().Y <= Game1.screenRectangle.Height / 5)
             {
-                World.offset_b.Y -= playerYSpeed_p / World.BLOCK_SIZE;
+                if (World.offset_b.Y <= 0)
+                {
+                    World.offset_b.Y = 0;
+                } else
+                {
+                    World.offset_b.Y -= playerYSpeed_p / World.BLOCK_SIZE;
+                }
             }
 
             // Jump
@@ -198,7 +222,7 @@ namespace HackISU_2018
             }
             else if (isMoving)
             {
-                if (tick % 30 == 0)
+                if (tick % 15 == 0)
                 {
                     if (currentAnimation == 3) currentAnimation = 0;
                     currentAnimation++;
