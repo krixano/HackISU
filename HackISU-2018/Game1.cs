@@ -161,10 +161,7 @@ namespace HackISU_2018
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
 
-            if (keyboard.IsKeyDown(Keys.P) && prevKeyboard.IsKeyDown(Keys.P))
-            {
-                gameState = GameStates.PAUSED;
-            }
+           
             if (gameState == GameStates.MAIN_MENU)
             {
                 UserInterface.UpdateButtonsStart();
