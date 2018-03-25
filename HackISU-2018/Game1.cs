@@ -155,6 +155,8 @@ namespace HackISU_2018
                 gun.gunUpdate();
                 enemy.enemyUpdate();
             }
+            if (gameState == GameStates.Exit)
+                Exit();
             //prevMouse = mouse;
             prevPad1 = pad1;
             prevKeyboard = keyboard;
