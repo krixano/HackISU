@@ -22,7 +22,7 @@ namespace HackISU_2018
             ASSAULT_RIFLE = 10,
             SHOTGUN = 45
         }
-        static public GunSelections gunSelection = GunSelections.SHOTGUN;
+        static public GunSelections gunSelection = GunSelections.HANDGUN;
 
         static public void gunInit()
         {
@@ -85,7 +85,7 @@ namespace HackISU_2018
         }
         public static void gunUpdate()
         {
-            if (Game1.mouse.X < player.sprite.position_wp.X)
+            if (Game1.mouse.X < player.sprite.position_wp.X - World.offset_b.X * World.BLOCK_SIZE)
             {
                 gunArm.effect = SpriteEffects.FlipVertically;
             } else
@@ -217,21 +217,24 @@ namespace HackISU_2018
         }
         public static void Draw(SpriteBatch spriteBatch)
         {
-            
-
+            spriteBatch.DrawString(Game1.font, "Ammo: " + ammo, Game1.fontVector, Color.White);
+            Game1.fontVector = new Vector2(0, 0);
             for (int i = 1; i < ammo + 1; i++)
             {
                 
-                int y = (int)(Game1.screenRectangle.Top);
+                
                 if (gunSelection == GunSelections.SHOTGUN)
                 {
-                    int x = (int)(Game1.screenRectangle.Left + Game1.shotgunShell.Width * i);
-                    spriteBatch.Draw(Game1.shotgunShell, new Rectangle(x, y, (int)Game1.shotgunShell.Width * 10, (int)Game1.shotgunShell.Height * 10), Game1.playerAnimation, Color.White);
+                    int x = (int)(Game1.screenRectangle.Left  + 10 * i ^2);
+                    int y = (int)(Game1.screenRectangle.Top + 10 * i * i);
+                    spriteBatch.Draw(Game1.shotgunShell, new Rectangle(x, (int) (Game1.fontVector.Y + Game1.font.MeasureString("Ammo").Y), (int)Game1.shotgunShell.Width, (int)Game1.shotgunShell.Height ), Color.White);
                 }
                 else
                 {
-                    int x = (int)(Game1.screenRectangle.Left + bulletSize * i);
-                    spriteBatch.Draw(Game1.bulletTexture, new Rectangle(x, y, (int)Game1.shotgunShell.Width * 10, (int)Game1.shotgunShell.Height * 10), Game1.playerAnimation, Color.White);
+                    int x = (int)(Game1.screenRectangle.Left + bullet[i].size.X * i);
+                    int y = 30;
+                    
+                    spriteBatch.Draw(Game1.bulletTexture, new Rectangle(x, y, (int)Game1.bulletTexture.Width, (int)Game1.bulletTexture.Height), Color.White);
                 }
             }
         }
@@ -240,4 +243,5 @@ namespace HackISU_2018
             
         }
     }
+
 }

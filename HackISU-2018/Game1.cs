@@ -17,6 +17,9 @@ namespace HackISU_2018
         public static Rectangle screenRectangle;
         public static Rectangle playerAnimation;
 
+        public static SpriteFont font;
+        public static Vector2 fontVector;
+
         public static SpriteEffects playerEffect = SpriteEffects.None;
         public static Texture2D testTexture;
         public static Texture2D dirtTexture;
@@ -36,6 +39,9 @@ namespace HackISU_2018
         public static Texture2D spiralTexture;
         public static Texture2D snowTexture;
         public static Texture2D playerTexture;
+
+        public static Texture2D heartTexture;
+        public static Texture2D halfHeartTexture;
 
         public static Texture2D quit, resume, newGame, settings, load;
 
@@ -63,7 +69,7 @@ namespace HackISU_2018
 
         public struct SpriteStruct
         {
-            public double health; // Out of 100% (max = 100)
+            public double health; // Out of 100% (max = 100) for enemies, 6 for player
             public Vector2_Double position_wp;
             public Vector2 size;
             public Rectangle source; // TODO: Use for player as well as enemies
@@ -104,6 +110,7 @@ namespace HackISU_2018
             gun.gunInit();
             enemy.enemyInit();
 
+            
             
             UserInterface.InitializeMenus();
 
@@ -155,6 +162,10 @@ namespace HackISU_2018
             playerTexture = Content.Load<Texture2D>("player_sprite_sheet_textures_180x720");
             crabEnemyTexture = Content.Load<Texture2D>("Enemy_Rude_Crab_Texture_160x128");
 
+            heartTexture = Content.Load<Texture2D>("Heart_Block_Texture_64x64");
+            halfHeartTexture = Content.Load<Texture2D>("Half_Heart_Block_Texture_64x64");
+
+            font = Content.Load<SpriteFont>("font");
 
             playerAnimation = new Rectangle(0, 0, playerTexture.Width, 720/4);
 
@@ -183,10 +194,10 @@ namespace HackISU_2018
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
 
-           
+            Console.WriteLine(fontVector);
             if (gameState == GameStates.MAIN_MENU)
             {
-                World.offset_b.X += .24; 
+                //World.offset_b.X += .24; 
                 UserInterface.UpdateButtonsStart();
             }
 
@@ -194,7 +205,7 @@ namespace HackISU_2018
             if (Game1.gameState == Game1.GameStates.PLAYING)
             {
                 World.BLOCK_SIZE = 45;
-                World.offset_b = new Vector2_Double(0, 28);
+                //World.offset_b = new Vector2_Double(0, 28);
             }
 
             if (gameState == GameStates.PLAYING)
@@ -231,6 +242,7 @@ namespace HackISU_2018
 
             spriteBatch.Begin();
             {                
+
                 //spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
                 for (int i = 0; i < gun.bullet.Length; i++)
                 {
@@ -254,6 +266,7 @@ namespace HackISU_2018
                                    
                     World.Draw(spriteBatch);
                     player.Draw(spriteBatch);
+                    gun.Draw(spriteBatch);
                     //spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
                     spriteBatch.Draw(shotgunTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, gun.gunArm.effect, 0);
                     for (int i = 0; i < gun.bullet.Length; i++)

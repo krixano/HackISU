@@ -35,12 +35,11 @@ namespace HackISU_2018
             sprite.size.Y = Game1.screenRectangle.Width / 10;
             sprite.position_wp.X = ((Game1.screenRectangle.Center.X - (sprite.size.X / 2)) + World.offset_b.X); // In World Pixels
             sprite.position_wp.Y = 28 * World.BLOCK_SIZE; //(((World.WORLD_SIZE.Y / 2) - 1) * World.BLOCK_SIZE) - sprite.size.Y;
-            
-                       
+            sprite.health = 6.0d;
         }
         public static void playerUpdate()
         {
-            isFalling = false;
+            //isFalling = false;
             bool isMoving = false;
 
             Double addFalling = playerYSpeed_p;
@@ -61,8 +60,8 @@ namespace HackISU_2018
                 canGoRight = false;
             
             //scrolls screen      
-            if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Right)
-                || Game1.keyboard.IsKeyDown(Keys.D) 
+            if (canGoRight && (Game1.keyboard.IsKeyDown(Keys.Right)
+                || Game1.keyboard.IsKeyDown(Keys.D))
                 && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
             {
                 if (World.offset_b.X >= World.WORLD_SIZE.X)
@@ -73,8 +72,8 @@ namespace HackISU_2018
                     World.offset_b.X += .20f;
                 }
             }
-            if (canGoLeft && Game1.keyboard.IsKeyDown(Keys.Left) 
-                || Game1.keyboard.IsKeyDown(Keys.A) 
+            if (canGoLeft && (Game1.keyboard.IsKeyDown(Keys.Left) 
+                || Game1.keyboard.IsKeyDown(Keys.A))
                 && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
             {
                 if (World.offset_b.X <= 0)
@@ -114,59 +113,10 @@ namespace HackISU_2018
                 }
             }
 
-            bool wallJumpOverride = false;
-            //WALL JUMPING
-            //Slow fall if touching wall
-            if ((canGoLeft == false || canGoRight == false) && isFalling)
-            {
-                wallJumpOverride = true;
-                addFalling = playerYSpeed_p / 5;
-                //sprite.position_wp.Y += playerYSpeed_p;
-                if (Game1.keyboard.IsKeyDown(Keys.Space) && Game1.prevKeyboard.IsKeyUp(Keys.Space))
-                {
-                    //playerXSpeed_p += playerXSpeed_p;
-                    isFalling = false;
-                    playerJump();
-                }
-            }
-            
-
             if (Game1.keyboard.IsKeyDown(Keys.Right) && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
                 World.offset_b.X += .25f;
             if (Game1.keyboard.IsKeyDown(Keys.Left) && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
                 World.offset_b.X -= .25f;
-
-            //Scrolls screen
-            /*if (Game1.pad1.IsButtonDown(Buttons.DPadLeft) || Game1.keyboard.IsKeyDown(Keys.Left))
-                sprite.position_wp.X -= playerXSpeed_p;
-            if (Game1.pad1.IsButtonDown(Buttons.DPadRight) || Game1.keyboard.IsKeyDown(Keys.Right))
-                sprite.position_wp.X += playerXSpeed_p;*/
-
-            /*Vector2_Double gravityCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
-            Vector2_Double gravityCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);*/
-            
-            //checking collision for bottom of player, left and right corners
-            /*if ((World.blocks[(int)gravityCollisionBottomRight.X + (int)gravityCollisionBottomRight.Y * (int)World.WORLD_SIZE.X].solid != true
-                || gravityCollisionBottomRight.X < 0 || gravityCollisionBottomRight.X > World.WORLD_SIZE.X || gravityCollisionBottomRight.Y < 0 || gravityCollisionBottomRight.Y > World.WORLD_SIZE.Y)
-                && !isJumping)
-            {
-                addFalling = playerYSpeed_p;
-                isFalling = true;
-            }*//* else
-            {
-                isFalling = false;
-                sprite.position_wp.Y = (gravityCollisionBottomRight.Y * World.BLOCK_SIZE) - 1 - sprite.size.Y;
-            }*/
-            /*if ((World.blocks[(int)gravityCollisionBottomLeft.X + (int)gravityCollisionBottomLeft.Y * (int)World.WORLD_SIZE.X].solid != true
-                || gravityCollisionBottomLeft.X < 0 || gravityCollisionBottomLeft.X > World.WORLD_SIZE.X || gravityCollisionBottomLeft.Y < 0 || gravityCollisionBottomLeft.Y > World.WORLD_SIZE.Y)
-                && !isJumping)
-            {
-                addFalling = playerYSpeed_p;
-                isFalling = true;
-            }*/
-
-
-
 
             if (playerScreenPixels().Y >= Game1.screenRectangle.Height / 5 * 3)
             {
@@ -188,29 +138,36 @@ namespace HackISU_2018
                 }
             }
 
-            // Jump
-            // If pressing jump button, and not jumping or falling
-            while ((Game1.pad1.IsButtonDown(Buttons.A) && Game1.prevPad1.IsButtonUp(Buttons.A)
-                || Game1.keyboard.IsKeyDown(Keys.Space) && Game1.prevKeyboard.IsKeyUp(Keys.Space)
-                || Game1.keyboard.IsKeyDown(Keys.Up) && Game1.prevKeyboard.IsKeyUp(Keys.Up)
-                || Game1.keyboard.IsKeyDown(Keys.W)) && Game1.prevKeyboard.IsKeyUp(Keys.W) && !isJumping && !isFalling)
-                isJumping = true;
-            playerJump();
 
-            if (!wallJumpOverride && (((isPlayerCollidingBottomLeft() || isPlayerCollidingBottomRight()))
+            if ((((isPlayerCollidingBottomLeft() || isPlayerCollidingBottomRight()))
                 || isJumping))
             {
-                Console.WriteLine("Test");
                 isFalling = false;
                 addFalling = 0;
                 sprite.position_wp.Y = (int) (sprite.position_wp.Y / World.BLOCK_SIZE) * World.BLOCK_SIZE;
             }
 
+            if (isPlayerCollidingBottomLeftPlus() || isPlayerCollidingBottomRightPlus())
+            {
+                isFalling = false;
+            }
+
+            // Jump
+            // If pressing jump button, and not jumping or falling
+            if (((Game1.pad1.IsButtonDown(Buttons.A) && Game1.prevPad1.IsButtonUp(Buttons.A)
+                || Game1.keyboard.IsKeyDown(Keys.Space) && Game1.prevKeyboard.IsKeyUp(Keys.Space)
+                || Game1.keyboard.IsKeyDown(Keys.Up) && Game1.prevKeyboard.IsKeyUp(Keys.Up)
+                || Game1.keyboard.IsKeyDown(Keys.W)) && Game1.prevKeyboard.IsKeyUp(Keys.W)) && !isFalling)
+            {
+                isJumping = true;
+            }
+            playerJump();
+
 
             sprite.position_wp.Y += addFalling;
-            if (!wallJumpOverride && (isPlayerCollidingBottomLeft() || isPlayerCollidingBottomRight()))
+            if ((isPlayerCollidingBottomLeft() || isPlayerCollidingBottomRight()))
             {
-                sprite.position_wp.Y = ((int) (sprite.position_wp.Y / World.BLOCK_SIZE) * World.BLOCK_SIZE) + 5;
+                sprite.position_wp.Y = ((int)(sprite.position_wp.Y / World.BLOCK_SIZE) * World.BLOCK_SIZE) + 5;
             }
             Console.WriteLine(addFalling);
 
@@ -239,14 +196,13 @@ namespace HackISU_2018
 
         public static void playerJump()
         {
-
             if (isJumping && !isFalling)
             {
-                
                 currentTmr++;
                 sprite.position_wp.Y -= playerYSpeed_p;
                 if (isPlayerCollidingTopLeft() || isPlayerCollidingTopRight())
                 {
+                    currentTmr = 0;
                     isJumping = false;
                     isFalling = true;
                 }
@@ -257,7 +213,6 @@ namespace HackISU_2018
                     isFalling = true;
                 }
             }
-            
         }        
 
         public static Vector2_Double playerScreenPixels()
@@ -276,6 +231,23 @@ namespace HackISU_2018
             int y = (int) (player.sprite.position_wp.Y - World.worldOffsetPixels().Y);
             //spriteBatch.Draw(Game1.playerTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Game1.playerAnimation, Color.White);
             spriteBatch.Draw(Game1.playerTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Game1.playerAnimation, Color.White, 0, new Vector2(0, 0), Game1.playerEffect, 0);
+
+
+            
+            int heartAmt = (int) player.sprite.health;
+            bool halfHeart = player.sprite.health - heartAmt > 0 && player.sprite.health - heartAmt < 1;
+            Console.WriteLine(heartAmt + ", " + halfHeart);
+            int gap = 3; // In pixels
+            for (int i = 0; i < heartAmt + 1; i++)
+            {
+                Rectangle destination = new Rectangle(Game1.screenRectangle.Right - (Game1.heartTexture.Width / 4 * 3) * i - gap * i, gap, Game1.heartTexture.Width / 4 * 3, Game1.heartTexture.Height / 4 * 3);
+                spriteBatch.Draw(Game1.heartTexture, destination, Color.White);
+            }
+            if (halfHeart)
+            {
+                Rectangle destination = new Rectangle(Game1.screenRectangle.Right - (Game1.halfHeartTexture.Width / 4 * 3) - gap, gap, Game1.halfHeartTexture.Width / 4 * 3, Game1.halfHeartTexture.Height / 4 * 3);
+                spriteBatch.Draw(Game1.halfHeartTexture, destination, Color.White);
+            }
         }
 
         public static bool isPlayerCollidingTopLeftSide()
@@ -322,7 +294,19 @@ namespace HackISU_2018
 
         public static bool isPlayerCollidingBottomRight() // TODO
         {
-            Vector2_Double gravityCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X + 1) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            Vector2_Double gravityCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 1) / World.BLOCK_SIZE);
+            return World.blocks[(int) gravityCollisionBottomRight.X + (int) gravityCollisionBottomRight.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isPlayerCollidingBottomLeftPlus() // TODO
+        {
+            Vector2_Double gravityCollisionBottomLeft = new Vector2_Double((sprite.position_wp.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 5) / World.BLOCK_SIZE);
+            return World.blocks[(int) gravityCollisionBottomLeft.X + (int) gravityCollisionBottomLeft.Y * (int) World.WORLD_SIZE.X].solid;
+        }
+
+        public static bool isPlayerCollidingBottomRightPlus() // TODO
+        {
+            Vector2_Double gravityCollisionBottomRight = new Vector2_Double((sprite.position_wp.X + sprite.size.X) / World.BLOCK_SIZE, (sprite.position_wp.Y + sprite.size.Y + 5) / World.BLOCK_SIZE);
             return World.blocks[(int) gravityCollisionBottomRight.X + (int) gravityCollisionBottomRight.Y * (int) World.WORLD_SIZE.X].solid;
         }
 
