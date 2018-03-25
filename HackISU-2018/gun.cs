@@ -11,6 +11,8 @@ namespace HackISU_2018
         static public Game1.SpriteStruct[] bullet;
         static public int bulletSpeed, shotgunSpread;
         static public float bulletSize, shellSize, rateOfFire, tick;
+        static public int ammo;
+        static public bool isEmpty;
 
         
         public enum GunSelections
@@ -43,16 +45,26 @@ namespace HackISU_2018
 
             //Bullet Sizes
             if (gunSelection == GunSelections.HANDGUN)
+            {
                 bulletSize = gunArm.size.X / 4;
+                ammo = 10;
+            }
             else if (gunSelection == GunSelections.ASSAULT_RIFLE)
+            {
                 bulletSize = gunArm.size.X / 8;
+                ammo = 30;
+            }
             else if (gunSelection == GunSelections.SMG)
+            {
                 bulletSize = gunArm.size.X / 6;
+                ammo = 25;
+            }
             else if (gunSelection == GunSelections.SHOTGUN)
             {
                 bulletSize = gunArm.size.X / 12;
                 shell.size.X = bulletSize;
                 shell.size.Y = bulletSize;
+                ammo = 2;
                 Game1.gunArmTexture = Game1.shotgunTexture;
             }
 
@@ -82,6 +94,23 @@ namespace HackISU_2018
             }
             checkForBulletCollision();
 
+            if (ammo == 0)
+            {
+                isEmpty = true;                
+            }
+            if (Game1.keyboard.IsKeyDown(Keys.R))
+            {
+                //RELOAD!!!
+                if (gunSelection == GunSelections.HANDGUN)
+                    ammo = 10;
+                if (gunSelection == GunSelections.ASSAULT_RIFLE)
+                    ammo = 30;
+                if (gunSelection == GunSelections.SMG)
+                    ammo = 25;
+                if (gunSelection == GunSelections.SHOTGUN)
+                    ammo = 2;
+                isEmpty = false;
+            }
             //Gun Arm Position Update
             gunArm.position_wp.X = player.sprite.position_wp.X + player.sprite.size.X / 2;
             gunArm.position_wp.Y = player.sprite.position_wp.Y + player.sprite.size.Y / 2;
@@ -90,7 +119,7 @@ namespace HackISU_2018
 
             //Shoots SHOTGUN at SHOTGUN (50) Rate of Fire
             if (Game1.mouse.LeftButton == ButtonState.Pressed
-                && tick % rateOfFire == 0 && gunSelection == GunSelections.SHOTGUN)
+                && tick % rateOfFire == 0 && gunSelection == GunSelections.SHOTGUN && !isEmpty)
             {
                 shootGun();
             }
@@ -99,7 +128,7 @@ namespace HackISU_2018
 
             //Shoots gun at selected Rate of Fire
             else if (Game1.mouse.LeftButton == ButtonState.Pressed
-                && tick % rateOfFire == 0)
+                && tick % rateOfFire == 0 && !isEmpty)
             {
                 shootGun();
                 
@@ -135,7 +164,8 @@ namespace HackISU_2018
         }
         public static void shootGun()
         {
-            
+            ammo--;            
+
             //Do this whenever you click/bullet fired
             for (int i=0; i<bullet.Length; i+= shotgunSpread)
             {              
@@ -182,6 +212,26 @@ namespace HackISU_2018
                         }
                     }
                     //if (bullet[i].position_wp.X )
+                }
+            }
+        }
+        public static void Draw(SpriteBatch spriteBatch)
+        {
+            
+
+            for (int i = 1; i < ammo + 1; i++)
+            {
+                
+                int y = (int)(Game1.screenRectangle.Top);
+                if (gunSelection == GunSelections.SHOTGUN)
+                {
+                    int x = (int)(Game1.screenRectangle.Left + Game1.shotgunShell.Width * i);
+                    spriteBatch.Draw(Game1.shotgunShell, new Rectangle(x, y, (int)Game1.shotgunShell.Width * 10, (int)Game1.shotgunShell.Height * 10), Game1.playerAnimation, Color.White);
+                }
+                else
+                {
+                    int x = (int)(Game1.screenRectangle.Left + bulletSize * i);
+                    spriteBatch.Draw(Game1.bulletTexture, new Rectangle(x, y, (int)Game1.shotgunShell.Width * 10, (int)Game1.shotgunShell.Height * 10), Game1.playerAnimation, Color.White);
                 }
             }
         }
