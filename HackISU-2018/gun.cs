@@ -22,7 +22,7 @@ namespace HackISU_2018
             ASSAULT_RIFLE = 10,
             SHOTGUN = 45
         }
-        static public GunSelections gunSelection = GunSelections.HANDGUN;
+        static public GunSelections gunSelection = GunSelections.ASSAULT_RIFLE;
 
         static public void gunInit()
         {

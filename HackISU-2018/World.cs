@@ -75,7 +75,7 @@ namespace HackISU_2018
                     if (map[index] == 's')
                     {
                         blocks[index].type = BlockType.STONE;
-                        blocks[index].solid = true;
+                        blocks[index].solid = false;
                     }
                     else if (map[index] == '1')
                     {
@@ -321,6 +321,18 @@ namespace HackISU_2018
                                 break;
                             case BlockType.SNOW:
                                 texture = Game1.snowTexture;
+                                break;
+                            case BlockType.COBBLE:
+                                texture = Game1.cobbleTexture;
+                                break;
+                            case BlockType.COBBLE_LEFT:
+                                texture = Game1.cobbleLeftTexture;
+                                break;
+                            case BlockType.COBBLE_RIGHT:
+                                texture = Game1.cobbleRightTexture;
+                                break;
+                            case BlockType.SHORT_GRASS:
+                                texture = Game1.shortGrassTexture;
                                 break;
                             default:
                                 texture = null;

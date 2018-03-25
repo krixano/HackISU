@@ -28,8 +28,8 @@ namespace HackISU_2018
 
             for (int r = 0; r <= MAX_Bottons; r++)
             {
-                startingMenu.bottons[r].X = areaMenu.X + 100;
-                startingMenu.bottons[r].Width = areaMenu.Width - 200;
+                startingMenu.bottons[r].X = areaMenu.X + Game1.screenRectangle.Width /2;
+                startingMenu.bottons[r].Width = areaMenu.Width /3-200;
                 startingMenu.bottons[r].Height = (areaMenu.Height - ((MAX_Bottons + 1) * GAP)) / (MAX_Bottons + 1);
                 startingMenu.bottons[r].Y = areaMenu.Y + (r * startingMenu.bottons[r].Height) + GAP * (r + 1);
             }
@@ -54,8 +54,8 @@ namespace HackISU_2018
             levels.color = Color.White;
             for (int r = 0; r < 5; r++)
             {
-                levels.bottons[r].X = areaPaused.X + GAP;
-                levels.bottons[r].Width = areaPaused.Width - (2 * GAP);
+                levels.bottons[r].X = screen.Left + screen.Width / 2 - levels.bottons[r].Width /2;
+                levels.bottons[r].Width = areaPaused.Width / 5 - (2 * GAP);
                 levels.bottons[r].Height = (areaPaused.Height - (5 * GAP)) / 5;
                 levels.bottons[r].Y = areaPaused.Y + ((r) * levels.bottons[r].Height) + GAP * (r + 1);
             }

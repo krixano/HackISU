@@ -176,7 +176,7 @@ namespace HackISU_2018
 
             playerAnimation = new Rectangle(0, 0, playerTexture.Width, 720/4);
 
-            shotgunTexture = Content.Load<Texture2D>("shotgun_64x22");
+            shotgunTexture = Content.Load<Texture2D>("Shotgun_Texture_123x31");
 
             gun.gunArm.origin.X = shotgunTexture.Width / 2;
             gun.gunArm.origin.Y = shotgunTexture.Height / 2;
@@ -221,8 +221,7 @@ namespace HackISU_2018
             }
 
             if (gameState == GameStates.PLAYING)
-            {
-                
+            {                
                 player.playerUpdate();
                 gun.gunUpdate();
                 enemy.enemyUpdate();
@@ -252,8 +251,8 @@ namespace HackISU_2018
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            {                
-
+            {
+                spriteBatch.Draw(cobbleTexture, gun.gunArm.source, Color.White);
                 //spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
                 for (int i = 0; i < gun.bullet.Length; i++)
                 {
@@ -278,8 +277,10 @@ namespace HackISU_2018
                     World.Draw(spriteBatch);
                     player.Draw(spriteBatch);
                     gun.Draw(spriteBatch);
-                    //spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
-                    spriteBatch.Draw(shotgunTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, gun.gunArm.effect, 0);
+                    if (gun.gunSelection == gun.GunSelections.SHOTGUN)
+                        spriteBatch.Draw(shotgunTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, gun.gunArm.effect, 0);
+                    else if (gun.gunSelection == gun.GunSelections.ASSAULT_RIFLE)
+                        spriteBatch.Draw(assaultRifleTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, gun.gunArm.effect, 0);
                     for (int i = 0; i < gun.bullet.Length; i++)
                     {
                         if (gun.bullet[i].isFired && gun.gunSelection == gun.GunSelections.SHOTGUN)
