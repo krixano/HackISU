@@ -14,9 +14,6 @@ namespace HackISU_2018
         SpriteBatch spriteBatch;
         public static KeyboardState keyboard, prevKeyboard;
 
-        public static SpriteEffects playerEffect = SpriteEffects.None;
-        public static Rectangle playerAnimation;
-        public static Texture2D playerTexture;
         public static Rectangle screenRectangle;
         public static Texture2D testTexture;
         public static Texture2D dirtTexture;
@@ -78,8 +75,6 @@ namespace HackISU_2018
             graphics.PreferredBackBufferWidth = screenRectangle.Width;
             graphics.PreferredBackBufferHeight = screenRectangle.Height;
             graphics.ApplyChanges();
-            
-            
 
             World.Init();
             player.playerInit();
@@ -99,7 +94,6 @@ namespace HackISU_2018
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             testTexture = Content.Load<Texture2D>("WhiteSquare100x100");
-            playerTexture = Content.Load<Texture2D>("Player_Sprite_Sheet_Textures_180x720");
             dirtTexture = Content.Load<Texture2D>("Dirt_Block_Texture_64x64");
             grassTexture = Content.Load<Texture2D>("Grass_Block_Texture_64x64");
             stoneTexture = Content.Load<Texture2D>("Stone_Block_Texture_64x64");
@@ -113,14 +107,11 @@ namespace HackISU_2018
             shotgunShell = Content.Load<Texture2D>("Shotgun_Shell_Texture_36x64");
             gunArmTexture = testTexture;
             bulletTexture = Content.Load<Texture2D>("Shotgun_Pellet_Texture_32x32");
-            quit = Content.Load<Texture2D>("Quit_game_texture_1280x720");
+            quit = Content.Load<Texture2D>("quit_game_texture_1280x720");
             newGame = Content.Load<Texture2D>("new_game_texture_1280x720");
             resume = Content.Load<Texture2D>("resume");
             settings = Content.Load<Texture2D>("options_texture_1280x720");
             load = Content.Load<Texture2D>("saved_game_texture_1280x720");
-
-            playerAnimation = new Rectangle(0, 0, playerTexture.Width, 720/4);
-
             gun.gunArm.origin.X = testTexture.Width / 2;
             gun.gunArm.origin.Y = testTexture.Height / 2;
             for (int i = 0; i < gun.bullet.Length; i++)
@@ -144,11 +135,6 @@ namespace HackISU_2018
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
 
-            if (gameState == GameStates.MAIN_MENU)
-                    UserInterface.UpdateButtonsStart();
-                if (gameState == GameStates.PAUSED)
-                    UserInterface.UpdateButtonsPaused();
-
             if (keyboard.IsKeyDown(Keys.P) && prevKeyboard.IsKeyDown(Keys.P))
             {
                 gameState = GameStates.PAUSED;
@@ -163,15 +149,19 @@ namespace HackISU_2018
                 UserInterface.UpdateButtonsPaused();
             }
 
-
             if (gameState == GameStates.PLAYING)
             {
+                if (keyboard.IsKeyDown(Keys.P) && prevKeyboard.IsKeyUp(Keys.P))
+                {
+                    gameState = GameStates.PAUSED;
+                }
                 player.playerUpdate();
                 gun.gunUpdate();
                 enemy.enemyUpdate();
             }
             if (gameState == GameStates.Exit)
                 Exit();
+           
             //prevMouse = mouse;
             prevPad1 = pad1;
             prevKeyboard = keyboard;
