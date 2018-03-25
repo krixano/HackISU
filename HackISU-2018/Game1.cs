@@ -30,6 +30,11 @@ namespace HackISU_2018
         public static Texture2D deepOceanTexture;
         public static Texture2D shallowOceanTexture;
         public static Texture2D skyTexture;
+        public static Texture2D caveTexture;
+        public static Texture2D darkCaveTexture;
+        public static Texture2D caveEntranceTexture;
+        public static Texture2D spiralTexture;
+
         public static Texture2D quit, resume, newGame, settings, load;
         public static Texture2D spiralPlatformTexture;
         public static Texture2D shotgunShell;
@@ -110,6 +115,11 @@ namespace HackISU_2018
             shallowOceanTexture = Content.Load<Texture2D>("Shallow_Ocean_Block_Texture_64x64");
             skyTexture = Content.Load<Texture2D>("Sky_Block_Texture_64x64");
             spiralPlatformTexture = Content.Load<Texture2D>("Spiral_Platform_Texture_256x40");
+            caveTexture = Content.Load<Texture2D>("Dark_Stone_Block_Texture_64x64");
+            darkCaveTexture = Content.Load<Texture2D>("Cave_Walkway_Path_Block_Texture_64x64");
+            caveEntranceTexture = Content.Load<Texture2D>("Cave_Entrance_Block_Texture_64x64");
+            spiralTexture = Content.Load <Texture2D>("Spiral_Tower_Colored_Block_Texture_64x64");
+
             shotgunShell = Content.Load<Texture2D>("Shotgun_Shell_Texture_36x64");
             gunArmTexture = testTexture;
             bulletTexture = Content.Load<Texture2D>("Shotgun_Pellet_Texture_32x32");
@@ -185,10 +195,10 @@ namespace HackISU_2018
 
             spriteBatch.Begin();
             {                
-                enemy.Draw(spriteBatch);               
-
-                player.Draw(spriteBatch);
+                enemy.Draw(spriteBatch);             
+                               
                 World.Draw(spriteBatch);
+                player.Draw(spriteBatch);
 
                 //spriteBatch.Draw(testTexture, new Rectangle((int) (player.sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int) (player.sprite.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int) player.sprite.size.X, (int) player.sprite.size.Y), Color.White);
                 for (int i = 0; i < gun.bullet.Length; i++)

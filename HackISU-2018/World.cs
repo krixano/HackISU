@@ -14,7 +14,7 @@ namespace HackISU_2018
         static public string fileName;
         public enum BlockType
         {
-            AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS, SHALLOW_OCEAN, DEEP_OCEAN, SPIRAL
+            AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS, SHALLOW_OCEAN, DEEP_OCEAN, PLATFORM, CAVE, DARK_CAVE, CAVE_ENTRANCE, TOWER
         };
 
         public struct Block
@@ -107,8 +107,29 @@ namespace HackISU_2018
                     }
                     else if (map[index] == 'p')
                     {
-                        blocks[index].type = BlockType.SPIRAL;
+                        blocks[index].type = BlockType.PLATFORM;
                         blocks[index].solid = true;
+
+                    }
+                    else if (map[index] == 'c')
+                    {
+                        blocks[index].type = BlockType.CAVE;
+                        blocks[index].solid = false;
+                    }
+                    else if (map[index] == 'C')
+                    {
+                        blocks[index].type = BlockType.DARK_CAVE;
+                        blocks[index].solid = false;
+                    }
+                    else if (map[index] == 'E')
+                    {
+                        blocks[index].type = BlockType.CAVE_ENTRANCE;
+                        blocks[index].solid = false;
+                    }
+                    else if (map[index] == 'i')
+                    {
+                        blocks[index].type = BlockType.TOWER;
+                        blocks[index].solid = false;
                     }
                     else if (map[index] == 'a')
                     {
@@ -154,7 +175,7 @@ namespace HackISU_2018
                         case BlockType.STONE:
                             texture = Game1.stoneTexture;
                             break;
-                        case BlockType.SPIRAL:
+                        case BlockType.PLATFORM:
                             texture = Game1.spiralPlatformTexture;
                             break;
                         case BlockType.ROSE:
@@ -165,6 +186,18 @@ namespace HackISU_2018
                             break;
                         case BlockType.WILDGRASS:
                             texture = Game1.wildgrassTexture;
+                            break;
+                        case BlockType.CAVE:
+                            texture = Game1.caveTexture;
+                            break;
+                        case BlockType.DARK_CAVE:
+                            texture = Game1.darkCaveTexture;
+                            break;
+                        case BlockType.CAVE_ENTRANCE:
+                            texture = Game1.caveEntranceTexture;
+                            break;
+                        case BlockType.TOWER:
+                            texture = Game1.spiralTexture;
                             break;
                         default:
                             texture = null;
