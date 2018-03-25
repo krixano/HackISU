@@ -31,7 +31,7 @@ namespace HackISU_2018
 
         public static void Init()
         {
-            fileName = "map4.txt";
+            //fileName = "map4.txt";
             int worldHeight = 50;// ((Game1.screenRectangle.Height / 2) / BLOCK_SIZE) + 2;
             WORLD_SIZE = new Vector2(200, worldHeight);
             offset_b = new Vector2_Double(0,28);

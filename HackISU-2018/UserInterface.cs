@@ -110,7 +110,7 @@ namespace HackISU_2018
                 switch(i)
                 {
                     case 0:
-                        levels.textures[i] = Game1.l1;
+                        levels.textures[i] = Game1.l1;                        
                         break;
                     case 1:
                         levels.textures[i] = Game1.l2;
@@ -139,7 +139,7 @@ namespace HackISU_2018
                 if (startingMenu.bottons[0].Contains(mouse1.X, mouse1.Y))
                 {
                     Game1.gameState = Game1.GameStates.PLAYING;
-                    //World.fileName = "map2.txt";
+                    World.fileName = "map2.txt";
                 }
                 else if (startingMenu.bottons[1].Contains(mouse1.X, mouse1.Y))
                 {

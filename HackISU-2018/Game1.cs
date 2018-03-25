@@ -201,6 +201,7 @@ namespace HackISU_2018
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
 
+            UserInterface.UpdateLevels();
             Console.WriteLine(fontVector);
             if (gameState == GameStates.Levels)
             {
@@ -211,6 +212,7 @@ namespace HackISU_2018
             {
                 //World.offset_b.X += .24; 
                 UserInterface.UpdateButtonsStart();
+                
             }
 
 
@@ -225,6 +227,7 @@ namespace HackISU_2018
                 player.playerUpdate();
                 gun.gunUpdate();
                 enemy.enemyUpdate();
+                
                 if (keyboard.IsKeyDown(Keys.P) && prevKeyboard.IsKeyUp(Keys.P))
                 {
                     gameState = GameStates.PAUSED;
