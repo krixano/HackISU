@@ -24,7 +24,11 @@ namespace HackISU_2018
         public static Texture2D testTexture;
         public static Texture2D dirtTexture;
         public static Texture2D grassTexture;
+        public static Texture2D shortGrassTexture;
         public static Texture2D stoneTexture;
+        public static Texture2D cobbleTexture;
+        public static Texture2D cobbleLeftTexture;
+        public static Texture2D cobbleRightTexture;
         public static Texture2D gunArmTexture;
         public static Texture2D pelletTexture;
         public static Texture2D roseTexture;
@@ -55,7 +59,7 @@ namespace HackISU_2018
 
         public static Texture2D bulletTexture;
         public static Texture2D shotgunShell;
-        public static Texture2D shotgunTexture;
+        public static Texture2D shotgunTexture, assaultRifleTexture;
 
         public static Texture2D crabEnemyTexture;
 
@@ -141,11 +145,14 @@ namespace HackISU_2018
             caveEntranceTexture = Content.Load<Texture2D>("Cave_Entrance_Block_Texture_64x64");
             spiralTexture = Content.Load <Texture2D>("Spiral_Tower_Colored_Block_Texture_64x64");
             snowTexture = Content.Load<Texture2D>("Mountain_Ice_Block_Texture_64x64");
+            cobbleTexture = Content.Load<Texture2D>("Stone_Brick_Block_Texture_64x64");
+            cobbleLeftTexture = Content.Load<Texture2D>("Stone_Brick_Left_Peg_Block_Texture_64x64");
+            cobbleRightTexture = Content.Load<Texture2D>("Stone_Brick_Right_Peg_Block_Texture_64x64");
 
-            
             shotgunShell = Content.Load<Texture2D>("Shotgun_Shell_Texture_36x64");
             bulletTexture = Content.Load<Texture2D>("Bullet_Texture_20x60");
             pelletTexture = Content.Load<Texture2D>("Shotgun_Pellet_Texture_32x32");
+            assaultRifleTexture = Content.Load<Texture2D>("Asault_Rifle_Texture_115x45");
 
             gunArmTexture = testTexture;
             

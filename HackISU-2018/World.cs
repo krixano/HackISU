@@ -14,7 +14,7 @@ namespace HackISU_2018
         static public string fileName;
         public enum BlockType
         {
-            AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS, SHALLOW_OCEAN, DEEP_OCEAN, PLATFORM, CAVE, DARK_CAVE, CAVE_ENTRANCE, TOWER, SNOW
+            AIR, DIRT, GRASS, STONE, SUNFLOWER, ROSE, WILDGRASS, SHALLOW_OCEAN, DEEP_OCEAN, PLATFORM, CAVE, DARK_CAVE, CAVE_ENTRANCE, TOWER, SNOW, COBBLE, COBBLE_LEFT, COBBLE_RIGHT, SHORT_GRASS
         };
 
         public struct Block
@@ -31,7 +31,7 @@ namespace HackISU_2018
 
         public static void Init()
         {
-            fileName = "map1.txt";
+            fileName = "map4.txt";
             int worldHeight = 50;// ((Game1.screenRectangle.Height / 2) / BLOCK_SIZE) + 2;
             WORLD_SIZE = new Vector2(200, worldHeight);
             offset_b = new Vector2_Double(0,28);
@@ -143,6 +143,26 @@ namespace HackISU_2018
                         blocks[index].type = BlockType.SNOW;
                         blocks[index].solid = true;
                     }
+                    else if (map[index] == 'S')
+                    {
+                        blocks[index].type = BlockType.COBBLE;
+                        blocks[index].solid = true;
+                    }
+                    else if (map[index] == 'L')
+                    {
+                        blocks[index].type = BlockType.COBBLE_LEFT;
+                        blocks[index].solid = true;
+                    }
+                    else if (map[index] == 'R')
+                    {
+                        blocks[index].type = BlockType.COBBLE_RIGHT;
+                        blocks[index].solid = true;
+                    }
+                    else if (map[index] == '4')
+                    {
+                        blocks[index].type = BlockType.SHORT_GRASS;
+                        blocks[index].solid = false;
+                    }
                     else if (map[index] == 'a')
                     {
                         blocks[index].type = BlockType.AIR;
@@ -226,6 +246,18 @@ namespace HackISU_2018
                                 break;
                             case BlockType.SNOW:
                                 texture = Game1.snowTexture;
+                                break;
+                            case BlockType.COBBLE:
+                                texture = Game1.cobbleTexture;
+                                break;
+                            case BlockType.COBBLE_LEFT:
+                                texture = Game1.cobbleLeftTexture;
+                                break;
+                            case BlockType.COBBLE_RIGHT:
+                                texture = Game1.cobbleRightTexture;
+                                break;
+                            case BlockType.SHORT_GRASS:
+                                texture = Game1.shortGrassTexture;
                                 break;
                             default:
                                 texture = null;
