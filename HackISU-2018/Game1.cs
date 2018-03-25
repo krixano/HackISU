@@ -23,7 +23,7 @@ namespace HackISU_2018
         public static Texture2D grassTexture;
         public static Texture2D stoneTexture;
         public static Texture2D gunArmTexture;
-        public static Texture2D bulletTexture;
+        public static Texture2D pelletTexture;
         public static Texture2D roseTexture;
         public static Texture2D sunflowerTexture;
         public static Texture2D wildgrassTexture;
@@ -40,6 +40,8 @@ namespace HackISU_2018
         public static Texture2D quit, resume, newGame, settings, load;
 
         public static Texture2D spiralPlatformTexture;
+
+        public static Texture2D bulletTexture;
         public static Texture2D shotgunShell;
         public static Texture2D shotgunTexture;
 
@@ -128,8 +130,11 @@ namespace HackISU_2018
 
             
             shotgunShell = Content.Load<Texture2D>("Shotgun_Shell_Texture_36x64");
+            bulletTexture = Content.Load<Texture2D>("Bullet_Texture_20x60");
+            pelletTexture = Content.Load<Texture2D>("Shotgun_Pellet_Texture_32x32");
+
             gunArmTexture = testTexture;
-            bulletTexture = Content.Load<Texture2D>("Shotgun_Pellet_Texture_32x32");
+            
             quit = Content.Load<Texture2D>("quit_game_texture_1280x720");
             newGame = Content.Load<Texture2D>("new_game_texture_1280x720");
             resume = Content.Load<Texture2D>("resume");
@@ -137,6 +142,7 @@ namespace HackISU_2018
             load = Content.Load<Texture2D>("saved_game_texture_1280x720");
             playerTexture = Content.Load<Texture2D>("player_sprite_sheet_textures_180x720");
             crabEnemyTexture = Content.Load<Texture2D>("Enemy_Rude_Crab_Texture_160x128");
+
 
             playerAnimation = new Rectangle(0, 0, playerTexture.Width, 720/4);
 
@@ -214,8 +220,8 @@ namespace HackISU_2018
                 for (int i = 0; i < gun.bullet.Length; i++)
                 {
                     if (gun.bullet[i].isFired && gun.gunSelection == gun.GunSelections.SHOTGUN)
-                        spriteBatch.Draw(shotgunShell, new Rectangle((int)(gun.shell.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.shell.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.shell.size.X, (int)gun.shell.size.Y), Color.White);
-                    if (gun.bullet[i].isFired)
+                        spriteBatch.Draw(pelletTexture, new Rectangle((int)(gun.bullet[i].position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.bullet[i].position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.bullet[i].size.X, (int)gun.bullet[i].size.Y), Color.White);
+                    if (gun.bullet[i].isFired && gun.gunSelection == gun.GunSelections.SHOTGUN)
                         spriteBatch.Draw(bulletTexture, new Rectangle((int)(gun.bullet[i].position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.bullet[i].position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.bullet[i].size.X, (int)gun.bullet[i].size.Y), null, Color.White, gun.bullet[i].rotation, gun.bullet[i].origin, SpriteEffects.None, 0);
                 spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, SpriteEffects.None, 0);
                 if (gameState == GameStates.MAIN_MENU)
