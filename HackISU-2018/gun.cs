@@ -156,7 +156,9 @@ namespace HackISU_2018
         public static void checkForBulletCollision()
         {
             for (int i = 0; i < bullet.Length; i++)
+            {
                 for (int j = 0; j < enemy.enemySprite.Length; j++)
+                {
                     if (bullet[i].position_wp.X >= enemy.enemySprite[j].position_wp.X && bullet[i].position_wp.X <= enemy.enemySprite[j].position_wp.X + enemy.enemySprite[j].size.X
                         && bullet[i].position_wp.Y <= enemy.enemySprite[j].position_wp.Y + enemy.enemySprite[j].size.Y && bullet[i].position_wp.Y >= enemy.enemySprite[j].size.Y)
                     {
@@ -165,7 +167,11 @@ namespace HackISU_2018
                         enemy.spawnRate -= 100;
                         enemy.enemiesLeft--;
                     }
-                   }
+
+                    //if (bullet[i].position_wp.X )
+                }
+            }
+        }
         public static void switchWeapons()
         {
             
