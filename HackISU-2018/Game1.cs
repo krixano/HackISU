@@ -110,7 +110,7 @@ namespace HackISU_2018
             graphics.PreferredBackBufferHeight = screenRectangle.Height;
             graphics.ApplyChanges();
 
-            World.Init();
+            World.Init("map1.txt");
             World.offset_b.Y = -.01;
             player.playerInit();
             gun.gunInit();
@@ -204,6 +204,11 @@ namespace HackISU_2018
             mouse = Mouse.GetState();
 
             Console.WriteLine(fontVector);
+            if (gameState == GameStates.Levels)
+            {
+                UserInterface.UpdateLevels();
+                Console.WriteLine("Give me Levels!");
+            }
             if (gameState == GameStates.MAIN_MENU)
             {
                 //World.offset_b.X += .24; 
@@ -236,8 +241,7 @@ namespace HackISU_2018
                 Exit();
             if (gameState == GameStates.OPTIONS)
                 UserInterface.UpdateButtonsOptions();
-            if (gameState == GameStates.Levels)
-                UserInterface.UpdateLevels();
+            
             prevMouse = mouse;
             prevPad1 = pad1;
             prevKeyboard = keyboard;
