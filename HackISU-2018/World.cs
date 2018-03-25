@@ -27,7 +27,7 @@ namespace HackISU_2018
         public static Vector2_Double offset_b; // _b: In Blocks
         public static Vector2 WORLD_SIZE;
         public static Block[] blocks;
-        public static int BLOCK_SIZE;
+        public static int BLOCK_SIZE = 45;
 
         public static void Init()
         {
@@ -41,7 +41,7 @@ namespace HackISU_2018
             Game1.gameState = Game1.GameStates.MAIN_MENU;
             if (Game1.gameState == Game1.GameStates.MAIN_MENU)
             {
-                BLOCK_SIZE = 15;
+                //BLOCK_SIZE = 15;
             }
             
 

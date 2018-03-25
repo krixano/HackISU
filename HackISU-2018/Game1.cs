@@ -140,7 +140,7 @@ namespace HackISU_2018
             newGame = Content.Load<Texture2D>("new_game_texture_1280x720");
             resume = Content.Load<Texture2D>("resume");
             settings = Content.Load<Texture2D>("options_texture_1280x720");
-            load = Content.Load<Texture2D>("saved_game_texture_1280x720");
+            load = Content.Load<Texture2D>("saved game");
             playerTexture = Content.Load<Texture2D>("player_sprite_sheet_textures_180x720");
             crabEnemyTexture = Content.Load<Texture2D>("Enemy_Rude_Crab_Texture_160x128");
 
@@ -172,36 +172,34 @@ namespace HackISU_2018
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
 
-            if (keyboard.IsKeyDown(Keys.P) && prevKeyboard.IsKeyDown(Keys.P))
-            {
-                gameState = GameStates.PAUSED;
-            }
+           
             if (gameState == GameStates.MAIN_MENU)
             {
-                World.offset_b.X += .24; 
+                //World.offset_b.X += .24; 
                 UserInterface.UpdateButtonsStart();
             }
 
-            if (gameState == GameStates.PAUSED)
-            {
-                UserInterface.UpdateButtonsPaused();
-            }
 
             if (Game1.gameState == Game1.GameStates.PLAYING)
             {
                 World.BLOCK_SIZE = 45;
-                World.offset_b = new Vector2_Double(0, 28);
+                //World.offset_b = new Vector2_Double(0, 28);
             }
 
             if (gameState == GameStates.PLAYING)
             {
+                
+                player.playerUpdate();
+                gun.gunUpdate();
+                enemy.enemyUpdate();
                 if (keyboard.IsKeyDown(Keys.P) && prevKeyboard.IsKeyUp(Keys.P))
                 {
                     gameState = GameStates.PAUSED;
                 }
-                player.playerUpdate();
-                gun.gunUpdate();
-                enemy.enemyUpdate();
+            }
+            if (gameState == GameStates.PAUSED)
+            {
+                UserInterface.UpdateButtonsPaused();
             }
             if (gameState == GameStates.Exit)
                 Exit();

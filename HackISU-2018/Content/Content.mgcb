@@ -488,3 +488,15 @@
 /processorParam:TextureFormat=Color
 /build:Stone_Brick_Right_Peg_Block_Texture_64x64.png
 
+#begin Saved Game.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Saved Game.png
+
