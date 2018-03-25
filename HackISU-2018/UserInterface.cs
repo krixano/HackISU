@@ -7,7 +7,7 @@ namespace HackISU_2018
 {
     class UserInterface
     {
-        static public Game1.Menu startingMenu, pausedMenu;
+        static public Game1.Menu startingMenu, pausedMenu, optionMenu;
         static public Rectangle areaMenu, areaPaused;
         const int MAX_Bottons = 3, GAP = 50;
         static public MouseState mouse1;
@@ -20,6 +20,8 @@ namespace HackISU_2018
             startingMenu.textures = new Texture2D[MAX_Bottons + 1];
             pausedMenu.bottons = new Rectangle[MAX_Bottons];
             pausedMenu.textures = new Texture2D[MAX_Bottons];
+            optionMenu.bottons = new Rectangle[MAX_Bottons - 1];
+
             for (int r = 0; r <= MAX_Bottons; r++)
             {
                 startingMenu.bottons[r].X = areaMenu.X + 100;
@@ -37,6 +39,12 @@ namespace HackISU_2018
                 pausedMenu.bottons[r - 1].Width = areaPaused.Width - (2 * GAP);
                 pausedMenu.bottons[r - 1].Height = (areaPaused.Height - (MAX_Bottons * GAP)) / MAX_Bottons;
                 pausedMenu.bottons[r - 1].Y = areaPaused.Y + ((r - 1) * pausedMenu.bottons[r - 1].Height) + GAP * (r);
+            }
+
+            optionMenu.color = Color.White;
+            for(int k =0; k < 2; k++)
+            {
+                optionMenu.bottons[k]= pausedMenu.bottons[k];
             }
         }
         static public void LoadTexture()
@@ -72,6 +80,10 @@ namespace HackISU_2018
                         break;
                 }
             }
+            for(int k = 0; k<2; k++)
+            {
+
+            }
         }
 
         static public void UpdateButtonsStart()
@@ -101,6 +113,7 @@ namespace HackISU_2018
 
         public static void UpdateButtonsPaused()
         {
+            mouse1 = Game1.mouse;
             if (startingMenu.bottons[0].Contains(mouse1.X, mouse1.Y))
             {
                 Game1.gameState = Game1.GameStates.PLAYING;

@@ -167,10 +167,6 @@ namespace HackISU_2018
                 UserInterface.UpdateButtonsStart();
             }
 
-            if (gameState == GameStates.PAUSED)
-            {
-                UserInterface.UpdateButtonsPaused();
-            }
 
             if (gameState == GameStates.PLAYING)
             {
@@ -181,6 +177,10 @@ namespace HackISU_2018
                 player.playerUpdate();
                 gun.gunUpdate();
                 enemy.enemyUpdate();
+            }
+            if (gameState == GameStates.PAUSED)
+            {
+                UserInterface.UpdateButtonsPaused();
             }
             if (gameState == GameStates.Exit)
                 Exit();
@@ -211,6 +211,7 @@ namespace HackISU_2018
                     if (gun.bullet[i].isFired)
                         spriteBatch.Draw(bulletTexture, new Rectangle((int)(gun.bullet[i].position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.bullet[i].position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.bullet[i].size.X, (int)gun.bullet[i].size.Y), null, Color.White, gun.bullet[i].rotation, gun.bullet[i].origin, SpriteEffects.None, 0);
                 spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, SpriteEffects.None, 0);
+                   
                 if (gameState == GameStates.MAIN_MENU)
                     UserInterface.DrawStartingMenu(spriteBatch);
                 if (gameState == GameStates.PAUSED)
