@@ -86,6 +86,7 @@
     <Content Include="Content\Spiral_Tower_Colored_Block_Texture_64x64.png" />
     <Content Include="Content\Stone_Block_Texture_64x64.png" />
     <Content Include="Content\Sunflower_Block_Texture_64x64.png" />
+    <Content Include="Content\Tree_Texture_128x256.png" />
     <Content Include="Content\WhiteSquare100x100.png" />
     <Content Include="Content\Wildgrass_Block_Texture_64x64.png" />
     <Content Include="Icon.ico" />

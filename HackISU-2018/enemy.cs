@@ -16,6 +16,7 @@ namespace HackISU_2018
         static public Random rnd;
         static public int spawnRate;
         static public int enemiesLeft;
+        static public long tick;
         public enum EnemiesPerLevel
         {
             level1 = 5,
@@ -38,14 +39,17 @@ namespace HackISU_2018
 
             for (int i=0; i<enemySprite.Length;i++)
             {
-                enemySprite[i].size.X = player.sprite.size.X;
-                enemySprite[i].size.Y = enemySprite[i].size.X;
+                enemySprite[i].size.Y = player.sprite.size.Y / 2;
+                enemySprite[i].size.X = enemySprite[i].size.Y;
                 enemySprite[i].position_wp = player.sprite.position_wp;
+                enemySprite[i].source = new Rectangle(0, 0, 160 / 2, 128 / 2);
                 enemySprite[i].visible = false;
+                enemySprite[i].health = 100d;
             }
         }
         static public void enemyUpdate()
         {
+            tick++;
             if (enemiesLeft == 0)
             {
                 enemiesPerLevel = EnemiesPerLevel.level2;
@@ -57,16 +61,51 @@ namespace HackISU_2018
             //Enemy AI
             for (int i = 0; i < enemySprite.Length; i++)
             {
-                if (enemySprite[i].position_wp.X < player.sprite.position_wp.X)
-                    enemySprite[i].position_wp.X += enemyXSpeed_p;
-                if (enemySprite[i].position_wp.Y < player.sprite.position_wp.Y)
-                    enemySprite[i].position_wp.Y += enemyYSpeed_p;
-                if (enemySprite[i].position_wp.X > player.sprite.position_wp.X)
-                    enemySprite[i].position_wp.X -= enemyXSpeed_p;
-                if (enemySprite[i].position_wp.Y > player.sprite.position_wp.Y)
-                    enemySprite[i].position_wp.Y -= enemyYSpeed_p;
-                if (enemySprite[i].visible = false && enemiesLeft > 0)
-                    spawnEnemy();
+                if (enemySprite[i].visible)
+                {
+                    if (enemySprite[i].position_wp.X < player.sprite.position_wp.X)
+                        enemySprite[i].position_wp.X += enemyXSpeed_p;
+                    if (enemySprite[i].position_wp.Y < player.sprite.position_wp.Y)
+                        enemySprite[i].position_wp.Y += enemyYSpeed_p;
+                    if (enemySprite[i].position_wp.X > player.sprite.position_wp.X)
+                        enemySprite[i].position_wp.X -= enemyXSpeed_p;
+                    if (enemySprite[i].position_wp.Y > player.sprite.position_wp.Y)
+                        enemySprite[i].position_wp.Y -= enemyYSpeed_p;
+
+                    if (enemySprite[i].health <= 0)
+                    {
+                        enemySprite[i].visible = false;
+                        enemy.enemiesLeft--;
+                        enemy.spawnRate -= 100;
+                        // Reset health back to 100
+                        enemySprite[i].health = 100d;
+                    }
+
+                    if (tick % 20 == 0)
+                    {
+                        if (enemySprite[i].source.X == 0)
+                        {
+                            enemySprite[i].source.X = 160 / 2;
+                            enemySprite[i].source.Y = 0;
+                        }  else if (enemySprite[i].source.X == 160 / 2)
+                        {
+                            enemySprite[i].source.X = 0;
+                            enemySprite[i].source.Y = 128 / 2;
+                        } else if (enemySprite[i].source.Y == 128 / 2)
+                        {
+                            enemySprite[i].source.X = 160 / 2;
+                            enemySprite[i].source.Y = 128 / 2;
+                        } else
+                        {
+                            enemySprite[i].source.X = 0;
+                            enemySprite[i].source.Y = 0;
+                        }
+                    }
+                } else
+                {
+                    if (!enemySprite[i].visible && enemiesLeft > 0)
+                        spawnEnemy();
+                }
             }
 
         }
@@ -75,11 +114,13 @@ namespace HackISU_2018
             
             for (int i = 0; i < enemySprite.Length; i++)
             {
-
-                //enemySprite[i].position_wp.X = rnd.Next(0, (int) World.WORLD_SIZE.X);
-                enemySprite[i].position_wp.X = enemy.rnd.Next(0, (int) World.WORLD_SIZE.X * World.BLOCK_SIZE);
-                enemySprite[i].position_wp.Y = 0;
-                enemySprite[i].visible = true;
+                if (!enemySprite[i].visible)
+                {
+                    //enemySprite[i].position_wp.X = rnd.Next(0, (int) World.WORLD_SIZE.X);
+                    enemySprite[i].position_wp.X = enemy.rnd.Next(0, (int) World.WORLD_SIZE.X * World.BLOCK_SIZE);
+                    enemySprite[i].position_wp.Y = World.BLOCK_SIZE * 3;
+                    enemySprite[i].visible = true;
+                }
             }
         }
         public static void Draw(SpriteBatch spriteBatch)
@@ -90,7 +131,8 @@ namespace HackISU_2018
                 {
                     int x = (int)(enemySprite[i].position_wp.X - World.worldOffsetPixels().X);
                     int y = (int)(enemySprite[i].position_wp.Y - World.worldOffsetPixels().Y);
-                    spriteBatch.Draw(Game1.crabEnemyTexture, new Rectangle(x, y, (int)player.sprite.size.X, (int)player.sprite.size.Y), Color.White);
+                    //spriteBatch.Draw(Game1.crabEnemyTexture, new Rectangle(x, y, (int)player.sprite.size.X, (int)player.sprite.size.Y), Color.White);
+                    spriteBatch.Draw(Game1.crabEnemyTexture, new Rectangle(x, y, (int) enemySprite[i].size.X, (int) enemySprite[i].size.Y), enemySprite[i].source, Color.White);
                 }
             }
         }

@@ -51,8 +51,10 @@ namespace HackISU_2018
 
         public struct SpriteStruct
         {
+            public double health; // Out of 100% (max = 100)
             public Vector2_Double position_wp;
             public Vector2 size;
+            public Rectangle source; // TODO: Use for player as well as enemies
             public Color color;
             public float rotation;
             public Vector2 origin, speed;

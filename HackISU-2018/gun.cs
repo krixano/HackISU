@@ -162,10 +162,11 @@ namespace HackISU_2018
                     if (bullet[i].position_wp.X >= enemy.enemySprite[j].position_wp.X && bullet[i].position_wp.X <= enemy.enemySprite[j].position_wp.X + enemy.enemySprite[j].size.X
                         && bullet[i].position_wp.Y <= enemy.enemySprite[j].position_wp.Y + enemy.enemySprite[j].size.Y && bullet[i].position_wp.Y >= enemy.enemySprite[j].size.Y)
                     {
-                        enemy.enemySprite[j].visible = false;
+                        enemy.enemySprite[j].health -= 5; // 5% hit/decrease
                         bullet[i].isFired = false;
-                        enemy.spawnRate -= 100;
-                        enemy.enemiesLeft--;
+                        //enemy.enemySprite[j].visible = false;
+                        //enemy.spawnRate -= 100;
+                        //enemy.enemiesLeft--;
                     }
 
                     //if (bullet[i].position_wp.X )
