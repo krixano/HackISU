@@ -44,7 +44,16 @@ namespace HackISU_2018
         public static Texture2D snowTexture;
         public static Texture2D playerTexture;
 
+        public static Texture2D heartTexture;
+        public static Texture2D halfHeartTexture;
+
         public static Texture2D quit, resume, newGame, settings, load;
+
+        public static Texture2D l1 ;
+        public static Texture2D l2 ; 
+        public static Texture2D l3 ; 
+        public static Texture2D l4 ; 
+        public static Texture2D l5 ; 
 
         public static Texture2D spiralPlatformTexture;
 
@@ -57,14 +66,14 @@ namespace HackISU_2018
         public enum GameStates
         {
             MAIN_MENU, PAUSED, PLAYING, Exit,
-            OPTIONS
+            OPTIONS, Levels
         }
-
+        
         static public GameStates gameState;
 
         public struct SpriteStruct
         {
-            public double health; // Out of 100% (max = 100)
+            public double health; // Out of 100% (max = 100) for enemies, 6 for player
             public Vector2_Double position_wp;
             public Vector2 size;
             public Rectangle source; // TODO: Use for player as well as enemies
@@ -152,8 +161,16 @@ namespace HackISU_2018
             resume = Content.Load<Texture2D>("resume");
             settings = Content.Load<Texture2D>("options_texture_1280x720");
             load = Content.Load<Texture2D>("saved game");
+            l1 = Content.Load<Texture2D>("1");
+            l2 = Content.Load<Texture2D>("2");
+            l3 = Content.Load<Texture2D>("3");
+            l4 = Content.Load<Texture2D>("4");
+            l5 = Content.Load<Texture2D>("5");
             playerTexture = Content.Load<Texture2D>("player_sprite_sheet_textures_180x720");
             crabEnemyTexture = Content.Load<Texture2D>("Enemy_Rude_Crab_Texture_160x128");
+
+            heartTexture = Content.Load<Texture2D>("Heart_Block_Texture_64x64");
+            halfHeartTexture = Content.Load<Texture2D>("Half_Heart_Block_Texture_64x64");
 
             font = Content.Load<SpriteFont>("font");
 
@@ -215,8 +232,11 @@ namespace HackISU_2018
             }
             if (gameState == GameStates.Exit)
                 Exit();
-           
-            //prevMouse = mouse;
+            if (gameState == GameStates.OPTIONS)
+                UserInterface.UpdateButtonsOptions();
+            if (gameState == GameStates.Levels)
+                UserInterface.UpdateLevels();
+            prevMouse = mouse;
             prevPad1 = pad1;
             prevKeyboard = keyboard;
             base.Update(gameTime);
@@ -241,9 +261,13 @@ namespace HackISU_2018
                 //spriteBatch.Draw(gunArmTexture, new Rectangle((int)(gun.gunArm.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE)), (int)(gun.gunArm.position_wp.Y - (World.offset_b.Y * World.BLOCK_SIZE)), (int)gun.gunArm.size.X, (int)gun.gunArm.size.Y), null, Color.Red, gun.gunArm.rotation, gun.gunArm.origin, SpriteEffects.None, 0);
                 if (gameState == GameStates.MAIN_MENU)
                     UserInterface.DrawStartingMenu(spriteBatch);
-                if (gameState == GameStates.PAUSED)
+                else if (gameState == GameStates.PAUSED)
                     UserInterface.DrawPauseMenu(spriteBatch);
-                if (gameState == GameStates.PLAYING)
+                else if (gameState == GameStates.OPTIONS)
+                    UserInterface.DrawOptionsMenu(spriteBatch);
+                else if (gameState == GameStates.Levels)
+                    UserInterface.DrawLevels(spriteBatch);
+                else if (gameState == GameStates.PLAYING)
                 {
                     enemy.Draw(spriteBatch);             
                                    

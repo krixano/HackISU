@@ -60,6 +60,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\1.png" />
+    <Content Include="Content\2.png" />
+    <Content Include="Content\3.png" />
+    <Content Include="Content\4.png" />
+    <Content Include="Content\5.png" />
     <Content Include="Content\Asault_Rifle_Texture_115x45.png" />
     <Content Include="Content\assault_rifle_64x22.png" />
     <Content Include="Content\Ball-White-Round.png" />
