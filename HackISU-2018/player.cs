@@ -61,8 +61,8 @@ namespace HackISU_2018
                 canGoRight = false;
             
             //scrolls screen      
-            if (canGoRight && Game1.keyboard.IsKeyDown(Keys.Right)
-                || Game1.keyboard.IsKeyDown(Keys.D) 
+            if (canGoRight && (Game1.keyboard.IsKeyDown(Keys.Right)
+                || Game1.keyboard.IsKeyDown(Keys.D))
                 && playerScreenPixels().X >= Game1.screenRectangle.Right - Game1.screenRectangle.Width / 3 + sprite.size.Y / 2)
             {
                 if (World.offset_b.X >= World.WORLD_SIZE.X)
@@ -73,8 +73,8 @@ namespace HackISU_2018
                     World.offset_b.X += .20f;
                 }
             }
-            if (canGoLeft && Game1.keyboard.IsKeyDown(Keys.Left) 
-                || Game1.keyboard.IsKeyDown(Keys.A) 
+            if (canGoLeft && (Game1.keyboard.IsKeyDown(Keys.Left) 
+                || Game1.keyboard.IsKeyDown(Keys.A))
                 && playerScreenPixels().X <= Game1.screenRectangle.Left + Game1.screenRectangle.Width / 3 - sprite.size.X / 2)
             {
                 if (World.offset_b.X <= 0)
