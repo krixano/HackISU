@@ -39,14 +39,10 @@ namespace HackISU_2018
 
         public static Texture2D quit, resume, newGame, settings, load;
 
-        public static Texture2D playerTexture;
-
         public static Texture2D spiralPlatformTexture;
         public static Texture2D shotgunShell;
 
         public static Texture2D crabEnemyTexture;
-
-        public static Rectangle playerAnimation;
 
         public enum GameStates
         {
@@ -56,7 +52,6 @@ namespace HackISU_2018
 
         static public GameStates gameState;
 
-        public static SpriteEffects playerEffect;
 
         public struct SpriteStruct
         {
