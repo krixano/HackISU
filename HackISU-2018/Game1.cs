@@ -33,10 +33,15 @@ namespace HackISU_2018
         public static Texture2D spiralTexture;
 
         public static Texture2D quit, resume, newGame, settings, load;
+
+        public static Texture2D playerTexture;
+
         public static Texture2D spiralPlatformTexture;
         public static Texture2D shotgunShell;
 
         public static Texture2D crabEnemyTexture;
+
+        public static Rectangle playerAnimation;
 
         public enum GameStates
         {
@@ -45,6 +50,8 @@ namespace HackISU_2018
         }
 
         static public GameStates gameState;
+
+        public static SpriteEffects playerEffect;
 
         public struct SpriteStruct
         {
@@ -122,7 +129,7 @@ namespace HackISU_2018
             resume = Content.Load<Texture2D>("resume");
             settings = Content.Load<Texture2D>("options_texture_1280x720");
             load = Content.Load<Texture2D>("saved_game_texture_1280x720");
-
+            playerTexture = Content.Load<Texture2D>("player_sprite_sheet_textures_180x720");
             crabEnemyTexture = Content.Load<Texture2D>("Enemy_Rude_Crab_Texture_160x128");
 
             playerAnimation = new Rectangle(0, 0, playerTexture.Width, 720/4);
