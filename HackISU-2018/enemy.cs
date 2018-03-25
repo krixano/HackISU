@@ -15,7 +15,7 @@ namespace HackISU_2018
         static public Game1.SpriteStruct[] enemySprite;
         static public Random rnd;
         static public int spawnRate;
-        static public int enemiesLeft;
+        static public int enemiesLeft, hitsTilDeath;
         static public long tick;
         public enum EnemiesPerLevel
         {
@@ -27,7 +27,9 @@ namespace HackISU_2018
         }
         static public EnemiesPerLevel enemiesPerLevel = EnemiesPerLevel.level1;
         static public void enemyInit()
-        {            
+        {
+            hitsTilDeath = 3;
+
             enemySprite = new Game1.SpriteStruct[(int) enemiesPerLevel];
             spawnRate = 9;
             enemy.rnd = new Random();
@@ -71,6 +73,9 @@ namespace HackISU_2018
                         enemySprite[i].position_wp.X -= enemyXSpeed_p;
                     if (enemySprite[i].position_wp.Y > player.sprite.position_wp.Y)
                         enemySprite[i].position_wp.Y -= enemyYSpeed_p;
+
+                    if (enemySprite[i].position_wp.X - player.sprite.position_wp.X < player.sprite.size.X / 2 && enemySprite[i].position_wp.Y - player.sprite.position_wp.Y < player.sprite.size.Y / 2)
+                        hitsTilDeath--;
 
                     if (enemySprite[i].health <= 0)
                     {
