@@ -52,7 +52,6 @@ namespace HackISU_2018
 
         static public GameStates gameState;
 
-
         public struct SpriteStruct
         {
             public double health; // Out of 100% (max = 100)
