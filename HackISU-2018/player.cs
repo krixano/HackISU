@@ -16,7 +16,7 @@ namespace HackISU_2018
         static public Game1.SpriteStruct sprite;
         static Timer tmr;
         //tmrAmt = Jump length
-        static int tmrAmt = 10;
+        static int tmrAmt = 7;
         static int currentTmr = 0;
         static bool isJumping = false;
         static bool isFalling = false;
