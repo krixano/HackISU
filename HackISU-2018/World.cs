@@ -38,11 +38,11 @@ namespace HackISU_2018
             blocks = new Block[(int) WORLD_SIZE.X * (int) WORLD_SIZE.Y];
             Console.WriteLine(worldHeight);
 
-            char[] map = new char[worldHeight * 200];
-            string[] lines = System.IO.File.ReadAllLines(@"map3.txt");
+            char[] map = new char[(int) (World.WORLD_SIZE.Y * World.WORLD_SIZE.X)];
+            string[] lines = System.IO.File.ReadAllLines(@fileName);
             Console.WriteLine(lines.Length);
             Console.WriteLine(lines);
-            for (int y = 0; y < worldHeight; y++)
+            for (int y = 0; y < World.WORLD_SIZE.Y; y++)
             {
                 if (y >= lines.Length)
                 {
@@ -60,9 +60,9 @@ namespace HackISU_2018
                 }
             }
             Console.WriteLine();
-            for (int y = 0; y < worldHeight; y++)
+            for (int y = 0; y < World.WORLD_SIZE.Y; y++)
             {
-                for (int x = 0; x < 200; x++)
+                for (int x = 0; x < World.WORLD_SIZE.X; x++)
                 {
                     int index = (int)(x + y * World.WORLD_SIZE.X);
                     if (map[index] == 's')
