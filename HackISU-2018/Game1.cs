@@ -118,7 +118,7 @@ namespace HackISU_2018
             settings = Content.Load<Texture2D>("options_texture_1280x720");
             load = Content.Load<Texture2D>("saved_game_texture_1280x720");
 
-            playerAnimation = new Rectangle(0, 0, Game1.playerTexture.Width, Game1.playerTexture.Height / 4);
+            playerAnimation = new Rectangle(0, 0, playerTexture.Width, 720/4);
 
             gun.gunArm.origin.X = testTexture.Width / 2;
             gun.gunArm.origin.Y = testTexture.Height / 2;
@@ -142,10 +142,6 @@ namespace HackISU_2018
             pad1 = GamePad.GetState(PlayerIndex.One);
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
-
-
-            playerAnimation.Y += 15;
-
 
             if (gameState == GameStates.MAIN_MENU)
                     UserInterface.UpdateButtonsStart();

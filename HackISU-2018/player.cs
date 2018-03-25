@@ -21,6 +21,9 @@ namespace HackISU_2018
         static bool isJumping = false;
         static bool isFalling = false;
 
+        static int currentAnimation = 0;
+        static long tick = 0;
+
         static public void playerInit()
         {
             tmr = new Timer(60);
@@ -38,6 +41,7 @@ namespace HackISU_2018
         public static void playerUpdate()
         {
             isFalling = false;
+            bool isMoving = false;
 
             Double addFalling = playerYSpeed_p;
             bool canGoLeft = true;
@@ -75,6 +79,7 @@ namespace HackISU_2018
                 || Game1.keyboard.IsKeyDown(Keys.A)))
             {
                 sprite.position_wp.X -= playerXSpeed_p;
+                isMoving = true;
                 if (isPlayerCollidingMiddleLeftSide() || isPlayerCollidingTopLeftSide())
                 {
                     double difference = sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE);
@@ -86,6 +91,7 @@ namespace HackISU_2018
                 Game1.keyboard.IsKeyDown(Keys.D) || Game1.keyboard.IsKeyDown(Keys.Right)))
             {
                 sprite.position_wp.X += playerXSpeed_p;
+                isMoving = true;
                 if (isPlayerCollidingMiddleRightSide() || isPlayerCollidingTopRightSide())
                 {
                     double difference = sprite.position_wp.X - (World.offset_b.X * World.BLOCK_SIZE);
@@ -106,7 +112,7 @@ namespace HackISU_2018
                 {
                     //playerXSpeed_p += playerXSpeed_p;
                     isFalling = false;
-                    playerJump();                    
+                    playerJump();
                 }
             }
             
@@ -181,6 +187,17 @@ namespace HackISU_2018
                 sprite.position_wp.Y = ((int) (sprite.position_wp.Y / World.BLOCK_SIZE) * World.BLOCK_SIZE) + 5;
             }
             Console.WriteLine(addFalling);
+
+            tick++;
+            if (isMoving)
+            {
+                if (tick % 30 == 0)
+                {
+                    currentAnimation++;
+                    if (currentAnimation == 3) currentAnimation = 1;
+                    Game1.playerAnimation.Y = 720/3 * currentAnimation;
+                }
+            }
         }
         
 
@@ -221,6 +238,7 @@ namespace HackISU_2018
         {
             int x = (int) (player.sprite.position_wp.X - World.worldOffsetPixels().X);
             int y = (int) (player.sprite.position_wp.Y - World.worldOffsetPixels().Y);
+            //spriteBatch.Draw(Game1.playerTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Game1.playerAnimation, Color.White);
             spriteBatch.Draw(Game1.playerTexture, new Rectangle(x, y, (int) player.sprite.size.X, (int) player.sprite.size.Y), Game1.playerAnimation, Color.White);
         }
 
